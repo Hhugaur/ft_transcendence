@@ -1,0 +1,34 @@
+version: '3'
+services:
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    networks:
+      - webapp
+    ports:
+      - 3000:3000
+    volumes:
+      - ./db:/app/db
+    restart: always
+    container_name: back
+    hostname: back
+
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    depends_on:
+      - back
+    networks:
+      - webapp
+    ports:
+      - 5000:5000
+    restart: always
+    container_name: front
+    hostname: front
+
+networks:
+  webapp:
+    driver: bridge
+
