@@ -2,7 +2,7 @@ version: '3'
 services:
   back:
     build:
-      context: ./back
+      context: ./backend
       dockerfile: Dockerfile
     networks:
       - webapp
@@ -16,7 +16,7 @@ services:
 
   front:
     build:
-      context: ./front
+      context: ./frontend
       dockerfile: Dockerfile
     depends_on:
       - back
