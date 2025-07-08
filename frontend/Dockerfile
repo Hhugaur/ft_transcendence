@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20-alpine3.22
 
 WORKDIR /app
 
@@ -13,4 +13,3 @@ RUN npm install -g serve
 EXPOSE 5000
 
 CMD ["serve", "-s", "dist", "-l", "5000"]
-
