@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  }
+}

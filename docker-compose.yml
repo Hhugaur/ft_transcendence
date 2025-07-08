@@ -1,23 +1,27 @@
 version: '3'
 services:
   back:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend
     networks:
       - webapp
     ports:
-      - 3000:3000
-    volumes:
-      - ./db:/app/db
+      - 3001:3001
     restart: always
     container_name: back
     hostname: back
 
+  database:
+    build: ./backend/database
+    ports:
+      - "3000:3000"
+    networks:
+      - webapp
+    restart: always
+    container_name: database
+    hostname: database
+
   front:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
     depends_on:
       - back
     networks:
