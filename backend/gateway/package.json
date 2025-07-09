@@ -1,19 +1,21 @@
 {
-  "name": "transcendence-back",
+  "name": "transcendence-gateway",
   "version": "1.0.0",
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "dependencies": {
-    "fastify": "^4.18.0",
-    "better-sqlite3": "^8.0.0",
-    "jsonwebtoken": "^9.0.0",
-    "otplib": "^12.0.1"
+    "fastify": "^4.24.3",
+    "@fastify/http-proxy": "^9.x.x",
+    "@fastify/cors": "^8.4.0",
+    "dotenv": "^16.0.3"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
-    "@types/node": "^18.15.11"
+    "@types/node": "^18.15.11",
+    "ts-node-dev": "^2.0.0"
   }
 }
 

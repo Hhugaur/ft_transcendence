@@ -4,6 +4,8 @@ services:
     build: ./backend/gateway
     depends_on:
       - front
+    env_file:
+      - .env
     networks:
       - webapp
     ports:
@@ -24,8 +26,6 @@ services:
 
   front:
     build: ./frontend
-    depends_on:
-      - gateway
     networks:
       - webapp
     ports:
