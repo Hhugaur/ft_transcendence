@@ -4,6 +4,10 @@ up:
 
 down:
 	docker-compose down
+
+fclean:
+	docker system prune -af --volumes
+	rm -rf db
 	
-.PHONY: up down build
+.PHONY: up down fclean
 
