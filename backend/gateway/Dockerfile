@@ -2,7 +2,8 @@ FROM node:20-alpine3.22
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json .
+COPY tsconfig.json .
 
 RUN npm install
 

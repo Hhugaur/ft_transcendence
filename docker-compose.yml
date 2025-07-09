@@ -1,14 +1,16 @@
 version: '3'
 services:
-  back:
-    build: ./backend
+  gateway:
+    build: ./backend/gateway
+    depends_on:
+      - front
     networks:
       - webapp
     ports:
       - 3001:3001
     restart: always
-    container_name: back
-    hostname: back
+    container_name: gateway
+    hostname: gateway
 
   database:
     build: ./backend/database
@@ -23,7 +25,7 @@ services:
   front:
     build: ./frontend
     depends_on:
-      - back
+      - gateway
     networks:
       - webapp
     ports:
