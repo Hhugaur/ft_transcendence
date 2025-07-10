@@ -23,7 +23,13 @@ server.register(fastifyHttpProxy, {
 });
 
 server.register(fastifyHttpProxy, {
-  upstream: process.env.FRONTEND_URL || 'http://front:5000',
+  upstream: process.env.FRONTEND_URL || 'http://authentification:3002',
+  prefix: '/authentification',
+  rewritePrefix: '/',
+});
+
+server.register(fastifyHttpProxy, {
+  upstream: process.env.AUTHENTIFICATION_URL || 'http://front:5000',
   prefix: '/front',
   rewritePrefix: '/',
 });

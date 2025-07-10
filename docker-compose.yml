@@ -14,6 +14,16 @@ services:
     container_name: gateway
     hostname: gateway
 
+  authentification:
+    build: ./backend/authentification
+    ports:
+      - "3002:3002"
+    networks:
+      - webapp
+    restart: always
+    container_name: authentification
+    hostname: authentification
+
   database:
     build: ./backend/database
     ports:
