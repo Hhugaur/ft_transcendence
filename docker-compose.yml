@@ -4,6 +4,8 @@ services:
     build: ./backend/gateway
     depends_on:
       - front
+      - database
+      - authentification
     env_file:
       - .env
     networks:

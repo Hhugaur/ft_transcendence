@@ -7,11 +7,15 @@
     "serve": "serve -s dist"
   },
   "dependencies": {
-    "tailwindcss": "^3.3.2",
-    "typescript": "^5.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "typescript": "^5.0.2",
+    "postcss": "^8.4.24",
+    "autoprefixer": "^10.4.14"
   }
 }
 
