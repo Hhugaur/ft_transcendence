@@ -7,10 +7,10 @@ const App: React.FC = () => {
       <button type="button" id="log" className="px-4 py-2 bg-blue-500 text-white rounded">
         Se connecter
       </button>
-      <button type="button" id="gameLaunch" className="px-4 py-2 bg-green-500 text-white rounded">
+      <button type="button" id="gameLaunch" className="px-4 py-2 bg-blue-500 text-white rounded">
         Classique
       </button>
-      <button type="button" id="gameLaunch" className="px-4 py-2 bg-purple-500 text-white rounded">
+      <button type="button" id="gameLaunch" className="px-4 py-2 bg-blue-500 text-white rounded">
         Tournoi
       </button>
     </div>
