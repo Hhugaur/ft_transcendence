@@ -17,19 +17,19 @@ server.register(fastifyCors, {
 
 // redirections
 server.register(fastifyHttpProxy, {
-  upstream: process.env.DATABASE_URL || 'http://database:3000',
+  upstream: process.env.DATABASE_URL,
   prefix: '/api/database',
   rewritePrefix: '/',
 });
 
 server.register(fastifyHttpProxy, {
-  upstream: process.env.FRONTEND_URL || 'http://authentification:3002',
+  upstream: process.env.FRONTEND_URL,
   prefix: '/authentification',
   rewritePrefix: '/',
 });
 
 server.register(fastifyHttpProxy, {
-  upstream: process.env.AUTHENTIFICATION_URL || 'http://front:5000',
+  upstream: process.env.AUTHENTIFICATION_URL,
   prefix: '/front',
   rewritePrefix: '/',
 });
