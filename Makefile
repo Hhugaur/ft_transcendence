@@ -7,19 +7,15 @@ down:
 
 dfclean:
 	docker-compose down
-	docker system prune -af --volumes
+	docker system prune -a
 
 fclean:
-	docker system prune -af --volumes
+	docker system prune -a
 
 reload:
 	docker restart front
 
-re:
-	docker-compose down
-	docker system prune -af --volumes
-	docker-compose build
-	docker-compose up -d
+re: dfclean up
 	
 .PHONY: up down fclean dfclean reload re
 
