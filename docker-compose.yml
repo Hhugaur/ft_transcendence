@@ -45,6 +45,9 @@ services:
     restart: always
     container_name: front
     hostname: front
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
 networks:
   webapp:
