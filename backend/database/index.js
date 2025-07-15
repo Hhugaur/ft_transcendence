@@ -4,7 +4,7 @@ import { open } from 'sqlite';
 
 async function initDatabase() {
     return open({
-        filename: './database.sqlite',
+        filename: './database/database.sqlite',
         driver: sqlite3.Database
     });
 }
@@ -21,20 +21,20 @@ async function main() {
     }
 }
 
-//async function listTables() {
-//  const db = await open({
-//    filename: './database.sqlite',
-//    driver: sqlite3.Database
-//  });
-//
-//  const tables = await db.all(`
-//    SELECT name FROM sqlite_master
-//    WHERE type='table' AND name NOT LIKE 'sqlite_%';
-//  `);
-//
-//  console.log("Tables in the database:");
-//  tables.forEach(table => console.log(table.name));
-//}
+async function listTables() {
+    const db = await open({
+        filename: './database/database.sqlite',
+        driver: sqlite3.Database
+  });
+
+  const tables = await db.all(`
+    SELECT name FROM sqlite_master
+    WHERE type='table' AND name NOT LIKE 'sqlite_%';
+  `);
+
+  console.log("Tables in the database:");
+  tables.forEach(table => console.log(table.name));
+}
 
 main();
-//listTables();
+listTables();

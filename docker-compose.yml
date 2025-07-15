@@ -36,6 +36,8 @@ services:
      - authentification
     container_name: database
     hostname: database
+    volumes:
+     - ./database:/app/database
 
   front:
     build: ./frontend

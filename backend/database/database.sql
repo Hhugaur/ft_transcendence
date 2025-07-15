@@ -49,5 +49,5 @@ SELECT
 	username,
 	win,
 	lose,
-	CONCAT(win, '/', GREATEST(win + lose, 1)) AS ratio
+	win || '/' || CASE WHEN (win + lose) = 0 THEN 1 ELSE (win + lose) END AS ratio
 FROM USERS;
