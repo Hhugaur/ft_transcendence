@@ -32,7 +32,8 @@ services:
       - "3000:3000"
     networks:
       - webapp
-    restart: always
+    depends_on:
+     - authentification
     container_name: database
     hostname: database
 

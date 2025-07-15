@@ -1,24 +1,40 @@
-const sqlite3 = require('sqlite3').verbose();
-const http = require('http');
+import fs from 'fs';
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
 
-// database connexion (in /app/data to persist)
-const db = new sqlite3.Database('./mydb.sqlite', (err) => {
-  if (err) {
-    console.error("❌ Erreur lors de l'ouverture de la base :", err.message);
-  } else {
-    console.log("✅ Base SQLite connectée.");
-  }
-});
+async function initDatabase() {
+    return open({
+        filename: './database.sqlite',
+        driver: sqlite3.Database
+    });
+}
 
-// Create db
-//db.run(`CREATE TABLE IF NOT EXISTS users (
-//  id INTEGER PRIMARY KEY AUTOINCREMENT,
-//  name TEXT
-//)`);
+async function main() {
+    try {
+        const database = await initDatabase();
+        const sql = fs.readFileSync('./database.sql').toString();
+        await database.exec(sql);
 
-http.createServer((req, res) => {
-  res.end("Database service running");
-}).listen(3000, () => {
-  console.log("✅ Database service listening on port 3000");
-});
+        console.log("Database initialized!");
+    } catch (err) {
+        console.error("Failed to initialize the database:", err.message);
+    }
+}
 
+//async function listTables() {
+//  const db = await open({
+//    filename: './database.sqlite',
+//    driver: sqlite3.Database
+//  });
+//
+//  const tables = await db.all(`
+//    SELECT name FROM sqlite_master
+//    WHERE type='table' AND name NOT LIKE 'sqlite_%';
+//  `);
+//
+//  console.log("Tables in the database:");
+//  tables.forEach(table => console.log(table.name));
+//}
+
+main();
+//listTables();
