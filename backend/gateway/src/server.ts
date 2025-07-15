@@ -31,7 +31,7 @@ server.register(fastifyCors, {
 // redirections
 server.register(fastifyHttpProxy, {
   upstream: databaseUrl,
-  prefix: '/api/database',
+  prefix: '/database',
   rewritePrefix: '/',
 });
 
@@ -43,7 +43,7 @@ server.register(fastifyHttpProxy, {
 
 server.register(fastifyHttpProxy, {
   upstream: authentificationUrl,
-  prefix: '/authentification',
+  prefix: '/authentication',
   rewritePrefix: '/',
 });
 
