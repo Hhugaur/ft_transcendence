@@ -7,10 +7,10 @@ down:
 
 dfclean:
 	docker-compose down
-	docker system prune -a
+	docker system prune -af
 
 fclean:
-	docker system prune -a
+	docker system prune -af
 
 reload:
 	docker restart front

@@ -1,0 +1,14 @@
+{
+  "name": "transcendence-websocket",
+  "version": "1.0.0",
+  "main": "entry.js",
+  "author": "PalsFreniers",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.24.3",
+    "@fastify/http-proxy": "^9.x.x",
+    "@fastify/cors": "^8.4.0",
+    "typed-coffee-script": "^0.12.2",
+    "dotenv": "^16.0.3"
+  }
+}
