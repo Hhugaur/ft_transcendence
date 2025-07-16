@@ -20,6 +20,8 @@ services:
     build: ./backend/authentication
     ports:
       - "3002:3002"
+    env_file:
+      - .env
     networks:
       - webapp
     restart: always
@@ -30,6 +32,8 @@ services:
     build: ./backend/database
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     networks:
       - webapp
     depends_on:
@@ -41,6 +45,8 @@ services:
 
   front:
     build: ./frontend
+    env_file:
+      - .env
     networks:
       - webapp
     ports:

@@ -6,11 +6,11 @@ dotenv.config();
 
 const databaseUrl = process.env.DATABASE_URL;
 const frontendUrl = process.env.FRONTEND_URL;
-const authentificationUrl = process.env.AUTHENTIFICATION_URL;
+const authenticationUrl = process.env.AUTHENTICATION_URL;
 const port = Number(process.env.GATEWAY_PORT);
 
-if (!databaseUrl || !frontendUrl || !authentificationUrl || !port) {
-  throw new Error("Missing one or more required env variables: DATABASE_URL, FRONTEND_URL, AUTHENTIFICATION_URL, GATEWAY_PORT");
+if (!databaseUrl || !frontendUrl || !authenticationUrl || !port) {
+  throw new Error("Missing one or more required env variables: DATABASE_URL, FRONTEND_URL, AUTHENTICATION_URL, GATEWAY_PORT");
 }
 
 if (isNaN(port) || port <= 0 || port > 65535) {
@@ -40,7 +40,6 @@ server.get('/authentication', async (request, reply) => {
 
 const start = async () => {
   try {
-    const port = Number(process.env.GATEWAY_PORT);
     await server.listen({ port, host: '0.0.0.0' });
     console.log(`Gateway listening on port ${port}`);
   } catch (err) {
