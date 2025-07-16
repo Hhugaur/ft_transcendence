@@ -1,2 +1,2 @@
-require('typed-coffee-script/register')
+require('coffeescript/register')
 const App = require('./index')

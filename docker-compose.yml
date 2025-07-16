@@ -53,7 +53,7 @@ services:
     networks:
       - webapp
     ports:
-      - 5000:5000
+      - "5000:5000"
     restart: always
     container_name: front
     hostname: front

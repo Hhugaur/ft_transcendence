@@ -1,23 +1,21 @@
 import Fastify from 'fastify'
 import dotenv from 'dotenv'
+import { Server } from 'socketio'
 
 dotenv.config()
 
-portNumber :: Int = process.env.WEBSOCKET_PORT
+portNumber = process.env.WEBSOCKET_PORT
 
 server = Fastify({ logger: true })
 
-console.debug("welcom to Fastify from CoffeeScript")
-
-server.get('/', (request, reply) ->
-        reply.type('application/json').code(200)
-        hello:
-                world: 'yosh'
-                fastify: true
+server.get("/api/websocket", (request, reply) ->
+        msg: "welcome to the pong at the end of time"
 )
 
-server.listen({ port: portNumber }, (err, addr) ->
-        if err
-                throw err
-)
-
+try
+        port = portNumber
+        await server.listen({ port: port, host: "0.0.0.0" })
+        console.log("websocket is listening on port #{port}")
+catch error
+        server.log.error(err)
+        process.exit(1)

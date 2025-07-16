@@ -8,7 +8,7 @@
     "fastify": "^4.24.3",
     "@fastify/http-proxy": "^9.x.x",
     "@fastify/cors": "^8.4.0",
-    "typed-coffee-script": "^0.12.2",
+    "coffeescript": "^2.7.0",
     "dotenv": "^16.0.3"
   }
 }
