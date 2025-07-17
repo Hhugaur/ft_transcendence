@@ -7,14 +7,14 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "fastify": "^4.24.3",
     "@fastify/jwt": "^6.1.0",
-    "dotenv": "^16.0.3"
+    "argon2": "^0.43.1",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.24.3"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
     "@types/node": "^18.15.11",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.0"
   }
 }
-

@@ -50,7 +50,6 @@ server.register(fastifyHttpProxy, {
 const start = async () => {
   try {
     await server.listen({ port, host: '0.0.0.0' });
-    console.log(`Gateway listening on port ${port}`);
   } catch (err) {
     server.log.error(err);
     process.exit(1);

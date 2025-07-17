@@ -1,12 +1,33 @@
 import fs from 'fs';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const server = Fastify();
 
 async function initDatabase() {
     return open({
         filename: './database/database.sqlite',
         driver: sqlite3.Database
     });
+}
+
+const registerManager = async ({ username, password }, db, reply) => {
+    try {
+        const user = await db.get('SELECT username FROM USERS WHERE username=?', username);
+
+        if (user.username)
+            return reply.code(400).send({ error: '$username already exist!'});
+        else {
+            await db.run ('INSERT INTO USERS (username, password) VALUES ($username, $password)',
+                {$username: username, $password: password});
+            return reply.code(201).send({ error: '$username has been created!'});
+        }
+    } catch (err) {
+        server.log.error(err);
+    }
 }
 
 async function main() {
@@ -16,25 +37,14 @@ async function main() {
         await database.exec(sql);
 
         console.log("Database initialized!");
+
+        server.post('/database/register', async (request, reply) => {
+            const { username, password } = request.body;
+            await registerManager({ username, password }, database, reply);
+        })
     } catch (err) {
         console.error("Failed to initialize the database:", err.message);
     }
 }
 
-async function listTables() {
-    const db = await open({
-        filename: './database/database.sqlite',
-        driver: sqlite3.Database
-  });
-
-  const tables = await db.all(`
-    SELECT name FROM sqlite_master
-    WHERE type='table' AND name NOT LIKE 'sqlite_%';
-  `);
-
-  console.log("Tables in the database:");
-  tables.forEach(table => console.log(table.name));
-}
-
 main();
-listTables();

@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
-import jwt from '@fastify/jwt';
 import dotenv from 'dotenv';
+import argon2 from 'argon2';
 
 dotenv.config();
 
@@ -16,32 +16,55 @@ if (!databaseUrl || !frontendUrl || !authenticationUrl || !port) {
 if (isNaN(port) || port <= 0 || port > 65535) {
   throw new Error("Invalid GATEWAY_PORT value");
 }
-
 // console logs
 const server = Fastify({
   logger: true,
 });
 
-// TODO
+// TODO but not here
 // server.register(jwt, {
 //  secret: process.env.JWT_SECRET as string,
 // });
 
+const sendDbRegisterRequest = async (username, hashedPassword) => {
+  const send = await fetch(databaseUrl + '/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password: hashedPassword }),
+  });
+
+  if (!send.ok) {
+    const error = await send.text();
+    throw new Error(`Error API DB: ${error}`);
+  }
+
+  return await send.json();
+}
+
 // Manage data request
-server.get('/authentication', async (request, reply) => {
+server.post('/authentication/register', async (request, reply) => {
   try {
-    reply.code(200).send({ message: 'Authentication request accepted!' });
+    const { username, password } = request.body;
+    const hashedPassword = await argon2.hash(password, {
+      type: argon2.argon2id,
+      memoryCost: 2 ** 16, // 64 MB
+      timeCost: 3,
+      parallelism: 1
+    });
+
+    const send = await sendDbRegisterRequest(username, hashedPassword);
+    reply.code(200).send({ message: `The user ${username} has been registred!` });
   } catch (error) {
     server.log.error(error);
     reply.code(500).send({ error: 'Server error' });
   }
 });
 
-
 const start = async () => {
   try {
     await server.listen({ port, host: '0.0.0.0' });
-    console.log(`Gateway listening on port ${port}`);
   } catch (err) {
     server.log.error(err);
     process.exit(1);
@@ -49,8 +72,4 @@ const start = async () => {
 };
 
 start();
-
-
-
-
 
