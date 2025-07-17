@@ -2,7 +2,6 @@ FROM node:20-alpine3.22
 
 WORKDIR /app
 
-RUN npm install react react-dom
 RUN npm install -D vite typescript tailwindcss postcss autoprefixer
 
 COPY package.json .

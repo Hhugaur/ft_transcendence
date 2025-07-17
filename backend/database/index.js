@@ -3,6 +3,12 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import dotenv from 'dotenv';
 
+const port = Number(process.env.GATEWAY_PORT);
+
+if (isNaN(port) || port <= 0 || port > 65535) { // Maybe restrict under 1024 ?? because need root
+    throw new Error("Invalid GATEWAY_PORT value");
+}
+
 dotenv.config();
 
 const server = Fastify();
@@ -37,13 +43,24 @@ async function main() {
         await database.exec(sql);
 
         console.log("Database initialized!");
+    } catch (err) {
+        console.error("Failed to initialize the database:", err.message);
+    }
 
+    try {
         server.post('/database/register', async (request, reply) => {
             const { username, password } = request.body;
             await registerManager({ username, password }, database, reply);
         })
     } catch (err) {
-        console.error("Failed to initialize the database:", err.message);
+        console.error("Error:", err.message);
+    }
+
+    try {
+        await server.listen({ port, host: '0.0.0.0' });
+    } catch (err) {
+        server.log.error(err);
+        process.exit(1);
     }
 }
 
