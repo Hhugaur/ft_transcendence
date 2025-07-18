@@ -1,7 +1,6 @@
 # ===========================
 #   VARIABLES
 # ===========================
-DOCKER_COMPOSE = docker-compose
 DB_DIR = database
 DB_FILE = $(DB_DIR)/database.sqlite
 
@@ -21,18 +20,18 @@ up:
 	@echo "$(BLUE)[INFO]$(NC) 🚀 Création du dossier base de données et fichier SQLite"
 	@mkdir -p $(DB_DIR) && touch $(DB_FILE) && chmod -R 777 $(DB_DIR)
 	@echo "$(BLUE)[INFO]$(NC) 🛠️  Construction des containers..."
-	@$(DOCKER_COMPOSE) build
+	@docker-compose build
 	@echo "$(GREEN)[OK]$(NC) ✅ Containers construits avec succès !"
 	@echo "$(BLUE)[INFO]$(NC) 🔥 Lancement des services en arrière-plan..."
-	@$(DOCKER_COMPOSE) up -d
+	@docker-compose up -d
 	@echo "$(GREEN)[SUCCESS]$(NC) ✅ Application lancée !"
 
 down:
 	@echo "$(YELLOW)[STOP]$(NC) 🔻 Arrêt des containers..."
-	@$(DOCKER_COMPOSE) down
+	@docker-compose down
 	@echo "$(GREEN)[OK]$(NC) ✅ Containers arrêtés."
 
-re: fclean up
+re: dfclean up
 
 reload:
 	@echo "$(BLUE)[INFO]$(NC) 🔄 Redémarrage du container front..."
@@ -50,7 +49,7 @@ fclean:
 
 dfclean:
 	@echo "$(RED)[CLEAN]$(NC) 🔍 Arrêt containers + prune volumes + suppression DB"
-	@$(DOCKER_COMPOSE) down
+	@docker-compose down
 	@docker system prune -af --volumes
 	@rm -rf $(DB_DIR)
 	@echo "$(GREEN)[OK]$(NC) ✅ Nettoyage effectué."
