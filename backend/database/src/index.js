@@ -31,7 +31,7 @@ const registerManager = async ({ username, password }, db, reply) => {
     try {
         const user = await db.get('SELECT username FROM USERS WHERE username=?', username);
 
-        if (user.username)
+        if (user)
             return reply.code(400).send({ error: '$username already exist!'});
         else {
             await db.run ('INSERT INTO USERS (username, password) VALUES ($username, $password)',
@@ -40,12 +40,14 @@ const registerManager = async ({ username, password }, db, reply) => {
         }
     } catch (err) {
         server.log.error(err);
+        return reply.code(500).send({ error: 'Internal Database Server Error' });
     }
 }
 
 async function main() {
+    let database;
     try {
-        const database = await initDatabase();
+        database = await initDatabase();
         const sql = fs.readFileSync(new URL('../database.sql', import.meta.url)).toString();
         await database.exec(sql);
 

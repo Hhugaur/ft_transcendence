@@ -43,6 +43,7 @@ const sendDbRegisterRequest = async (username, hashedPassword) => {
 
     if (!send.ok) {
         const error = await send.text();
+        console.log('Sending to DB:', JSON.stringify({ username, password: hashedPassword }));
         throw new Error(`Error API DB: ${error}`);
     }
 
@@ -53,6 +54,10 @@ const sendDbRegisterRequest = async (username, hashedPassword) => {
 server.post('/authentication/register', async (request, reply) => {
     try {
         const { username, password } = request.body;
+        if (!username || !password) {
+            console.log('Body reçu par /authentication/register:', request.body);
+            return reply.code(400).send({ error: 'Invalid argument(s)!' });
+        }
         const hashedPassword = await argon2.hash(password, {
             type: argon2.argon2id,
             memoryCost: 2 ** 16, // 64 MB
@@ -64,7 +69,9 @@ server.post('/authentication/register', async (request, reply) => {
         reply.code(200).send({ message: `The user ${username} has been registred!` });
     } catch (error) {
         server.log.error(error);
-        reply.code(500).send({ error: 'Server error' });
+        server.log.error(error.message);
+        server.log.error(error.stack);
+        reply.code(500).send({ error: 'Authentication server error' });
     }
 });
 
