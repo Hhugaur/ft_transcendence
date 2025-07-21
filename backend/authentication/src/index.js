@@ -32,6 +32,22 @@ await server.register(cors, {
     methods: ['GET', 'POST']
 });
 
+const encryptPassword = async (password) => {
+    try {
+        return await argon2.hash(password, {
+            type: argon2.argon2id,
+            memoryCost: 2 ** 16, // 64 MB
+            timeCost: 3,
+            parallelism: 1
+        });
+    } catch (error) {
+        server.log.error(error);
+        server.log.error(error.message);
+        server.log.error(error.stack);
+        reply.code(500).send({ error: 'Encryption error' });
+    }
+}
+
 const sendDbRegisterRequest = async (username, hashedPassword) => {
     const send = await fetch(databaseUrl + '/register', {
         method: 'POST',
@@ -46,8 +62,22 @@ const sendDbRegisterRequest = async (username, hashedPassword) => {
         console.log('Sending to DB:', JSON.stringify({ username, password: hashedPassword }));
         throw new Error(`Error API DB: ${error}`);
     }
+}
 
-    return await send.json();
+const sendDbLoginRequest = async (username, password) => {
+    const send = await fetch(databaseUrl + '/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+    });
+
+    if (!send.ok) {
+        const error = await send.text();
+        console.log('Sending to DB:', JSON.stringify({ username, password }));
+        throw new Error(`Error API DB: ${error}`);
+    }
 }
 
 // Manage data request
@@ -55,19 +85,32 @@ server.post('/authentication/register', async (request, reply) => {
     try {
         const { username, password } = request.body;
         if (!username || !password) {
-            console.log('Body reçu par /authentication/register:', request.body);
+            console.log('Body received by /authentication/register:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
-        const hashedPassword = await argon2.hash(password, {
-            type: argon2.argon2id,
-            memoryCost: 2 ** 16, // 64 MB
-            timeCost: 3,
-            parallelism: 1
-        });
+        const hashedPassword = await encryptPassword(password);
 
-        const send = await sendDbRegisterRequest(username, hashedPassword);
+        await sendDbRegisterRequest(username, hashedPassword);
         reply.code(200).send({ message: `The user ${username} has been registred!` });
     } catch (error) {
+        server.log.error(error);
+        server.log.error(error.message);
+        server.log.error(error.stack);
+        reply.code(500).send({ error: 'Authentication server error' });
+    }
+});
+
+server.post('/authentication/login', async (request, reply) => {
+    try {
+        const { username, password } = request.body;
+        if (!username || !password) {
+            console.log('Body received by /authentication/login:', request.body);
+            return reply.code(400).send({ error: 'Invalid argument(s)!' });
+        }
+
+        await sendDbLoginRequest(username, password);
+        reply.code(200).send({ message: `The user ${username} is connected!` });
+    } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
         server.log.error(error.stack);

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import argon2 from 'argon2';
 import Fastify from 'fastify';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
@@ -40,7 +41,24 @@ const registerManager = async ({ username, password }, db, reply) => {
         }
     } catch (err) {
         server.log.error(err);
-        return reply.code(500).send({ error: 'Internal Database Server Error' });
+        return reply.code(500).send({ error: 'Internal Database Server Error: register' });
+    }
+}
+
+const loginManager = async ({ username, password }, db, reply) => {
+    try {
+        const user = await db.get('SELECT username, password FROM USERS WHERE username=?', username);
+
+        if (!user)
+            return reply.code(400).send({ error: "$username doesn't exist!"});
+
+        const isPasswordValid = await argon2.verify(user.password, password);
+        if (!isPasswordValid)
+            return reply.code(401).send({ error: 'Invalid password' });
+        return reply.code(201).send({ error: '$username has been logged!'});
+    } catch (err) {
+        server.log.error(err);
+        return reply.code(500).send({ error: 'Internal Database Server Error: login' });
     }
 }
 
@@ -60,6 +78,10 @@ async function main() {
         server.post('/database/register', async (request, reply) => {
             const { username, password } = request.body;
             await registerManager({ username, password }, database, reply);
+        })
+        server.post('/database/login', async (request, reply) => {
+            const { username, password } = request.body;
+            await loginManager({ username, password }, database, reply);
         })
     } catch (err) {
         console.error("Error:", err.message);
