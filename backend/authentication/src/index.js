@@ -1,26 +1,11 @@
 import cors from '@fastify/cors';
-import Fastify from 'fastify';
-import dotenv from 'dotenv';
-import argon2 from 'argon2';
 
-dotenv.config();
+import server from './server.js';
+import { config } from './config.js';
+import { encryptPassword } from './utils.js';
+import { sendDbRegisterRequest } from './register.js';
+import { sendDbLoginRequest } from './login.js';
 
-const databaseUrl = process.env.DATABASE_URL;
-const frontendUrl = process.env.FRONTEND_URL;
-const authenticationUrl = process.env.AUTHENTICATION_URL;
-const port = Number(process.env.AUTHENTICATION_PORT);
-
-if (!databaseUrl || !frontendUrl || !authenticationUrl) {
-    throw new Error("Missing one or more required env variables: DATABASE_URL, FRONTEND_URL, AUTHENTICATION_URL, GATEWAY_PORT");
-}
-
-if (isNaN(port) || port <= 0 || port > 65535) {
-    throw new Error("Invalid GATEWAY_PORT value");
-}
-// console logs
-const server = Fastify({
-    logger: true,
-});
 
 // TODO but not here
 // server.register(jwt, {
@@ -31,54 +16,6 @@ await server.register(cors, {
     origin: '*', // a modif mais pour l'instant test
     methods: ['GET', 'POST']
 });
-
-const encryptPassword = async (password) => {
-    try {
-        return await argon2.hash(password, {
-            type: argon2.argon2id,
-            memoryCost: 2 ** 16, // 64 MB
-            timeCost: 3,
-            parallelism: 1
-        });
-    } catch (error) {
-        server.log.error(error);
-        server.log.error(error.message);
-        server.log.error(error.stack);
-        reply.code(500).send({ error: 'Encryption error' });
-    }
-}
-
-const sendDbRegisterRequest = async (username, hashedPassword) => {
-    const send = await fetch(databaseUrl + '/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password: hashedPassword }),
-    });
-
-    if (!send.ok) {
-        const error = await send.text();
-        console.log('Sending to DB:', JSON.stringify({ username, password: hashedPassword }));
-        throw new Error(`Error API DB: ${error}`);
-    }
-}
-
-const sendDbLoginRequest = async (username, password) => {
-    const send = await fetch(databaseUrl + '/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-    });
-
-    if (!send.ok) {
-        const error = await send.text();
-        console.log('Sending to DB:', JSON.stringify({ username, password }));
-        throw new Error(`Error API DB: ${error}`);
-    }
-}
 
 // Manage data request
 server.post('/authentication/register', async (request, reply) => {
@@ -120,7 +57,7 @@ server.post('/authentication/login', async (request, reply) => {
 
 const start = async () => {
     try {
-        await server.listen({ port, host: '0.0.0.0' });
+        await server.listen({ port: config.port, host: '0.0.0.0' });
     } catch (err) {
         server.log.error(err);
         process.exit(1);

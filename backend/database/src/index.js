@@ -1,20 +1,12 @@
 import fs from 'fs';
-import argon2 from 'argon2';
-import Fastify from 'fastify';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import cors from '@fastify/cors';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-const port = Number(process.env.DATABASE_PORT);
-
-if (isNaN(port) || port <= 0 || port > 65535) { // Maybe restrict under 1024 ?? because need root
-    throw new Error("Invalid GATEWAY_PORT value");
-}
-
-const server = Fastify();
+import server from './server.js';
+import { config } from './config.js';
+import { loginManager } from './login.js';
+import { registerManager } from './register.js';
 
 async function initDatabase() {
     return open({
@@ -27,40 +19,6 @@ await server.register(cors, {
     origin: '*', // a modif mais pour l'instant test
     methods: ['GET', 'POST']
 });
-
-const registerManager = async ({ username, password }, db, reply) => {
-    try {
-        const user = await db.get('SELECT username FROM USERS WHERE username=?', username);
-
-        if (user)
-            return reply.code(400).send({ error: '$username already exist!'});
-        else {
-            await db.run ('INSERT INTO USERS (username, password) VALUES ($username, $password)',
-                {$username: username, $password: password});
-            return reply.code(201).send({ error: '$username has been created!'});
-        }
-    } catch (err) {
-        server.log.error(err);
-        return reply.code(500).send({ error: 'Internal Database Server Error: register' });
-    }
-}
-
-const loginManager = async ({ username, password }, db, reply) => {
-    try {
-        const user = await db.get('SELECT username, password FROM USERS WHERE username=?', username);
-
-        if (!user)
-            return reply.code(400).send({ error: "$username doesn't exist!"});
-
-        const isPasswordValid = await argon2.verify(user.password, password);
-        if (!isPasswordValid)
-            return reply.code(401).send({ error: 'Invalid password' });
-        return reply.code(201).send({ error: '$username has been logged!'});
-    } catch (err) {
-        server.log.error(err);
-        return reply.code(500).send({ error: 'Internal Database Server Error: login' });
-    }
-}
 
 async function main() {
     let database;
@@ -88,7 +46,7 @@ async function main() {
     }
 
     try {
-        await server.listen({ port, host: '0.0.0.0' });
+        await server.listen({ port: config.port, host: '0.0.0.0' });
     } catch (err) {
         server.log.error(err);
         process.exit(1);
