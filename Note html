@@ -1,24 +1,25 @@
 HTML note (https://www.youtube.com/watch?v=68oSyuKVjeU):
 
+index.html est le main.c 
 Plugin vscode "Live Server" (pour afficher en temps reel la page html a chaque save)
 autre plugin "Prettier" format. Pas utile
 https://htmlcheatsheet.com/
 dans head <link rel="shortcut icon" href="./image.png">
 <body>
     <nav>
-            UL = Unordered List
+            <!-- UL = Unordered List -->
         <ul>
             <li>Exemple de list</li>
             <li>
-                ancre qui permet d'aller sur le formulaire de notre propre page
+                <!-- ancre qui permet d'aller sur le formulaire de notre propre page -->
                 <a href="#form">Formulaire</a>
             </li>
         </ul>
     </nav>
     <header>
-        Un seul h1 par page (norme/referencement)
+        <!-- Un seul h1 par page (norme/referencement) -->
         <h1>Titre principale</h1>
-        p = paragraphe
+        <!-- p = paragraphe -->
         <p>texte classique
         <em>texte italique</em>
         <strong>texte en gras</strong>
@@ -35,76 +36,76 @@ dans head <link rel="shortcut icon" href="./image.png">
         <section>
             <h3> image html</h3>
             <img src="./exemple" height="" alt="image-error"/> modif height plutot en CSS | alt = si img error remplace par ce du texte
-            div fourre tout ou pas d'idee pour nom de balise
-            aussi fait un bloc donc tous qui est en dehors revien a la ligne
+            <!-- div fourre tout ou pas d'idee pour nom de balise -->
+            <!-- aussi fait un bloc donc tous qui est en dehors revien a la ligne -->
             <div>
                 <div> </div>
-                Tableaux
+                <!-- Tableaux -->
                 <table border="4" cellpadding="10" cellspacing="4" style="text-align: center">
-                    entete de tableau
+                    <!-- entete de tableau -->
                     <thead>
-                        creer une ligne
+                        <!-- creer une ligne -->
                         <tr>
-                            creer une colonne
+                            <!-- creer une colonne -->
                             <th></th>
                         </tr>
                     </thead>
-                    corps du tableau
+                    <!-- corps du tableau -->
                     <tbody>
                     </tbody>
                 </table>
             </div>
             <div>
                 <h5><span>Icone si i le met en italique si span en normal</span>Les liens</h5>
-                target _blank = permet de creer un nouvel onglet
+                <!-- target _blank = permet de creer un nouvel onglet -->
                 <a href="lien d'un site" target="_blank"> Nom du lien </a>
             </div>
             <div>
-                Video
+                <!-- Video -->
                 <video src="./lienvideo" height="300" autoplay muted loop></video>
             </div>
         </section>
         <section id="form">
-            Formulaire
+            <!-- Formulaire -->
             <form action="">
                 <label for="name">Nom texte</label>
-                le for est connecter a l'id et donc de connecter label a input
-                input = permet d'inscrire des donne
-                type = peut etre text nombre et autre
+                <!-- le for est connecter a l'id et donc de connecter label a input -->
+                <!-- input = permet d'inscrire des donne -->
+                <!-- type = peut etre text nombre et autre -->
                 <input type="text" id="name" placeholder="Entrez votre nom"/>
-                on peut mettre value="exemple" dans input
-                br = saut de ligne
+                <!-- on peut mettre value="exemple" dans input -->
+                <!-- br = saut de ligne -->
                 <br />
-                input de type select
+                <!-- input de type select -->
                 <label>meme chose que au dessus</label>
                 <select name="" id="">
                     <option value="1">1</option>
                     <option selected="selected" value="2">2</option>
                 </select>
-                input de type radio
-                meme type normal ca les connect ensemble
+                <!-- input de type radio -->
+                <!-- meme type normal ca les connect ensemble -->
                 <input type="radio" name="type" id="test" checked/>
                 <label for="test">Test</label>
                  <input type="radio" name="type" id="cat"/>
                 <label for="cat">Test</label>
                  <input type="radio" name="type" id="sett"/>
                 <label for="sett">Test</label>
-                --------------------------
+                <!-- _________________________ -->
                 <textarea placeholder="Feedback" cols="20" rows="5"></textarea>
-                type a cocher like condition d'utilisation
+                <!-- type a cocher like condition d'utilisation -->
                 <input type="checkbox" name="" id="">
-                bouton finir le formulaire
+                <!-- bouton finir le formulaire -->
                 <input type="submit" />
             </form>
-            meme chose que le submit met pas meme utilisation
+            <!-- meme chose que le submit met pas meme utilisation -->
             <button></button>
         </section>
     </main>
-    Mail et envoie de ficher (note de bas de page)
+    <!-- Mail et envoie de ficher (note de bas de page) -->
     <footer>
         <a href="mailto:mail@mail.com">Contactez moi</a>
         <a href="./trucatelecharger" download="Nom du ficher"> Text</a>
     </footer>
 
 </body>
-fini
+<!-- fini -->
