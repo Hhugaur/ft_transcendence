@@ -8,6 +8,7 @@ import { config } from './config.js';
 import { loginManager } from './login.js';
 import { registerManager } from './register.js';
 import { disconnectManager } from './disconnect.js';
+import { addFriendManager } from './friends.js';
 
 async function initDatabase() {
     return open({
@@ -45,6 +46,10 @@ async function main() {
         server.post('/database/disconnect', async (request, reply) => {
             const { username } = request.body;
             await disconnectManager(username, database, reply);
+        })
+        server.post('/database/friends/add', async (request, reply) => {
+            const { username, friend } = request.body;
+            await addFriendManager({ username, friend }, database, reply);
         })
     } catch (err) {
         console.error("Error:", err.message);
