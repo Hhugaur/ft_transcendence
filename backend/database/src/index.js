@@ -7,6 +7,7 @@ import server from './server.js';
 import { config } from './config.js';
 import { loginManager } from './login.js';
 import { registerManager } from './register.js';
+import { disconnectManager } from './disconnect.js';
 
 async function initDatabase() {
     return open({
@@ -40,6 +41,10 @@ async function main() {
         server.post('/database/login', async (request, reply) => {
             const { username, password } = request.body;
             await loginManager({ username, password }, database, reply);
+        })
+        server.post('/database/disconnect', async (request, reply) => {
+            const { username } = request.body;
+            await disconnectManager(username, database, reply);
         })
     } catch (err) {
         console.error("Error:", err.message);
