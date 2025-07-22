@@ -12,6 +12,9 @@ export const loginManager = async ({ username, password }, db, reply) => {
         const isPasswordValid = await argon2.verify(user.password, password);
         if (!isPasswordValid)
             return reply.code(401).send({ error: 'Invalid password' });
+        await db.run(
+            'UPDATE USERS SET status = "connected" WHERE username = $username',
+            { $username: username });
         return reply.code(201).send({ error: '$username has been logged!'});
     } catch (err) {
         server.log.error(err);
