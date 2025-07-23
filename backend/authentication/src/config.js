@@ -7,6 +7,8 @@ export const config = {
     frontendUrl: process.env.FRONTEND_URL,
     authenticationUrl: process.env.AUTHENTICATION_URL,
     port: Number(process.env.AUTHENTICATION_PORT),
+    safeUsernameSQLInjection: "/^(?!.*(--|\\/\\*|;|'|\"|#|=)).{1,20}$/",
+    safePasswordSQLInjection: "/^(?!.*(--|\\/\\*|;|'|\"|#|=)).{12,32}$/",
 };
 
 if (!config.databaseUrl || !config.frontendUrl || !config.authenticationUrl) {

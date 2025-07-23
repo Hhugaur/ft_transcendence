@@ -28,6 +28,9 @@ server.post('/authentication/register', async (request, reply) => {
             console.log('Body received by /authentication/register:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password)) {
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
+        }
         const hashedPassword = await encryptPassword(password);
 
         await sendDbRegisterRequest(username, hashedPassword);
@@ -47,6 +50,9 @@ server.post('/authentication/login', async (request, reply) => {
             console.log('Body received by /authentication/login:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password)) {
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
+        }
 
         await sendDbLoginRequest(username, password);
         reply.code(200).send({ message: `The user ${username} is connected!` });
@@ -64,6 +70,9 @@ server.post('/authentication/disconnect', async (request, reply) => {
         if (!username) {
             console.log('Body received by /authentication/disconnect:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
+        }
+        if (!config.safeUsernameSQLInjection.test(username)) {
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
         }
 
         await sendDbDisconnectRequest(username);
@@ -83,6 +92,9 @@ server.post('/authentication/friends/add', async (request, reply) => {
             console.log('Body received by /authentication/friends/add:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend)) {
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
+        }
 
         await sendDbAddFriendRequest(username, friend);
         reply.code(200).send({ message: `${username} try to add ${friend}: Success, ${friend} has been add his friend list!` });
@@ -100,6 +112,9 @@ server.post('/authentication/friends/delete', async (request, reply) => {
         if (!username || !friend) {
             console.log('Body received by /authentication/friends/delete:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
+        }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend)) {
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
         }
 
         await sendDbDeleteFriendRequest(username, friend);

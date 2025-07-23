@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS USERS (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	status TEXT CHECK(status IN ('disconnected', 'connected', 'absent')) NOT NULL DEFAULT 'disconnected',
-	username VARCHAR(45) UNIQUE NOT NULL,
+	username VARCHAR(20) UNIQUE NOT NULL,
 	password VARCHAR(128),
 	avatar BLOB,
 	ratio VARCHAR(5),
