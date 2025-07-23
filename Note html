@@ -109,3 +109,13 @@ dans head <link rel="shortcut icon" href="./image.png">
 
 </body>
 <!-- fini -->
+
+extra :
+
+<body>
+    <style>
+        body {
+            background: red;
+        }
+    </style>
+</body>
