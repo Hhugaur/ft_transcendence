@@ -6,7 +6,8 @@ import { encryptPassword } from './utils.js';
 import { sendDbRegisterRequest } from './register.js';
 import { sendDbLoginRequest } from './login.js';
 import { sendDbDisconnectRequest } from './disconnect.js';
-import { sendDbAddFriendRequest } from "./friends.js";
+import { sendDbAddFriendRequest,
+    sendDbDeleteFriendRequest } from "./friends.js";
 
 
 // TODO but not here
@@ -85,6 +86,24 @@ server.post('/authentication/friends/add', async (request, reply) => {
 
         await sendDbAddFriendRequest(username, friend);
         reply.code(200).send({ message: `${username} try to add ${friend}: Success, ${friend} has been add his friend list!` });
+    } catch(error) {
+        server.log.error(error);
+        server.log.error(error.message);
+        server.log.error(error.stack);
+        reply.code(500).send({ error: 'Authentication server error' });
+    }
+});
+
+server.post('/authentication/friends/delete', async (request, reply) => {
+    try {
+        const { username, friend } = request.body;
+        if (!username || !friend) {
+            console.log('Body received by /authentication/friends/delete:', request.body);
+            return reply.code(400).send({ error: 'Invalid argument(s)!' });
+        }
+
+        await sendDbDeleteFriendRequest(username, friend);
+        reply.code(200).send({ message: `${username} try to delete ${friend}: Success, ${friend} has been deleted from his friend list!` });
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
