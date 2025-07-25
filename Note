@@ -18,4 +18,13 @@ https://v2.tailwindcss.com/docs
 https://www.youtube.com/watch?v=30LWjhZzg50&t=30s
 https://www.youtube.com/watch?v=RMe5LYEnfy8
 
+
+
+Single-page-application note :
+
 https://fr.wikipedia.org/wiki/Application_web_monopage
+https://en.wikipedia.org/wiki/Single-page_application
+
+tout se fait dans une seul page pas de chargement ou de nouvelle page a afficher
+
+De nombreuses bibliothèques JavaScript, et notamment des bibliothèques libres, sont spécialisées dans la création d'applications web monopages, entre autres : AngularJS, Ember.js, React, Vue.js et Svelte.
