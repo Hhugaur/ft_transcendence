@@ -1,0 +1,248 @@
+Tailwind CSS note (https://www.youtube.com/watch?v=RMe5LYEnfy8):
+https://tailwindcss.com/
+comme typescript a une sorte de compilateur qui transforme le code en CSS
+pour teter la responsivite c'est de la maniere inverse on teste d'abord avec le plus petit ecran
+
+<!-- class utilitaire -->
+<!-- tailwind CSS a des class deja prefaite qui va generer -->
+https://play.tailwindcss.com/
+<p class="text-3xl">
+  Titre test 
+</p>
+
+<!-- installation -->
+https://tailwindcss.com/docs/installation/tailwind-cli
+npm init
+npm install tailwindcss @tailwindcss/cli
+<!-- compilation -->
+ <!-- le flag --watch (compile automatiquement) -->
+npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
+<!--             -->
+extension (VScode): 
+- tailwind CSS intellisense
+- (opt) Material Icon Theme
+- Live Server
+- (opt) Prettier
+
+<!--  -->
+
+-node_modules
+    |
+    -tailwindcss
+        |
+        -NaN
+-src
+    |
+    -assets
+        |
+        -images
+            |
+            -
+        |
+        -fonts
+            |
+            -
+    |
+    -css
+        |
+        -input.css
+-index.html
+-package-lock.json
+-package.json
+
+index.html :
+<!DOCTYPE html>
+<!-- injecter par js la class="dark" dans la balise la plus haute -->
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- output  car l'input va etre compiler et devenir outpu -->
+    <link href="src/css/outpu.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- mettre la video en hidden plus tot qu'en opacity-0 car ne charge pas une video hidden -->
+  <video src="./video.mp4" autoplay loop muted class="absolute -z-10object-cover w-full h-screen dark:hidden"></video>
+  <video src="./video.mp4" autoplay loop muted class="absolute -z-10object-cover w-full h-screen hidden dark:block"></video>
+  <main class="container mx-auto min-h-screen flex flex-col">
+    <!-- En-tete -->
+    <header class="flex items-center justify-between pt-5">
+      <nav>
+        <ul class="flex gap-5 text-gray-500">
+          <li>Test</li>
+          <li><a href="#" class="underline"> Boutique</a></li>
+          <li><a href="#" class="underline"> Source</a></li>
+          <li><a href="#" class="underline"> Telechargements</a></li>
+        </ul>
+      </nav>
+      <!-- -translate-y-1 le - devant le translate c'est pour les negative -->
+      <a href="#">
+        <img src="./img.png" alt="exemple" class="w-52 grayscale-100 hover:grayscale-0 duration-200 hover:-translate-y-1"/>
+      </a>
+    </header>
+    <!-- m-[] les [] c'est pour customiser la value qu'on veut utiliser -->
+    <!-- Corps -->
+    <section class="flex items-center flex-col mt-[40vh] mx-auto max-w-[550px] text-xl grow">
+        <p class="dark:text-white">
+            <span class="font-bold">Test</span> LSSSSSS
+        </p>
+        <button class="text-orange-500 text-white py-4 px-14 rounded"> Acheter</button>
+    </section>
+    <!-- fonctionnalite -->
+    <!-- commence en premier par les telephones puis par les autre taille d'ecran (pas de sm(taille d'ecran telephone)) -->
+    <!-- 1:sm > 2:md > 3:lg > 4:xl > 5:2xl -->
+    <section class ="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-5 pb-5 opacity-80 mt-32 md:mt-0">
+      <!-- fonctionnalite 1 -->
+      <div class="flex item-start gap-3">
+        <img src="logo1" alt="logo1"  class="w-14">
+        <div>
+          <h3 class="text-xl mb-1.5">Titre1</h3>
+          <div class="text-sm">Texte1</div>
+        </div>
+      </div>
+      <!-- fonctionnalite 2 -->
+      <div>
+         <div class="flex item-start gap-3">
+        <img src="logo2" alt="logo2"  class="w-14">
+        <div>
+          <h3 class="text-xl mb-1.5">Titre2</h3>
+          <div class="text-sm">Texte2</div>
+        </div>
+      </div>
+      <!-- fonctionnalite 3 -->
+      <div>
+         <div class="flex item-start gap-3">
+        <img src="logo3" alt="logo3"  class="w-14">
+        <div>
+          <h3 class="text-xl mb-1.5">Titre3</h3>
+          <div class="text-sm">Texte3</div>
+        </div>
+      </div>
+      <!-- fonctionnalite 4-->
+      <div>
+        <div class="flex item-start gap-3">
+        <img src="logo4" alt="logo4" class="w-14">
+        <div>
+          <h3 class="text-xl mb-1.5">Titre4</h3>
+          <div class="text-sm">Texte4</div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Demo -->
+  <section class="flex h-screen">
+    <!-- Description -->
+    <div class="w-1/2 flex items-center p-10">
+      <h2 class="text-5xl">Titre</h2>
+      <p class="text-xl">Texttetttttt</p>
+      <div class="flex items-end mt-10">
+        <img src="assets.png" alt="assets1" class="w-32 h-32 object-contain">
+        <div>
+          <h3 class="text-xl">Tutre</h3>
+          <div class="text-sm mt-1">
+              textetetxtetetxetxt
+          </div>
+        </div>
+      </div>
+      <div class="flex items-end mt-5">
+        <img src="assets.png" alt="assets1" class="w-32 h-32 object-contain">
+        <div>
+          <h3 class="text-xl">AUTRETIT</h3>
+          <div class="text-sm mt-1">
+              qwerqwerqwerqwer
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- video -->
+    <div class="w-1/2 relative">
+      <video src="video.mp3" autoplay loop muted class="absolute -z-10object-cover w-full h-screen"></video>
+    </div>
+  </section>
+</body>
+</html>
+
+input.css :
+https://tailwindcss.com/docs/dark-mode
+@import "tailwindcss";
+<!-- ref: CSS -->
+@import url("myspecial.font");
+<!-- customiser tailwind css -->
+
+@theme {
+  <!-- remplace orange-500 devient bleu -->
+  <!-- ajouter des classes pour tailwind CSS -->
+  --color-orange-500: blue;
+  --color-orange-550: red;
+  --color-primary: green;
+  --color-secondary: orange;
+  --breakpoint-3xl: 99rem;
+  --spacing-99: 1000rem;
+  --font-myspecial: 'myspecial', non-seris;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+<!-- mod style des elements -->
+@layer base {
+  a {
+    text-decoration: underline;
+    color: blue;
+  }
+}
+
+@layer components {
+  .btn {
+    <!-- evite d'avoir trop de chose dans les class dans le html -->
+    @apply code tailwindCSS; 
+  }
+}
+
+<!-- creer une class utilitaire -->
+
+@utility flex-centered {
+  @apply flex justify-center items-center;
+}
+
+output.css :
+<!-- tailwind css supprimer tout les param par defaut (mode preflight) -->
+
+
+
+
+  <p class="text-3xl font-bold not-italic underline text-yellow-50 bg-black mx-auto my-auto">
+    Titre test 
+  </p>
+  <!-- 
+    Empatement de la police
+    font-weight : bold -> font-semi-bold
+  -->
+  <p class="text-xl text-orange-800 bg-blue-200 p-1 m-1 ml-0 mt-10"> <span class="font-bold text-red-950">Hello</span> po lele lele</p>
+  <p class="text-xl text-orange-800 bg-blue-200 mx-12 py-4"> <span class="font-bold text-red-950">PSSS SSSS</span> qqqqqqq qqq qqqq qqqqqq qqqqqqqq</p>
+  <p class="text-2xl mt-10"><b class="p-5  bg-purple-800 rounded-2xl"> Achetez </b> </p>
+  <p class="hover:bg-blue-400 mt-10 bg-red-800 rounded-2xl px-auto py-auto m-auto text-center"> hello</p>
+  <a href="google.com" class="not-visited: text-blue-800 has-visited:text-red-700"> google </a>
+  <input type="text" class="bg-green-900 mx-auto cursor-not-allowed block text-center text-white" disabled placeholder="hello" />
+  <input type="text" class="bg-red-200 cursor-pointer block" placeholder="hello" />
+
+  <div class="flex gap-4 justify-center bg-amber-50 w-20">
+    <!-- inline-block fait la meme chose avec de gros guillemet (pour mettre cote a cote) -->
+    <div class="bg-blue-500 p-10 order-2"> </div>
+    <div class="bg-red-500 p-10 order-1"></div>
+  </div>
+<div class="flex bg-black w-[550px] min-w-4 grayscale-75">
+  <p class="text-white p-10 m-10  ">hello </p>
+  <div class="bg-blue-500 p-10 order-2"> </div>
+  <div class="bg-red-500 p-10 order-1"></div>
+</div>
+
+<div class="grid grid-cols-2 gap-4"> 
+  <div class="bg-black"></div>
+  <div class="bg-blue-900"></div>
+</div>
+<!-- responsivite -->
+https://tailwindcss.com/docs/responsive-design
+<p class="text-5xl font-bold md:text-black md:bg-black"> HELLO </p>
+
+<!-- fini -->
