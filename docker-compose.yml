@@ -1,5 +1,17 @@
 version: '3'
 services:
+  proxy-ssl:
+    build: ./proxy-ssl
+    depends_on:
+      - front
+    networks:
+      - webapp
+    ports:
+      - 443:443
+    restart: always
+    container_name: proxy-ssl
+    hostname: proxy-ssl
+    
   gateway:
     build: ./backend/gateway
     depends_on:

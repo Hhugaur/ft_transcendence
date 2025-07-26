@@ -47,8 +47,8 @@ server.register(fastifyCors, {
 // redirections
 server.register(fastifyHttpProxy, {
     upstream: databaseUrl,
-    prefix: '/database',
-    rewritePrefix: '',
+    prefix: '/api/database',
+    rewritePrefix: '/',
     replyOptions: {
         onResponse: (req, reply, res) => {
             server.log.info(`Response from Database: ${res.statusCode}`);
@@ -71,8 +71,8 @@ server.register(fastifyHttpProxy, {
 
 server.register(fastifyHttpProxy, {
     upstream: authenticationUrl,
-    prefix: '/authentication',
-    rewritePrefix: '',
+    prefix: '/api/auth',
+    rewritePrefix: '/',
     replyOptions: {
         onResponse: (req, reply, res) => {
             server.log.info(`Response from Authentication: ${res.statusCode}`);

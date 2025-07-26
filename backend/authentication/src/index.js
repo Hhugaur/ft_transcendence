@@ -21,15 +21,15 @@ await server.register(cors, {
 });
 
 // Manage data request
-server.post('/authentication/register', async (request, reply) => {
+server.post('/register', async (request, reply) => {
     try {
         const { username, password } = request.body;
         if (!username || !password) {
-            console.log('Body received by /authentication/register:', request.body);
+            console.log('Body received by /register:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
         if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
+            return reply.code(400).send({ error: 'Use of prohibited character(s) or too few characters!' })
         }
         const hashedPassword = await encryptPassword(password);
 
@@ -43,11 +43,11 @@ server.post('/authentication/register', async (request, reply) => {
     }
 });
 
-server.post('/authentication/login', async (request, reply) => {
+server.post('/login', async (request, reply) => {
     try {
         const { username, password } = request.body;
         if (!username || !password) {
-            console.log('Body received by /authentication/login:', request.body);
+            console.log('Body received by /login:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
         if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password)) {
@@ -64,11 +64,11 @@ server.post('/authentication/login', async (request, reply) => {
     }
 });
 
-server.post('/authentication/disconnect', async (request, reply) => {
+server.post('/disconnect', async (request, reply) => {
     try {
         const { username } = request.body;
         if (!username) {
-            console.log('Body received by /authentication/disconnect:', request.body);
+            console.log('Body received by /disconnect:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
         if (!config.safeUsernameSQLInjection.test(username)) {
@@ -85,11 +85,11 @@ server.post('/authentication/disconnect', async (request, reply) => {
     }
 });
 
-server.post('/authentication/friends/add', async (request, reply) => {
+server.post('/friends/add', async (request, reply) => {
     try {
         const { username, friend } = request.body;
         if (!username || !friend) {
-            console.log('Body received by /authentication/friends/add:', request.body);
+            console.log('Body received by /friends/add:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
         if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend)) {
@@ -106,11 +106,11 @@ server.post('/authentication/friends/add', async (request, reply) => {
     }
 });
 
-server.post('/authentication/friends/delete', async (request, reply) => {
+server.post('/friends/delete', async (request, reply) => {
     try {
         const { username, friend } = request.body;
         if (!username || !friend) {
-            console.log('Body received by /authentication/friends/delete:', request.body);
+            console.log('Body received by /friends/delete:', request.body);
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         }
         if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend)) {
@@ -135,6 +135,6 @@ const start = async () => {
         process.exit(1);
     }
 };
-
+console.log(server.printRoutes());
 start();
 

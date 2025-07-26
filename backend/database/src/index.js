@@ -36,23 +36,23 @@ async function main() {
     }
 
     try {
-        server.post('/database/register', async (request, reply) => {
+        server.post('/register', async (request, reply) => {
             const { username, password } = request.body;
             await registerManager({ username, password }, database, reply);
         })
-        server.post('/database/login', async (request, reply) => {
+        server.post('/login', async (request, reply) => {
             const { username, password } = request.body;
             await loginManager({ username, password }, database, reply);
         })
-        server.post('/database/disconnect', async (request, reply) => {
+        server.post('/disconnect', async (request, reply) => {
             const { username } = request.body;
             await disconnectManager(username, database, reply);
         })
-        server.post('/database/friends/add', async (request, reply) => {
+        server.post('/friends/add', async (request, reply) => {
             const { username, friend } = request.body;
             await addFriendManager({ username, friend }, database, reply);
         })
-        server.post('/database/friends/delete', async (request, reply) => {
+        server.post('/friends/delete', async (request, reply) => {
             const { username, friend } = request.body;
             await deleteFriendManager({ username, friend }, database, reply);
         })
