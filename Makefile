@@ -8,8 +8,8 @@ up:
 	docker-compose up -d --build
 
 down:
-	rm -fr .env
 	docker-compose down
+	rm -fr .env
 
 dfclean: down
 	docker system prune -af

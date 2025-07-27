@@ -7,48 +7,53 @@ dotenv.config()
 
 portNumber = process.env.WEBSOCKET_PORT
 hostIp = process.env.HOST_IP
-hostAddress = "https://#{hostIp}:5173"
+hostAddress = "http://#{hostIp}:5173"
 
-server = Fastify(
-        logger: true
-)
+server = Fastify logger: true
 
 corsObj = 
         origin: [
                 hostAddress,
-                "https://localhost:5173"
+                "http://localhost:5173"
         ]
         methods: [ "GET", "POST" ]
         credentials: true
 
-server.register(cors, corsObj)
+server.register cors, corsObj
 
-io = new Server(server.server, 
+io = new Server server.server, 
         cors: corsObj
-        path: "/my-websocket/"
-)
+        path: "/my-websocket"
 
-server.get("/health", (request, reply) ->
+server.get "/health", (request, reply) ->
         service: "websocket"
         port: portNumber
         status: "healthy"
         uptime: process.uptime()
-)
 
-io.on("connection", (socket) ->
-        console.log("a user has connected")
-        socket.on("disconnect", ->
-                console.log("a user has disconnected")
-        )
-)
+io.on "connection", (socket) ->
+        console.log "a user has connected"
+        socket.on "disconnect", ->
+                console.log "a user has disconnected"
+        socket.on "error", (err) ->
+                console.log "WebSocket error: #{err}"
+        socket.on "message", (msg) ->
+                console.log "got msg: '#{msg}' from someone"
+                socket.emit "response",
+                        status: "echo"
+                        msg: msg
 
-try
-        server.listen(
-                port: portNumber
-                host: "0.0.0.0"
-        )
-        console.log("websocket is listening on port #{portNumber}")
-        console.log("websocket hostAddress: #{hostAddress}")
-catch errr
-        server.log.error(err)
-        process.exit(1)
+
+
+start = ->
+        try
+                await server.listen
+                        port: portNumber
+                        host: "0.0.0.0"
+                console.log "websocket is listening on port #{portNumber}"
+                console.log "websocket hostAddress: #{hostAddress}"
+        catch errr
+                server.log.error err
+                process.exit 1
+
+start()
