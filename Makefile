@@ -3,10 +3,13 @@ HOST_IP := $(if $(HOST_IP),$(HOST_IP),$(shell hostname -I | cut -d' ' -f1))
 HOST_IP := $(if $(HOST_IP),$(HOST_IP),localhost)
 
 up:
-	HOST_IP=$(HOST_IP) docker-compose up -d --build
+	cat .env-template > .env
+	echo "HOST_IP=$(HOST_IP)" >> .env
+	docker-compose up -d --build
 
 down:
-	HOST_IP=$(HOST_IP) docker-compose down
+	rm -fr .env
+	docker-compose down
 
 dfclean: down
 	docker system prune -af
@@ -14,8 +17,8 @@ dfclean: down
 reload:
 	docker restart front
 
-websocket:
-	dowker restart websocket
+ws:
+	docker restart websocket
 
 re: dfclean up
 	
