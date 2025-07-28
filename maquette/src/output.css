@@ -176,6 +176,18 @@
   .-z-1 {
     z-index: calc(1 * -1);
   }
+  .-z-10 {
+    z-index: calc(10 * -1);
+  }
+  .z-0 {
+    z-index: 0;
+  }
+  .z-1 {
+    z-index: 1;
+  }
+  .z-10 {
+    z-index: 10;
+  }
   .order-1 {
     order: 1;
   }
@@ -224,11 +236,20 @@
   .mx-100 {
     margin-inline: calc(var(--spacing) * 100);
   }
+  .mx-\[25\%\] {
+    margin-inline: 25%;
+  }
   .mx-\[90\%\] {
     margin-inline: 90%;
   }
   .mx-\[90\] {
     margin-inline: 90;
+  }
+  .mx-\[100\%\] {
+    margin-inline: 100%;
+  }
+  .mx-\[100\] {
+    margin-inline: 100;
   }
   .mx-auto {
     margin-inline: auto;
@@ -453,6 +474,9 @@
   }
   .py-10 {
     padding-block: calc(var(--spacing) * 10);
+  }
+  .pl-10 {
+    padding-left: calc(var(--spacing) * 10);
   }
   .text-center {
     text-align: center;
