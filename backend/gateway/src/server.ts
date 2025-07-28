@@ -8,10 +8,11 @@ dotenv.config();
 const databaseUrl = process.env.DATABASE_URL;
 const frontendUrl = process.env.FRONTEND_URL;
 const authentificationUrl = process.env.AUTHENTIFICATION_URL;
+const websocketUrl = process.env.WEBSOCKET_URL;
 const port = Number(process.env.GATEWAY_PORT);
 
-if (!databaseUrl || !frontendUrl || !authentificationUrl || !port) {
-  throw new Error("Missing one or more required env variables: DATABASE_URL, FRONTEND_URL, AUTHENTIFICATION_URL, GATEWAY_PORT");
+if (!databaseUrl || !frontendUrl || !authentificationUrl || !websocketUrl || !port) {
+  throw new Error("Missing one or more required env variables: DATABASE_URL, FRONTEND_URL, AUTHENTIFICATION_URL, GATEWAY_PORT, WEBSOCKET_URL");
 }
 
 if (isNaN(port) || port <= 0 || port > 65535) {
@@ -32,6 +33,12 @@ server.register(fastifyCors, {
 server.register(fastifyHttpProxy, {
   upstream: databaseUrl,
   prefix: '/api/database',
+  rewritePrefix: '/',
+});
+
+server.register(fastifyHttpProxy, {
+  upstream: websocketUrl,
+  prefix: '/api/websocket',
   rewritePrefix: '/',
 });
 

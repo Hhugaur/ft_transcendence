@@ -1,53 +1,69 @@
 version: '3'
 services:
-  gateway:
-    build: ./backend/gateway
-    depends_on:
-      - front
-      - database
-      - authentification
-    env_file:
-      - .env
-    networks:
-      - webapp
-    ports:
-      - 3001:3001
-    restart: always
-    container_name: gateway
-    hostname: gateway
-
-  authentification:
-    build: ./backend/authentification
-    ports:
-      - "3002:3002"
-    networks:
-      - webapp
-    restart: always
-    container_name: authentification
-    hostname: authentification
-
   database:
     build: ./backend/database
     ports:
       - "3000:3000"
     networks:
       - webapp
-    depends_on:
-     - authentification
+    restart: always
     container_name: database
     hostname: database
+    
+  gateway:
+    build: ./backend/gateway
+    depends_on:
+      - front
+      - database
+      - authentification
+      - websocket
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3001:3001"
+    restart: always
+    container_name: gateway
+    hostname: gateway
+    
+  websocket:
+    build: ./backend/websocket
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3002:3002"
+    restart: always
+    container_name: websocket
+    hostname: websocket
     volumes:
-     - ./database:/app/database
+      - ./backend/websocket:/app
+      - /app/node_modules
+      
+  authentification:
+    build: ./backend/authentification
+    ports:
+      - "3003:3003"
+    networks:
+      - webapp
+    restart: always
+    container_name: authentification
+    hostname: authentification
 
   front:
     build: ./frontend
     networks:
       - webapp
     ports:
-      - 5000:5000
+      - "5000:5000"
     restart: always
     container_name: front
     hostname: front
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
 networks:
   webapp:
