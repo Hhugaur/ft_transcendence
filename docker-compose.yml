@@ -11,34 +11,6 @@ services:
     restart: always
     container_name: proxy-ssl
     hostname: proxy-ssl
-    
-  gateway:
-    build: ./backend/gateway
-    depends_on:
-      - front
-      - database
-      - authentication
-    env_file:
-      - .env
-    networks:
-      - webapp
-    ports:
-      - 3001:3001
-    restart: always
-    container_name: gateway
-    hostname: gateway
-
-  authentication:
-    build: ./backend/authentication
-    ports:
-      - "3002:3002"
-    env_file:
-      - .env
-    networks:
-      - webapp
-    restart: always
-    container_name: authentication
-    hostname: authentication
 
   database:
     build: ./backend/database
@@ -50,10 +22,51 @@ services:
       - webapp
     depends_on:
      - authentication
+    restart: always
     container_name: database
     hostname: database
+    
+  gateway:
+    build: ./backend/gateway
+    depends_on:
+      - front
+      - database
+      - authentification
+      - websocket
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3001:3001"
+    restart: always
+    container_name: gateway
+    hostname: gateway
+    
+  websocket:
+    build: ./backend/websocket
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3002:3002"
+    restart: always
+    container_name: websocket
+    hostname: websocket
     volumes:
-     - ./database:/app/database
+      - ./backend/websocket:/app
+      - /app/node_modules
+      
+  authentification:
+    build: ./backend/authentification
+    ports:
+      - "3003:3003"
+    networks:
+      - webapp
+    restart: always
+    container_name: authentification
+    hostname: authentification
 
   front:
     build: ./frontend
@@ -62,10 +75,13 @@ services:
     networks:
       - webapp
     ports:
-      - 5000:5000
+      - "5000:5000"
     restart: always
     container_name: front
     hostname: front
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
 networks:
   webapp:

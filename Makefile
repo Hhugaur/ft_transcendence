@@ -3,6 +3,9 @@
 # ===========================
 DB_DIR = database
 DB_FILE = $(DB_DIR)/database.sqlite
+HOST_IP := $(shell hostname -I | tr ' ' '\n' | grep '^10\.' | head -1)
+HOST_IP := $(if $(HOST_IP),$(HOST_IP),$(shell hostname -I | cut -d' ' -f1))
+HOST_IP := $(if $(HOST_IP),$(HOST_IP),localhost)
 
 # Couleurs
 GREEN = \033[0;32m
@@ -17,6 +20,8 @@ NC = \033[0m # No Color
 all: up
 
 up:
+	@cat .env-template > .env
+	@echo "HOST_IP=$(HOST_IP)" >> .env
 	@echo "$(BLUE)[INFO]$(NC) 🚀 Création du dossier base de données et fichier SQLite"
 	@mkdir -p $(DB_DIR) && touch $(DB_FILE) && chmod -R 777 $(DB_DIR)
 	@echo "$(BLUE)[INFO]$(NC) 🛠️  Construction des containers..."
@@ -30,26 +35,17 @@ down:
 	@echo "$(YELLOW)[STOP]$(NC) 🔻 Arrêt des containers..."
 	@docker-compose down
 	@echo "$(GREEN)[OK]$(NC) ✅ Containers arrêtés."
+	@rm -fr .env
 
 re: dfclean up
 
-reload:
-	@echo "$(BLUE)[INFO]$(NC) 🔄 Redémarrage du container front..."
-	@docker restart front
-	@echo "$(GREEN)[OK]$(NC) ✅ Front redémarré."
+ws:
+	docker restart websocket
 
-# ===========================
-#   CLEAN COMMANDS
-# ===========================
-fclean:
-	@echo "$(RED)[CLEAN]$(NC) 🗑 Suppression de TOUT (containers, volumes, DB)..."
-	@docker system prune -af --volumes
-	@rm -rf $(DB_DIR)
-	@echo "$(GREEN)[OK]$(NC) ✅ Nettoyage complet terminé."
-
-dfclean:
+re: dfclean up
+	
+dfclean: down
 	@echo "$(RED)[CLEAN]$(NC) 🔍 Arrêt containers + prune volumes + suppression DB"
-	@docker-compose down
 	@docker system prune -af --volumes
 	@rm -rf $(DB_DIR)
 	@echo "$(GREEN)[OK]$(NC) ✅ Nettoyage effectué."
@@ -70,4 +66,4 @@ help:
 	@echo "$(BLUE)make help$(NC)       → Affiche cette aide"
 	@echo ""
 
-.PHONY: all up down fclean dfclean reload re help
+.PHONY: all up down fclean dfclean reload re help ws
