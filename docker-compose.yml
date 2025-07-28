@@ -9,6 +9,7 @@ services:
     restart: always
     container_name: database
     hostname: database
+    
   gateway:
     build: ./backend/gateway
     depends_on:
@@ -25,6 +26,7 @@ services:
     restart: always
     container_name: gateway
     hostname: gateway
+    
   websocket:
     build: ./backend/websocket
     env_file:
@@ -39,6 +41,7 @@ services:
     volumes:
       - ./backend/websocket:/app
       - /app/node_modules
+      
   authentification:
     build: ./backend/authentification
     ports:
@@ -48,6 +51,7 @@ services:
     restart: always
     container_name: authentification
     hostname: authentification
+
   front:
     build: ./frontend
     networks:
