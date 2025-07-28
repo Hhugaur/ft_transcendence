@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS USERS (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	username VARCHAR(45) UNIQUE NOT NULL,
-	password VARCHAR(255),
+	status TEXT CHECK(status IN ('disconnected', 'connected', 'absent')) NOT NULL DEFAULT 'disconnected',
+	username VARCHAR(20) UNIQUE NOT NULL,
+	password VARCHAR(128),
 	avatar BLOB,
 	ratio VARCHAR(5),
 	win INTEGER DEFAULT 0,
@@ -19,7 +20,6 @@ CREATE TABLE IF NOT EXISTS GAMES (
 CREATE TABLE IF NOT EXISTS FRIENDS (
 	user_id INTEGER,
 	friend_id INTEGER,
-	status TEXT CHECK(status IN ('disconnected', 'connected', 'absent')) NOT NULL DEFAULT 'disconnected',
 	PRIMARY KEY (user_id, friend_id),
 	FOREIGN KEY (user_id) REFERENCES USERS(id),
 	FOREIGN KEY (friend_id) REFERENCES USERS(id)

@@ -2,18 +2,18 @@
   "name": "transcendence-gateway",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node src/server.js",
-    "start": "node src/server.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "dependencies": {
-    "fastify": "^4.24.3",
-    "@fastify/http-proxy": "^9.x.x",
     "@fastify/cors": "^8.4.0",
-    "dotenv": "^16.0.3"
+    "@fastify/jwt": "^6.1.0",
+    "argon2": "^0.43.1",
+    "dotenv": "^16.0.3",
+    "fastify": "^4.24.3"
   },
   "devDependencies": {
     "@types/node": "^18.15.11"
   },
   "type": "module"
 }
-
