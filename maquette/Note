@@ -8,12 +8,8 @@ hsl(22, 40.50%, 85.50%)
 titre :
 bitcount
 texte:
-Shadows Into Light ?
-Caveat ?
-Background color :
-Color : 
+Caveat brush
 regarde la branch de tdelage
 faire page connexion et page lie avec la connexion
-
 tsc src/script.ts --watch
 npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
