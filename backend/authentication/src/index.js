@@ -135,6 +135,6 @@ const start = async () => {
         process.exit(1);
     }
 };
-console.log(server.printRoutes());
+
 start();
 
