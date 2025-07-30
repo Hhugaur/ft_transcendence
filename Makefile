@@ -49,6 +49,7 @@ dfclean: down
 	@docker system prune -af --volumes
 	@rm -rf $(DB_DIR)
 	@echo "$(GREEN)[OK]$(NC) ✅ Nettoyage effectué."
+	@rm -rf backend/game/src/game.node
 
 # ===========================
 #   HELP

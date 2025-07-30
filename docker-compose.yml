@@ -72,6 +72,21 @@ services:
     container_name: authentication
     hostname: authentication
 
+  game:
+    build: ./backend/game
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3005:3005"
+    restart: always
+    container_name: game
+    hostname: game
+    volumes:
+      - ./backend/game:/app
+      - /app/node_modules
+
   front:
     build: ./frontend
     env_file:
