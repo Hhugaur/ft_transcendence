@@ -1,6 +1,10 @@
-import './style.css';
+import { Router } from './router';
+import { Index } from './pages/index';
+import { Test } from './pages/test';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <h1>Hello from Vite!</h1>
-`;
+const app = Router.getInstance();
 
+app.register('/', Index);
+app.register('/test', Test);
+
+app.launch();
