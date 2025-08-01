@@ -43,6 +43,12 @@ server.register(fastifyHttpProxy, {
 });
 
 server.register(fastifyHttpProxy, {
+  upstream: gameUrl,
+  prefix: '/api/game',
+  rewritePrefix: '/',
+});
+
+server.register(fastifyHttpProxy, {
   upstream: frontendUrl,
   prefix: '/front',
   rewritePrefix: '/',

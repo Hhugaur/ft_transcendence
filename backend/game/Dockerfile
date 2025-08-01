@@ -14,5 +14,5 @@ COPY . .
 
 EXPOSE 3005
 
-CMD ["bash", "/app/src/entry.sh"]
+CMD ["bash", "entry.sh"]
 
