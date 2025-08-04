@@ -1,12 +1,11 @@
 import { HTMLComponent } from '../component';
 
-export class Title extends HTMLComponent {
+export class Text extends HTMLComponent {
         public constructor() {
                 super();
         }
 
         public override make(): HTMLElement {
-                const h = document.createElement('h1');
                 this.setTextContent(h);
                 this.setClassName(h);
                 this.appendChilds(h);
