@@ -12,4 +12,3 @@ Caveat brush
 regarde la branch de tdelage
 faire page connexion et page lie avec la connexion
 npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
-
