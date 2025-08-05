@@ -1,11 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", './src/html/**/*.html'],
   theme: {
     extend: {
       spacing: {
         15: '3.75rem',
         17: '4.25rem',
+		30: '7.5rem',
+		50: '12.5rem', 
+		60: '15rem', 
         70: '17.5rem',
       },
       colors: {

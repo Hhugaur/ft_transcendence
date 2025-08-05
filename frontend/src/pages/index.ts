@@ -36,11 +36,11 @@ export const Index: PageComponent = new PageComponent(() => {
 
     // --- Game Buttons Section ---
     const gameDiv: HTMLElement = document.createElement('div');
-    gameDiv.className = 'flex flex-col text-2xl text-bg0';
+    gameDiv.className = 'flex flex-col items-center text-2xl text-bg0';
 
     // --- Classic Mode Button ---
     const buttonClassic: HTMLButtonElement = document.createElement('button');
-    buttonClassic.className = 'hover:cursor-pointer mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+    buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
     buttonClassic.textContent = 'Classique';
 
     const classicL: HTMLComponent = new Link('/game');
@@ -49,7 +49,7 @@ export const Index: PageComponent = new PageComponent(() => {
 
     // --- Tournament Mode Button ---
     const buttonTournament: HTMLButtonElement = document.createElement('button');
-    buttonTournament.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+    buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
     buttonTournament.textContent = 'Tournoi';
 
     const tournamentL: HTMLComponent = new Link('/tournament');

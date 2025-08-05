@@ -4,10 +4,12 @@ WORKDIR /app
 
 RUN npm install -D vite typescript tailwindcss postcss autoprefixer
 
-COPY package.json package-lock.json* ./
+COPY package.json .
 RUN npm install
 
 COPY . .
+
+RUN npx tailwindcss -i ./style.css -o ./dist/output.css --config ./tailwind.config.ts
 
 EXPOSE 5000
 
