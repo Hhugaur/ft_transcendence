@@ -6,19 +6,18 @@
     "build": "vite build",
     "serve": "serve -s dist"
   },
-  "dependencies": {
+	"dependencies": {
 	"@auth0/auth0-spa-js": "2.2.0",
-    "@babylonjs/core": "8.14.0",
-    "socket.io-client": "4.8.1",
-    "tailwindcss": "^3.3.2"
-  },
-  "devDependencies": {
-    "@babel/core": "7.28.0",
-    "@types/node": "20.19.4",
-    "autoprefixer": "10.4.21",
-    "postcss": "8.5.6",
-    "tailwindcss": "3.4.17",
-    "typescript": "5.8.3",
-    "vite": "7.0.0"
-  }
+	"@babylonjs/core": "8.14.0",
+	"socket.io-client": "4.8.1"
+	},
+	"devDependencies": {
+	"@babel/core": "7.28.0",
+	"@types/node": "20.19.4",
+	"autoprefixer": "10.4.21",
+	"postcss": "8.5.6",
+	"tailwindcss": "3.4.17",
+	"typescript": "5.8.3",
+	"vite": "7.0.0"
+	}
 }

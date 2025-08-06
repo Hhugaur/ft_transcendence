@@ -11,9 +11,9 @@ export const Login: PageComponent = new PageComponent(() => {
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
 	const div: HTMLElement = document.createElement('div');
-	div.className = 'bg-bg1 border-bg0 border-2 px-30 py-30 my-[12%] rounded-4xl';
+	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[12%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
-	title.className = 'text-bg0 hover:cursor-default text-4xl text-center -mt-[35%]';
+	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[35%]';
 	title.textContent = 'CONNEXION';
 	div.appendChild(title);
 	const form: HTMLFormElement = document.createElement('form');
@@ -23,7 +23,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	user.type = 'text';
 	user.placeholder = 'Username';
 	user.id = 'Username';
-	user.className = 'p-2 bg-bg0 mt-[30%] text-center';
+	user.className = 'p-2 bg-bg0 mt-[28%] text-center';
 	const pass: HTMLInputElement = document.createElement('input');
 	pass.type = 'password';
 	pass.placeholder = 'Password';
@@ -46,19 +46,21 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.appendChild(or);
 	//ici le transformer en link pour qu'il aille vers le bon endroint
 	const google: HTMLAnchorElement = document.createElement('a');
-	google.className = 'text-bg1 bg-bg0 ml-[30%]  py-1 px-5';
-	google.textContent = 'google';
+	google.className = 'text-bg1 bg-bg0 ml-[30%] py-1 px-5';
+	google.textContent = 'GOOGLE';
 	div.appendChild(google);
 	//va manquer les link pour ammener ou il faut quand mot de pass oublie et quand il faut s'inscrire
 	const buttonDiv: HTMLElement = document.createElement('div');
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
-	registerB.className = 'hover:cursor-pointer ml-50 -mr-60 underline text-sm';
+	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
 	registerB.textContent = "S'inscrire";
 	const forgotpass: HTMLElement = document.createElement('button');
-	forgotpass.className = 'hover:cursor-pointer -ml-20  underline text-sm';
+	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
 	forgotpass.textContent = 'Mot de passe oublié';
-	buttonDiv.appendChild(registerB);
+	const registerL: HTMLComponent = new Link('/register');
+	registerL.appendChild(registerB);
+	buttonDiv.appendChild(registerL.make());
 	buttonDiv.appendChild(forgotpass);
 	div.appendChild(buttonDiv);
 	root.appendChild(div);
