@@ -17,7 +17,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	const imgDiv: HTMLElement = document.createElement('div');
 	imgDiv.className = 'w-32 h-32 rounded-full bg-bg0 overflow-hidden flex items-center justify-center relative text-center text-sm -mb-[1%] ml-[15%]';
 	const imgProf: HTMLImageElement = document.createElement('img');
-	imgProf.className = 'w-full h-full object-cover absolute top-0 left-0';
+	imgProf.className = 'w-full h-full object-cover absolute top-0 left-0 text-bg0';
 	imgProf.alt = 'Image de profile';
 	imgProf.src = './test.jpg';
 	const imgSpan: HTMLSpanElement =  document.createElement('span');
@@ -27,13 +27,13 @@ export const Profile: PageComponent = new PageComponent(() => {
 	root.appendChild(imgDiv);
 	const tabDiv: HTMLElement = document.createElement('div');
 	const profDiv: HTMLElement = document.createElement('div');
-	profDiv.className = 'flex bg-bg1 border-bg0 border-8 mt-[2%] pb-[30%] ml-[1%] mr-[75%]';
+	profDiv.className = 'flex bg-bg1 border-bg0 border-8 mt-[2%] pb-[30%] ml-[2%] mr-[75%]';
 	const profP: HTMLParagraphElement = document.createElement('p');
 	profP.className = 'mx-[30%] text-bg0 mt-2 text-4xl';
 	profP.textContent = 'Profile';
 	profDiv.appendChild(profP);
 	const lFriendDiv: HTMLElement = document.createElement('div');
-	lFriendDiv.className = 'flex justify-end bg-bg1 border-bg0 border-8 ml-[80%] -mt-[33.3%] mr-[5%] pb-[30%]';
+	lFriendDiv.className = 'flex justify-end bg-bg1 border-bg0 border-8 ml-[80%] -mt-[33.3%] mr-[2%] pb-[30%]';
 	const friendP: HTMLParagraphElement = document.createElement('p');
 	friendP.className = 'mx-[30%] text-xl text-bg0 mt-2';
 	friendP.textContent = "Liste d'amie";
