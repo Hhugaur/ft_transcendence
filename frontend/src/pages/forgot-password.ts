@@ -5,8 +5,8 @@ import {
 import { Title } from '../components/title';
 import { Link } from '../components/link';
 
-export const Tournament: PageComponent = new PageComponent(() => {
+export const ForgotPassword: PageComponent = new PageComponent(() => {
 	const root: HTMLElement = document.createElement('div');
-	
+
 	return root;
 });

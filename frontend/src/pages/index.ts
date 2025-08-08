@@ -136,7 +136,6 @@ export const Index: PageComponent = new PageComponent(() => {
     return root;
 });
 
-
 /*const isLoggedIn = checkAuth(); // Replace with real auth check
 
 if (isLoggedIn) {

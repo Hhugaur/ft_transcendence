@@ -5,6 +5,16 @@ import {
 import { Title } from '../components/title';
 import { Link } from '../components/link';
 
+function createInput(type: string, placeholder: string, id: string, className: string): HTMLInputElement {
+	const input = document.createElement('input');
+	input.type = type;
+	if(placeholder)
+		input.placeholder = placeholder;
+	input.id = id;
+	input.className = className;
+	return input;
+}
+
 export const Login: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
@@ -19,37 +29,47 @@ export const Login: PageComponent = new PageComponent(() => {
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
 	//ici faudra mettre des check vu que c'est ici que va avoir le formulaire pour la connexion
-	const user: HTMLInputElement = document.createElement('input');
-	user.type = 'text';
-	user.placeholder = 'Username';
-	user.id = 'Username';
-	user.className = 'p-2 bg-bg0 mt-[28%] text-center';
-	const pass: HTMLInputElement = document.createElement('input');
-	pass.type = 'password';
-	pass.placeholder = 'Password';
-	pass.id = 'Password';
-	pass.className = 'p-2 bg-bg0 mt-2 text-center';
-	//peut etre un link ici car qunad c'est le reste est valider doit revenir sur la page principale mais 
-	//je pense que pour l'instant je vais le diriger vers la page de profile
-	const submit: HTMLInputElement = document.createElement('input');
-	submit.type = 'submit';
+	const user: HTMLInputElement = createInput('text', 'Username', 'Username', 'p-2 bg-bg0 mt-[28%] text-center');
+
+	const pass: HTMLInputElement = createInput('password', 'Password', 'Password', 'p-2 bg-bg0 mt-2 text-center');
+
+	//attendre qu'il y a ce qu'il faut pour apres le redecaler vers les bon endroits (accueil)
+	const submit: HTMLInputElement = createInput('submit', '', 'Valider', 'py-1 bg-txt1 text-bg0 text-xl mt-3 text-center rounded-sm');
 	submit.value = 'Se connecter';
-	submit.id = 'Valider';
-	submit.className = 'py-1 bg-txt1 text-bg0 text-xl mt-3 text-center rounded-sm';
 	form.appendChild(user);
 	form.appendChild(pass);
 	form.appendChild(submit);
 	div.appendChild(form);
+	
+	form.onsubmit = (e) => {
+		e.preventDefault(); // Prevent page reload
+
+		const username = user.value.trim();
+		const password = pass.value.trim();
+
+		// Basic validation
+		if (!username || !password) {
+			alert('Veuillez remplir tous les champs.');
+			return;
+		}
+
+		// Example of sending to an API
+		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })
+		// alert(`Tentative de connexion avec:\nUsername: ${username}\nPassword: ${password}`);
+	};
+
 	const or: HTMLParagraphElement = document.createElement('p');
 	or.className = 'text-bg0 text-center mt-1 mb-1';
 	or.textContent = 'or';
 	div.appendChild(or);
+
 	//ici le transformer en link pour qu'il aille vers le bon endroint
 	const google: HTMLAnchorElement = document.createElement('a');
 	google.className = 'text-bg1 bg-bg0 ml-[30%] py-1 px-5';
 	google.textContent = 'GOOGLE';
 	div.appendChild(google);
-	//va manquer les link pour ammener ou il faut quand mot de pass oublie et quand il faut s'inscrire
+
+	//va manquer le link le mot de passe oublié
 	const buttonDiv: HTMLElement = document.createElement('div');
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
@@ -58,18 +78,16 @@ export const Login: PageComponent = new PageComponent(() => {
 	const forgotpass: HTMLElement = document.createElement('button');
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
 	forgotpass.textContent = 'Mot de passe oublié';
+
 	const registerL: HTMLComponent = new Link('/register');
 	registerL.appendChild(registerB);
 	buttonDiv.appendChild(registerL.make());
 	buttonDiv.appendChild(forgotpass);
 	div.appendChild(buttonDiv);
+
 	root.appendChild(div);
 	return root;
 });
-
-/* const link: HTMLComponent = new Link('/test');
-    root.appendChild(link.make());*/
-
 
 /*form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -98,3 +116,10 @@ forgotpass.addEventListener('click', (e) => {
     console.log("Redirect to forgot password page");
 });
 */
+
+/*const forgotpassL: HTMLComponent = new Link('/forgot-password');
+const forgotpass: HTMLElement = document.createElement('button');
+forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
+forgotpass.textContent = 'Mot de passe oublié';
+forgotpassL.appendChild(forgotpass);
+buttonDiv.appendChild(forgotpassL.make()); */
