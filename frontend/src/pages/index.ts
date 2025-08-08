@@ -121,7 +121,7 @@ export const Index: PageComponent = new PageComponent(() => {
 
     // --- Title Section ---
     const titleDiv: HTMLElement = document.createElement('div');
-    titleDiv.className = 'flex flex-col items-center mx-[25%] bg-bg11 -mt-10 p-7 rounded-4xl';
+    titleDiv.className = 'flex flex-col items-center mx-[25%] bg-bg11 -mt-10 p-7 rounded-3xl';
 
     const title: HTMLParagraphElement = document.createElement('p');
     title.className = 'text-8xl hover:cursor-default font-bitcount text-bg0';

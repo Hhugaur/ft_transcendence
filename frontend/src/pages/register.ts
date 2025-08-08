@@ -24,7 +24,7 @@ export const Register: PageComponent = new PageComponent(() => {
 	const div: HTMLElement = document.createElement('div');
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[12%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
-	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[30%] -mx-5';
+	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[35%] -mx-7';
 	title.textContent = 'INSCRIPTION';
 	div.appendChild(title);
 

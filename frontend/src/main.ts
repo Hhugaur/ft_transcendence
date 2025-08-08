@@ -6,7 +6,7 @@ import { Game } from './pages/game';
 import { Tournament } from './pages/tournament';
 import { Profile } from './pages/profile';
 import { Register } from './pages/register';
-//import { ForgotPassword } from './pages/forgot-password';
+import { ForgotPassword } from './pages/forgot-password';
 
 const app = Router.getInstance();
 
@@ -16,7 +16,7 @@ app.register('/game', Game);
 app.register('/tournament', Tournament);
 app.register('/profile', Profile);
 app.register('/register', Register);
-//app.register('/forgot-password', ForgotPassword);
+app.register('/forgot-password', ForgotPassword);
 //
 
 app.launch();

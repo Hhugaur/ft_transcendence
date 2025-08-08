@@ -80,9 +80,11 @@ export const Login: PageComponent = new PageComponent(() => {
 	forgotpass.textContent = 'Mot de passe oublié';
 
 	const registerL: HTMLComponent = new Link('/register');
-	registerL.appendChild(registerB);
+	const forgotpassL: HTMLComponent = new Link('/forgot-password');
+	registerL.appendChild(registerB); 
 	buttonDiv.appendChild(registerL.make());
-	buttonDiv.appendChild(forgotpass);
+	forgotpassL.appendChild(forgotpass);
+	buttonDiv.appendChild(forgotpassL.make());
 	div.appendChild(buttonDiv);
 
 	root.appendChild(div);
