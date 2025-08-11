@@ -13,7 +13,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	
 	const htwo: HTMLHeadingElement = document.createElement('h2');
 	htwo.className = 'flex justify-center font-bitcount text-bg0 text-8xl bg-bg21 mx-[35%] mt-[2%]';
-	htwo.textContent = 'PROFIL';
+	htwo.textContent = 'PROFILE';
 	root.appendChild(htwo);
 
 	const imgDiv: HTMLElement = document.createElement('div');
@@ -40,7 +40,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	lFriendDiv.className = 'flex justify-end bg-bg1 border-bg0 border-8 ml-[80%] -mt-[33.3%] mr-[2%] pb-[30%]';
 	const friendP: HTMLParagraphElement = document.createElement('p');
 	friendP.className = 'mx-[30%] text-xl text-bg0 mt-2';
-	friendP.textContent = "Liste d'amie";
+	friendP.textContent = "Liste d'amis";
 	lFriendDiv.appendChild(friendP);
 	
 	const histDiv: HTMLElement = document.createElement('div');

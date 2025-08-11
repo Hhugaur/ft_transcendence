@@ -29,9 +29,9 @@ export const Login: PageComponent = new PageComponent(() => {
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
 	//ici faudra mettre des check vu que c'est ici que va avoir le formulaire pour la connexion
-	const user: HTMLInputElement = createInput('text', 'Username', 'Username', 'p-2 bg-bg0 mt-[28%] text-center');
+	const user: HTMLInputElement = createInput('text', 'Username', 'Username', 'p-2 bg-bg0 mt-[28%] text-center rounded-sm');
 
-	const pass: HTMLInputElement = createInput('password', 'Password', 'Password', 'p-2 bg-bg0 mt-2 text-center');
+	const pass: HTMLInputElement = createInput('password', 'Password', 'Password', 'p-2 bg-bg0 mt-2 text-center rounded-sm');
 
 	//attendre qu'il y a ce qu'il faut pour apres le redecaler vers les bon endroits (accueil)
 	const submit: HTMLInputElement = createInput('submit', '', 'Valider', 'py-1 bg-txt1 text-bg0 text-xl mt-3 text-center rounded-sm');
