@@ -35,6 +35,7 @@ services:
       - database
       - authentication
       - websocket
+      - pong
     env_file:
       - .env
     networks:
@@ -71,6 +72,18 @@ services:
     restart: always
     container_name: authentication
     hostname: authentication
+
+  pong:
+    build: ./backend/pong
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3004:3004"
+    restart: always
+    container_name: pong
+    hostname: pong
 
   front:
     build: ./frontend
