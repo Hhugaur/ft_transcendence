@@ -1,0 +1,137 @@
+
+Javascript note part 1 (https://youtu.be/Ew7KG2j8eII?t=640) :
+
+go apprendre html CSS.
+si probleme de lecture du code changer le theme de vscode
+beacoup de truc ce font comme en c (operateur et +)
+
+index.html :
+
+<head>
+    <!-- <script defer src="./index.js"> </script> -->
+</head>
+<body>
+    <!-- <script>
+        alert("pop up haut de page");
+        console.log("Message a la console");
+    </script> -->
+    <!-- le ./ n'est pas utile juste pour la precision -->
+    <!-- le fichier js doit etre lu en dernier -->
+    <script src="./index.js"> </script>
+</body>
+
+console de l'application web :
+utilise la console peut etre une maniere de detecter les problemes de syntaxe du code ou plus
+
+>alert("meme message que au dessus")
+<!-- on peut utilise la consoler pour savoir la valeur des variable -->
+>console.log(unTexte)
+
+index.js (pas d'importance pour le nom):
+
+//alert("meme truc");
+//console.log("meme truc");
+
+<!-- mettre en CamelCase si la variable a plusieur mot (norme) -->
+//let maSuperVariable = "hello";
+<!-- afficher dans la console ce que contient la variable -->
+//console.log(maSuperVariable);
+
+<!-- VARIABLE -->
+<!-- ancien maniere  de  nommer des variable en js sinon maintenant c'est let-->
+var unTexte = "voici un texte";
+//console.log(unText);
+<!-- comme un const en c -->
+const prenom = "JJ";
+<!-- comme en c on peut reassigne la value de la variable -->
+<!-- let = variable peut evoluer -->
+let unChiffre = 24;
+unChiffre = 22;
+<!-- pas de difference entre " " et ' ' pour js -->
+let string = 'je suis l\'une chaine de caractere';
+
+<!-- concatener -->
+<!-- comme en c++ on peut addition les meme type pour une variable -->
+let nouvelleChaine = "Chaine precedente : " + chaine;
+<!-- autre manier de concatene si chaine de caractre grand -->
+let autreConcatenation = `Chaine precedente : ${chaine}`
+
+<!-- Type de donnees -->
+<!-- on peut mettre les nom qu'on veut -->
+<!-- meme subtilite qu'en c sauf que y a juste let au debut et pas le type de variable -->
+let string = "string";
+let number = 1;
+let boolean = false;
+let array = ["je", "suis", 42, true];
+let object = { 
+    prenom: "prenom",
+    age: 0,
+    ville: "ville"
+};
+<!-- variable sans valeur -->
+let abre;
+<!-- c -->
+arbre = "sapin";
+
+<!-- operateur -->
+console.log(1 + 1);
+console.log(2 - 2);
+console.log(3 / 3);
+console.log(4 * 4);
+<!-- puissance -->
+console.log(5 ** 5);
+
+<!-- operateur d'affectation -->
+let total = 0;
+
+total = total + 1;
+<!-- c -->
+total++;
+total += 5;
+total *= 2;
+
+<!-- structure de controle -->
+let x = 2;
+let y = 5;
+<!-- peut se faire avec accoladde comme en c -->
+if(x > y) alert("Yes x plus que y");
+<!-- c -->
+else 
+{
+    alert("Y plus grand");
+}
+<!-- l'egalite pour le type ET le contenu en js -->
+<!-- x = 2 y = "2" alors le if est false donc passe au suivant -->
+<!-- x = 2 y = 2 alors le if est true -->
+if(x === y)
+<!-- l'egalite de valeur sans prend en compte le type -->
+<!-- x = 2 y = "2" alors if est true donc fait ce qu'il  a l'interieur -->
+<!-- x = 2 y = 2 alors le if est true -->
+if(x == y)
+<!-- c -->
+if (x < 1 || y > 1)
+if(x < 1 && y > 1)
+
+<!-- fonction -->
+<!-- fonction classique (ancienne version) -->
+function fonction()
+{
+    <!-- truc dans une fonction -->
+}
+<!-- c -->
+fonction();
+<!-- fonction flechee (version moderne)-->
+<!-- => veut dire que c'est une fonction -->
+const addition = (a, b) =>
+{
+    console.log(a + b)
+}
+
+<!-- la portee des variables -->
+function add2()
+{
+    let a = 4;
+    return a + 2;
+}
+
+<!-- fini part 1 -->

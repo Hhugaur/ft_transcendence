@@ -21,8 +21,10 @@ export class Router {
         public warp(path: string, push: boolean = true): void {
                 const route = this.routes.find(r => r.getPath() === path);
                 if(!route) {
-                        console.warn("unable to find path ${path} returning to home");
-                        this.warp('/');
+						//modif 01/08
+                        console.warn(`unable to find path ${path} returning to home`);
+						if (path !== '/') this.warp('/');
+						return;
                 }
                 if(push) window.history.pushState(null, '', path);
                 const page: HTMLElement = route.make();

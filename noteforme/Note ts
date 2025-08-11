@@ -1,0 +1,571 @@
+Typescript note (https://youtu.be/30LWjhZzg50?t=921):
+
+Typescript englobe javascript avec un processs typesafe. C'est un peu un genre de C++ pour C en gros typescript c'est du javascript avec des truc en plus.
+
+TYpescript is for static checking et ca definition est que l'ide pourra me dire si il y a une erreur comparer a javascript.
+
+Pour installer Typescript 15:25 parle de react et d'un autre truc qui ont besoin d'un fichier cfg
+
+        <!-- Part 1 -->
+<!-- installation de type script -->
+https://www.typescriptlang.org/download/
+    npm install -g typescript
+check si node estt installer (>node -v)
+donner acces a la commande tsc qui permettra d'exec typescript file
+
+intro.ts :
+
+let user = {name : "jjjj", age: 10};
+
+console.log("jjjj");
+console.log(user.name);
+
+
+<!-- il (24:25) est entrain de compiler le fichier avec tsc (comme en c) car ce n'est pas du ts qu'on a mis dans le fichier-->
+<!-- a la fin ca a creer un fichier js qui a le meme contenue -->
+<!-- il explique que ts est juste un dev tool qui entoure js -->
+<!-- commen en c quand on compile donner les erreur trouver (tout le fameux typesafe pour ts) -->
+https://www.typescriptlang.org/play/
+<!-- ce lien au dessus sert a creer un fichier de cfg -->
+
+<!-- Part 2 -->
+<!-- type -->
+https://www.typescriptlang.org/docs/handbook/type-compatibility.html#any-unknown-object-void-undefined-null-and-never-assignability
+ number | string | boolean
+ null | undefined | void 
+ Object | Array | Tuples | ....
+ any | never | unknow
+<!-- eviter d'utiliser any -->
+
+let varName: type = value;
+
+variableMe.ts :
+
+<!-- c and C++-->
+let greetings: string;
+string = "Hello";
+<!-- error on greetings; -->
+<!-- comme en C++ fonction rattacher au type -->
+greetings.toUpperCase();
+export{};
+
+<!-- part 2 suite -->
+
+number is for numbers like 42. JavaScript does not have a special runtime value for integers,
+so there’s no equivalent to int or float - everything is simply number
+
+variableMe.ts :
+
+<!-- number -->
+let userId: number = 334455;
+<!-- exemple -->
+userId.toString();
+
+<!-- boolean -->
+let isLoggedIn: boolean  = false;
+isLoggedIn.valueOf();
+
+<!-- exemple (comme en js)-->
+<!-- choix entre preciser et sans preciser le type -->
+let userId = 5656;
+
+<!-- part 2 suite -->
+
+<!-- any -->
+
+variable.ts :
+<!-- dans la video il met pas de semicolon ; -->
+
+<!-- en gros la cas de any c'est quand la variable n'as rien d'assigner et pour eviter un cas ou lui donner une mauvaise valeur sa casse  -->
+<!-- on assigne le type (style ts) avec les : type donc le cas ou on besoin de : type compare au reste ou c'est redundant-->
+let hero: string;
+
+function getHero() 
+{
+    return "thor";
+}
+
+hero = getHero();
+
+export{};
+
+When you don’t specify a type, and TypeScript can’t infer it from context, the compiler will typically default to any.
+You usually want to avoid this, though, because any isn’t type-checked.
+Use the compiler flag noImplicitAny to flag any implicit any as an error.
+
+<!-- part 3 -->
+<!-- function -->
+
+myfunctions.ts :
+
+<!-- je precise le type pour eviter des cas d'erreur pour la var et la funct-->
+function addTwo(num: number): number
+{
+   return num + 2;
+   //return "str"
+}
+
+function getUpper(val: string)
+{
+    return val.toUpperCase();
+}
+
+function sighUpUser(name: string, email: string, isPaid: boolean)
+{}
+<!-- on peut assigner des valeur dans les parenthe va etre diffrement quand se fera compiler en js -->
+let loginUser = (name: string, email: string, isPaid: boolean = false) =>
+{}
+
+let myValie = addTwo(5);
+getUpper("hello");
+
+signUpUser("", "", false);
+loginUser("h", "h@h.com");
+
+export {};
+
+<!-- part 3 suite -->
+
+myfunction.ts :
+
+<!-- exempl -->
+/*function getValue(myVal: number)
+{ 
+    if(myVal > 5)
+        return true;
+    return "200 ok"
+}*/
+
+<!-- c -->
+const getHello = (s: string): string => 
+{
+    return "";
+}
+
+const heros = ["thor", "spiderman", "ironman"];
+//const heros = [1, 2, 3];
+
+heros.map((hero): string => {
+    return `hero is ${hero}`;
+});
+
+<!-- good pratice in ts precise what type -->
+function consoleError(errmsg: string): void
+{
+    console.log(errmsg);
+}
+
+https://www.typescriptlang.org/docs/handbook/2/functions.html#never
+The never type represents values which are never observed. In a return type, 
+this means that the function throws an exception or terminates execution of the program.
+
+function handleError(errmsg: string): never
+{
+    throw new Error(errmsg);
+}
+
+export{}
+
+<!-- part 4 -->
+<!-- bad behavior -->
+
+myObjects.ts :
+
+const User = 
+{
+    name: "lll",
+    email: "dfd@sd.c",
+    isActive: true
+};
+
+function createUser({name: string, isPaid: boolean})
+{
+
+}
+
+let newUser = {name: 'as', isPaid: false, email: "@"}; 
+<!-- ne se fait pas detecter qu'il y a un truc en trop -->
+createUser(newUser);
+
+<!-- {} = object -->
+function createCourse(): {name: string, price: number}
+{
+    return{name: "re", price: 1};
+}
+
+<!-- type aliases -->
+https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
+<!-- on ne defini pas la valeur mais le type -->
+type User = {
+    name: string;
+    email: string;
+    isActive: boolean
+}
+
+function createUser(user: User): User
+{
+    return {name: "as", email: "@", isActive: false}
+}
+
+createUser({name: "as", email: "@", isActive: false});
+
+<!-- suite -->
+
+type User = {
+    <!-- readonly keyword -->
+    readonly _id: string
+    name: string;
+    email: string;
+    isActive: boolean,
+    <!-- ? keyword -->
+    credcardDetails?: number
+}
+
+let myUser: User = {
+    _id: "qwe",
+    name: "h",
+    email: "h@",
+    isActive: false
+}
+
+type cardNumber = {
+    cardnumber: string
+}
+
+type carDatre = {
+    cardDat: string
+}
+
+<!-- combine &  il existe d'autre signe comme _ -->
+type cardDetails = cardNumber & cardDate & {
+    cvv: number
+}
+
+
+
+myUser.email = "h@gggg";
+
+
+export {};
+
+<!-- part skip -->
+ https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays
+ <!-- j'ai skip la partie sur les array -->
+
+<!-- part 4 -->
+<!-- union -->
+https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types
+<!-- pas abuser -->
+let score: number | string = 33;
+score = 44;
+score= "55";
+
+type User = {
+    name: string;
+    id: number
+}
+
+type Admin = {
+    username: string;
+    id: number
+}
+
+let hh: User | Admin = {name: "hh", id: 234}
+hitesh = {username: "hc", id:234}
+
+function getDbId(id: number | string)
+{
+    <!-- API calls -->
+    console.log(`DB id is ${id}`);
+}
+getDbId(3);
+getDbId("4");
+
+function getDbId(id: number | string)
+{
+    <!-- check si id est bien un string car je dit qui peut etre soit un numb soit un str-->
+    if(typeof id === "string")
+        id.toLowerCase();
+}
+
+const data: number[] = [1, 2, 3];
+const data2: string[] = ["1", "2", "3"];
+<!-- case specifique timer 2:02:00 -->
+const data3: (number | string)[] = [1, "2", 3];
+
+<!-- literal assignament typ -->
+let pi:3.14 = 3.14
+<!-- exemple -->
+let seatAllotment: "aisle" | "middle" | "window";
+seatAllotment = "aisle";
+//setAllotment = "crew";
+
+<!-- part skip -->
+ <!-- tuples -->
+https://stackoverflow.com/questions/64069552/typescript-array-push-method-cant-catch-a-tuple-type-of-the-array
+
+
+<!-- part skip -->
+ <!-- enum commee en C -->
+
+<!-- part 5 -->
+<!-- interface -->
+https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces
+
+<!-- similaire a type -->
+<!-- ref lig 212 -->
+interface User {
+    //function: () => string
+    function(): string
+    getCoupon(couponname: string): number
+}
+interface User {
+    more: string;
+}
+
+<!-- extend keyword -->
+<!-- heritage -->
+interface Admin extends User {
+    role: "" | "" | "";
+}
+const str: User = {... , more};
+
+function: () => {
+    return string
+}
+<!-- utilite de l'interface compare au type -->
+
+
+<!-- c -->
+getCoupon: (name: "str") => {
+    return 10
+}
+
+<!-- part skip -->
+<!-- setup ts -->
+<!-- pour le html ref Note js pt 1 ou 2 -->
+<!-- dans tous les cas le ts deviendra forcement du js a la fin -->
+2:39:30 <> 2:53:50
+tsc --init
+
+<!-- part 6 -->
+<!-- class -->
+https://www.typescriptlang.org/docs/handbook/2/classes.html
+<!-- c++ -->
+class User 
+{
+    public _email: string 
+    private _name: string
+    city: string = "str"
+    constructor(email: string, name: string){
+        this._email = email;
+        this._name = name;
+    }
+}
+
+class User 
+{
+    private _iddd = 1;
+
+    readonly city: string = "str"
+    constructor(
+        public email: string, 
+        public name: string
+        //private userId: string
+        ){
+    }
+    <!-- getteur et setteur -->
+    get getEmail() : string{
+        return `email${this.email}`
+    }
+    
+    get getIdddd(): number{
+        return this._iddd
+    }
+    <!-- nothing can be returned with a setter -->
+    set setIddd(iddd) {
+        if(iddd <= 1){
+            throw new Error("")
+        }
+        else
+            this._iddd = iddd
+    }
+    protected _str: string = "default"
+    <!-- comme du C++ le protected c'est pour l'heritage -->
+}
+
+class SubUser extends User
+{
+    changeStr(str: string){
+        this._str = str;
+    }
+}
+<!-- comme du c++ -->
+
+<!-- part interface -->
+<!-- skip 3:22:00 -->
+interface TakePhoto {
+    <!--  -->
+}
+
+class Insta implements TakePhoto {
+    constructor(
+        <!--  -->
+    ) {}
+}
+
+<!-- abstract class -->
+<!-- skip c++ -->
+Abstract class TakePhoto {
+    
+    constructor( 
+        <!--  -->
+    ){}
+    
+}
+class Instagram extends TakePhoto {
+
+}
+
+<!-- part generic -->
+https://www.typescriptlang.org/docs/handbook/2/generics.html
+<!-- sorte de template -->
+<!-- utilise type plutot que any -->
+<!-- type comme les template en c++ sera le type a la compilation -->
+function loggingIdentity<Type>(arg: Type[]): Type[] {
+  console.log(arg.length);
+  return arg;
+}
+<!-- ou -->
+let output = identity<string>("myString");
+<!-- les deux fonctionne -->
+let output = identity("myString");
+
+<!-- le <T> comme une declaration de template en C++ -->
+function getSearchProducts<T>(products: T[]): T{
+    return products[]
+}
+<!-- 3:55:00 parle de pourquoi la virgule ici -->
+const getMore = <T,>(products: T[]): T => {
+    return products[]
+}
+
+https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints
+function anoFunc<T, U extends number>(val:T, str:U): object {
+    return{
+        val,
+        str
+    }
+}
+anoFunc(3, 4)
+<!-- skip -->
+
+<!-- part Type Narrowing -->
+https://www.typescriptlang.org/docs/handbook/2/narrowing.html
+
+function provideId(id: string | null)
+{
+    if (!id)
+    {
+        return
+    }
+    id.toLowerCase()
+}
+
+<!-- in narrowing -->
+https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-in-operator-narrowing
+
+interface test {
+    sssss: number
+}
+
+interface pas 
+{
+    str: string
+}
+
+function isAdmin(account: test | pas)
+{
+    if("str" in account)
+    {
+        return account.str
+    }
+}
+
+<!-- Instanceof and type Predicates -->
+https://www.typescriptlang.org/docs/handbook/2/narrowing.html#instanceof-narrowing
+https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
+
+function ststts(x: test | pas) {
+    if(x instanceof test)
+        x.exemple()
+    else
+        x.anotherexemple()
+}
+
+type Fish = {swim: () => void}
+type Bird = {fly: () => void}
+
+<!-- if true return Fish grace a : pet is Fish -->
+function isFish(pet: Fish | Bird): pet is Fish{
+    <!-- boolean -->
+  return (pet as Fish).swim !== undefined;
+}
+
+
+function getFood(pet: Fish | Bird): pet is Fish {
+    if(isFish(pet)) {
+        pet 
+        return "fish food"
+    }
+    else
+    {
+        pet
+        return "bird food"
+    }
+}
+
+<!-- Discrimitated Union and Exhaustivenss CHecking with never -->
+https://www.typescriptlang.org/docs/handbook/2/narrowing.html#assertion-functions
+https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
+
+interface Circle {
+    kind: "circle",
+    radius: number
+}
+
+interface Square {
+    kind:"square"
+    side: number
+}
+
+interface Rectangle {
+    kind: "rectangle",
+    length: number,
+    width: number
+}
+
+type Shape = Circle | Square | Rectangle
+
+function getTrueShape(shape: Shape){
+    if(shape.kind === "circle")
+        return Math.Pi * shape.radius ** 2
+    return shape.side * shape.side
+}
+
+
+function getArea(shape: Shape){
+    switch(shape.kind)
+    {
+        case "circle":
+            return
+        case "square":
+            return
+            <!-- futurproof  lorrs de la compilation dira si quelque chose est ajoute comme la avec rectangle et donnera une erreur-->
+        default:
+            const _default: never = shape;
+            return _default
+    }
+}
+
+<!-- fini -->
