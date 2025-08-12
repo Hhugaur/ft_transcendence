@@ -19,10 +19,19 @@ function createInput(type: string, placeholder: string, id: string, className: s
 export const Register: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
+	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
+	
+	const back: HTMLComponent = new Link ('/');
+	const buttonback: HTMLElement = document.createElement('button');
+	buttonback.className = 'underline ml-[5%] text-bg0';
+	buttonback.textContent = 'retour';
+	back.appendChild(buttonback);
+	main.appendChild(back.make());
+	
 	const div: HTMLElement = document.createElement('div');
-	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[12%] rounded-3xl';
+	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
 	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[35%] -mx-7';
 	title.textContent = 'INSCRIPTION';
@@ -79,6 +88,6 @@ export const Register: PageComponent = new PageComponent(() => {
 	div.appendChild(google);
 
 	root.appendChild(div);
-
-	return root;
+	main.appendChild(root);
+	return main;
 });

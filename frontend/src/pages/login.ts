@@ -18,10 +18,19 @@ function createInput(type: string, placeholder: string, id: string, className: s
 export const Login: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
+	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
+
+	const back: HTMLComponent = new Link ('/');
+	const buttonback: HTMLElement = document.createElement('button');
+	buttonback.className = 'underline ml-[5%] text-bg0';
+	buttonback.textContent = 'retour';
+	back.appendChild(buttonback);
+	main.appendChild(back.make());
+
 	const div: HTMLElement = document.createElement('div');
-	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[12%] rounded-3xl';
+	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
 	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[35%]';
 	title.textContent = 'CONNEXION';
@@ -33,11 +42,30 @@ export const Login: PageComponent = new PageComponent(() => {
 
 	const pass: HTMLInputElement = createInput('password', 'Password', 'Password', 'p-2 bg-bg0 mt-2 text-center rounded-sm');
 
+
+	// Create a container to hold password input + toggle button side by side
+	const toggleBtn: HTMLButtonElement = document.createElement('button');
+	toggleBtn.type = 'button';
+	toggleBtn.textContent = 'Afficher';
+	toggleBtn.className = 'ml-2 text-sm text-txt1 underline whitespace-nowrap w-[70px] overflow-hidden text-center -mr-10';
+
+	// Container for both input and button
+	const passRow = document.createElement('div');
+	passRow.className = 'flex items-center mt-2'; // Flex layout
+	passRow.appendChild(pass);
+	passRow.appendChild(toggleBtn);
+
+	// Toggle logic
+	toggleBtn.addEventListener('click', () => {
+		pass.type = pass.type === 'password' ? 'text' : 'password';
+		toggleBtn.textContent = pass.type === 'password' ? 'Afficher' : 'Masquer';
+	});
+
 	//attendre qu'il y a ce qu'il faut pour apres le redecaler vers les bon endroits (accueil)
 	const submit: HTMLInputElement = createInput('submit', '', 'Valider', 'py-1 bg-txt1 text-bg0 text-xl mt-3 text-center rounded-sm');
 	submit.value = 'Se connecter';
 	form.appendChild(user);
-	form.appendChild(pass);
+	form.appendChild(passRow);
 	form.appendChild(submit);
 	div.appendChild(form);
 	
@@ -88,7 +116,8 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.appendChild(buttonDiv);
 
 	root.appendChild(div);
-	return root;
+	main.appendChild(root);
+	return main;
 });
 
 /*form.addEventListener('submit', (e) => {

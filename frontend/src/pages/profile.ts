@@ -5,14 +5,48 @@ import {
 import { Title } from '../components/title';
 import { Link } from '../components/link';
 
+
+function createInput(type: string, placeholder: string, id: string, className: string): HTMLInputElement {
+	const input = document.createElement('input');
+	input.type = type;
+	if(placeholder)
+		input.placeholder = placeholder;
+	input.id = id;
+	input.className = className;
+	return input;
+}
+
+function createLabeledInput(type: string, id: string, labelText: string, inputClass: string): HTMLElement {
+  const container = document.createElement('div');
+  container.className = 'flex flex-col items-start w-64';
+
+  const label = document.createElement('label');
+  label.htmlFor = id;
+  label.textContent = labelText;
+  label.className = 'text-bg0 mb-1 ml-1'; // Styling for label
+
+  const input = createInput(type, id, labelText, inputClass);
+  container.appendChild(label);
+  container.appendChild(input);
+
+  return container;
+}
+
 export const Profile: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'font-CaveatBrush';
 	
+	const back: HTMLComponent = new Link ('/');
+	const buttonback: HTMLElement = document.createElement('button');
+	buttonback.className = 'underline ml-[5%] text-bg0';
+	buttonback.textContent = 'retour';
+	back.appendChild(buttonback);
+	root.appendChild(back.make());
+
 	const htwo: HTMLHeadingElement = document.createElement('h2');
-	htwo.className = 'flex justify-center font-bitcount text-bg0 text-8xl bg-bg21 mx-[35%] mt-[2%]';
+	htwo.className = 'flex justify-center font-bitcount text-bg0 text-8xl bg-bg21 mx-[35%] mt-[1%]';
 	htwo.textContent = 'PROFILE';
 	root.appendChild(htwo);
 
@@ -29,30 +63,42 @@ export const Profile: PageComponent = new PageComponent(() => {
 	root.appendChild(imgDiv);
 	
 	const tabDiv: HTMLElement = document.createElement('div');
+	tabDiv.className = 'grid grid-cols-3 gap-8 mt-[2%] mx-[1%]';
+
 	const profDiv: HTMLElement = document.createElement('div');
-	profDiv.className = 'flex bg-bg1 border-bg0 border-8 mt-[2%] pb-[30%] ml-[2%] mr-[75%]';
+	profDiv.className = 'col-span-1 grid gap-4 bg-bg1 border-bg0 border-8 mr-[10%] pb-[70%]';
 	const profP: HTMLParagraphElement = document.createElement('p');
-	profP.className = 'mx-[30%] text-bg0 mt-2 text-4xl';
+	profP.className = 'text-center text-bg0 mt-3 text-4xl';
 	profP.textContent = 'Profile';
+	const userInput = createLabeledInput(
+	'text', 'Username', 'Username :',
+	'p-2 w-full bg-bg0 text-center rounded-sm ml-1'
+	);
+	const passInput = createLabeledInput(
+	'password', 'Password', 'Password : ',
+	'p-2 w-full bg-bg0 text-center rounded-sm ml-1'
+	);
 	profDiv.appendChild(profP);
-	
+	profDiv.appendChild(userInput);
+	profDiv.appendChild(passInput);
+
+	const histDiv: HTMLElement = document.createElement('div');
+	histDiv.className = 'col-span-1 bg-bg1 border-bg0 border-8 -mx-[9%]';
+	const histP: HTMLParagraphElement = document.createElement('p');
+	histP.className = 'text-center text-4xl text-bg0 mt-3';
+	histP.textContent = "Historique de partie";
+
 	const lFriendDiv: HTMLElement = document.createElement('div');
-	lFriendDiv.className = 'flex justify-end bg-bg1 border-bg0 border-8 ml-[80%] -mt-[33.3%] mr-[2%] pb-[30%]';
+	lFriendDiv.className = 'col-span-1 bg-bg1 border-bg0 border-8 ml-[10%]';
 	const friendP: HTMLParagraphElement = document.createElement('p');
-	friendP.className = 'mx-[30%] text-xl text-bg0 mt-2';
+	friendP.className = 'text-center text-4xl text-bg0 mt-3';
 	friendP.textContent = "Liste d'amis";
 	lFriendDiv.appendChild(friendP);
 	
-	const histDiv: HTMLElement = document.createElement('div');
-	histDiv.className = 'flex justify-center bg-bg1 border-bg0 border-8 ml-[30%] mr-[25%] -mt-[32.7%] pb-[30%]';
-	const histP: HTMLParagraphElement = document.createElement('p');
-	histP.className = 'mx-[30%] text-4xl text-bg0 mt-2';
-	histP.textContent = "Historique de partie";
-	
 	histDiv.appendChild(histP);
 	tabDiv.appendChild(profDiv);
-	tabDiv.appendChild(lFriendDiv);
 	tabDiv.appendChild(histDiv);
+	tabDiv.appendChild(lFriendDiv);
 	
 	root.appendChild(tabDiv);
 	return root;
