@@ -4,16 +4,7 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link } from '../components/link';
-
-function createInput(type: string, placeholder: string, id: string, className: string): HTMLInputElement {
-	const input = document.createElement('input');
-	input.type = type;
-	if(placeholder)
-		input.placeholder = placeholder;
-	input.id = id;
-	input.className = className;
-	return input;
-}
+import { createInput, createLabeledInput } from '../components/input';
 
 export const Login: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');

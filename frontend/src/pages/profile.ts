@@ -4,33 +4,8 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link } from '../components/link';
-
-
-function createInput(type: string, placeholder: string, id: string, className: string): HTMLInputElement {
-	const input = document.createElement('input');
-	input.type = type;
-	if(placeholder)
-		input.placeholder = placeholder;
-	input.id = id;
-	input.className = className;
-	return input;
-}
-
-function createLabeledInput(type: string, id: string, labelText: string, inputClass: string): HTMLElement {
-  const container = document.createElement('div');
-  container.className = 'flex flex-col items-start w-64';
-
-  const label = document.createElement('label');
-  label.htmlFor = id;
-  label.textContent = labelText;
-  label.className = 'text-bg0 mb-1 ml-1'; // Styling for label
-
-  const input = createInput(type, id, labelText, inputClass);
-  container.appendChild(label);
-  container.appendChild(input);
-
-  return container;
-}
+import { createMatchItem, Match } from '../components/matchHistory';
+import { createInput, createLabeledInput } from '../components/input';
 
 export const Profile: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
@@ -66,7 +41,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	tabDiv.className = 'grid grid-cols-3 gap-8 mt-[2%] mx-[1%]';
 
 	const profDiv: HTMLElement = document.createElement('div');
-	profDiv.className = 'col-span-1 grid gap-4 bg-bg1 border-bg0 border-8 mr-[10%] pb-[70%]';
+	profDiv.className = 'col-span-1 grid gap-4 bg-bg1 border-bg0 border-8 mr-[10%] pb-[50%]';
 	const profP: HTMLParagraphElement = document.createElement('p');
 	profP.className = 'text-center text-bg0 mt-3 text-4xl';
 	profP.textContent = 'Profile';
@@ -78,24 +53,57 @@ export const Profile: PageComponent = new PageComponent(() => {
 	'password', 'Password', 'Password : ',
 	'p-2 w-full bg-bg0 text-center rounded-sm ml-1'
 	);
+	const winratetxt: HTMLElement = document.createElement('p');
+	winratetxt.className = 'text-bg0 ml-1';
+	winratetxt.textContent = 'Winrate :';
+	//creation d'une fonctionne qui donne la value de winrate si c'est en dessous de 50 sa sera en txt-txt1
+	const winrate: HTMLElement = document.createElement('p');
+	winrate.className = 'ml-1 text-txt0 bg-bg0 mr-[50%] text-center -mt-2';
+	winrate.textContent = '55%';
+
 	profDiv.appendChild(profP);
 	profDiv.appendChild(userInput);
 	profDiv.appendChild(passInput);
+	profDiv.appendChild(winratetxt);
+	profDiv.appendChild(winrate);
 
 	const histDiv: HTMLElement = document.createElement('div');
-	histDiv.className = 'col-span-1 bg-bg1 border-bg0 border-8 -mx-[9%]';
+	histDiv.className = 'col-span-1 grid bg-bg1 border-bg0 border-8 -mx-[9%]';
+
 	const histP: HTMLParagraphElement = document.createElement('p');
 	histP.className = 'text-center text-4xl text-bg0 mt-3';
 	histP.textContent = "Historique de partie";
+
+	// Example mock data
+	//max 7 match a afficher 
+	const matchData: Match[] = [
+		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
+		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
+		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
+		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
+		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
+		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
+		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
+	];
+
+	histDiv.appendChild(histP);
+
+	// Add each match as a collapsible item
+	matchData.forEach(match => {
+		const matchItem = createMatchItem(match);
+		histDiv.appendChild(matchItem);
+	});
 
 	const lFriendDiv: HTMLElement = document.createElement('div');
 	lFriendDiv.className = 'col-span-1 bg-bg1 border-bg0 border-8 ml-[10%]';
 	const friendP: HTMLParagraphElement = document.createElement('p');
 	friendP.className = 'text-center text-4xl text-bg0 mt-3';
 	friendP.textContent = "Liste d'amis";
+	const searchfriend: HTMLInputElement = createInput('text', 'chercher un ami', 'friendid', 'ml-1 mt-2');
 	lFriendDiv.appendChild(friendP);
+	lFriendDiv.appendChild(searchfriend);
 	
-	histDiv.appendChild(histP);
+
 	tabDiv.appendChild(profDiv);
 	tabDiv.appendChild(histDiv);
 	tabDiv.appendChild(lFriendDiv);
