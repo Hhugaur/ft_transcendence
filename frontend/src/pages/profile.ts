@@ -5,7 +5,57 @@ import {
 import { Title } from '../components/title';
 import { Link } from '../components/link';
 import { createMatchItem, Match } from '../components/matchHistory';
-import { createInput, createLabeledInput } from '../components/input';
+import { createInput, createLabeledInput, createEditableField } from '../components/input';
+
+function createFriendItem(friendName: string): HTMLElement {
+	const container = document.createElement('div');
+	container.className = 'flex items-center justify-between bg-txt1 p-2 mx-2 my-1 rounded shadow';
+
+	// Nom de l'ami
+	const name = document.createElement('p');
+	name.className = 'text-bg0 font-bold';
+	name.textContent = friendName;
+	container.appendChild(name);
+
+	// Conteneur des boutons
+	const buttonContainer = document.createElement('div');
+	buttonContainer.className = 'flex space-x-2';
+
+	// Bouton "Voir profil"
+	const profileBtn = document.createElement('button');
+	profileBtn.className = 'bg-bg0 text-txt0 px-2 py-1 rounded hover:bg-bg2 transition';
+	profileBtn.textContent = 'Profil';
+	profileBtn.onclick = () => {
+		// À remplacer par la logique réelle
+		console.log(`Voir profil de ${friendName}`);
+		// window.location.href = `/profile/${friendName}`; (exemple)
+	};
+
+	// Bouton "Demander match"
+	const challengeBtn = document.createElement('button');
+	challengeBtn.className = 'bg-bg0 text-txt0 px-2 py-1 rounded hover:bg-bg2 transition';
+	challengeBtn.textContent = 'Match';
+	challengeBtn.onclick = () => {
+		console.log(`Envoyer une demande de match à ${friendName}`);
+	};
+
+	// Bouton "Supprimer"
+	const removeBtn = document.createElement('button');
+	removeBtn.className = 'bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition';
+	removeBtn.textContent = 'Supprimer';
+	removeBtn.onclick = () => {
+		console.log(`Supprimer ${friendName} de la liste`);
+		container.remove(); // Ou logique backend
+	};
+
+	// Ajout des boutons
+	buttonContainer.appendChild(profileBtn);
+	buttonContainer.appendChild(challengeBtn);
+	buttonContainer.appendChild(removeBtn);
+	container.appendChild(buttonContainer);
+
+	return container;
+}
 
 export const Profile: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
@@ -45,25 +95,20 @@ export const Profile: PageComponent = new PageComponent(() => {
 	const profP: HTMLParagraphElement = document.createElement('p');
 	profP.className = 'text-center text-bg0 mt-3 text-4xl';
 	profP.textContent = 'Profile';
-	const userInput = createLabeledInput(
-	'text', 'Username', 'Username :',
-	'p-2 w-full bg-bg0 text-center rounded-sm ml-1'
-	);
-	const passInput = createLabeledInput(
-	'password', 'Password', 'Password : ',
-	'p-2 w-full bg-bg0 text-center rounded-sm ml-1'
-	);
+	const userInput = createEditableField('Username :', 'username');
+	const passInput = createEditableField('Password :', '••••••');
+
 	const winratetxt: HTMLElement = document.createElement('p');
 	winratetxt.className = 'text-bg0 ml-1';
 	winratetxt.textContent = 'Winrate :';
-	//creation d'une fonctionne qui donne la value de winrate si c'est en dessous de 50 sa sera en txt-txt1
 	const winrate: HTMLElement = document.createElement('p');
-	winrate.className = 'ml-1 text-txt0 bg-bg0 mr-[50%] text-center -mt-2';
-	winrate.textContent = '55%';
+	const winrateValue = 55;
+	winrate.textContent = `${winrateValue}%`;
+	winrate.className = `ml-1 ${winrateValue < 50 ? 'text-txt1' : 'text-txt0'} bg-bg0 mr-[50%] text-center -mt-2`;
 
 	profDiv.appendChild(profP);
-	profDiv.appendChild(userInput);
-	profDiv.appendChild(passInput);
+	profDiv.appendChild(userInput.element);
+	profDiv.appendChild(passInput.element);
 	profDiv.appendChild(winratetxt);
 	profDiv.appendChild(winrate);
 
@@ -74,35 +119,74 @@ export const Profile: PageComponent = new PageComponent(() => {
 	histP.className = 'text-center text-4xl text-bg0 mt-3';
 	histP.textContent = "Historique de partie";
 
-	// Example mock data
-	//max 7 match a afficher 
 	const matchData: Match[] = [
 		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
-		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
-		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
-		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
-		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
-		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
-		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
 	];
+	// matchData.slice(0, 7).forEach(match => {
+	// const matchItem = createMatchItem(match);
+	// histDiv.appendChild(matchItem);
+	// });
 
 	histDiv.appendChild(histP);
 
-	// Add each match as a collapsible item
 	matchData.forEach(match => {
 		const matchItem = createMatchItem(match);
 		histDiv.appendChild(matchItem);
 	});
 
+	//va etre mis dans une fonction pour alleger le code 
 	const lFriendDiv: HTMLElement = document.createElement('div');
 	lFriendDiv.className = 'col-span-1 bg-bg1 border-bg0 border-8 ml-[10%]';
 	const friendP: HTMLParagraphElement = document.createElement('p');
 	friendP.className = 'text-center text-4xl text-bg0 mt-3';
 	friendP.textContent = "Liste d'amis";
-	const searchfriend: HTMLInputElement = createInput('text', 'chercher un ami', 'friendid', 'ml-1 mt-2');
 	lFriendDiv.appendChild(friendP);
-	lFriendDiv.appendChild(searchfriend);
-	
+
+	// Conteneur pour le champ et le bouton
+	const addFriendContainer = document.createElement('div');
+	addFriendContainer.className = 'flex items-center gap-2 px-2 mt-2';
+
+	// Champ de saisie
+	const friendInput = document.createElement('input');
+	friendInput.type = 'text';
+	friendInput.placeholder = 'Nom de l\'ami';
+	friendInput.className = 'flex-1 px-2 py-1 rounded border border-bg0';
+
+	// Bouton d'ajout
+	const addFriendButton = document.createElement('button');
+	addFriendButton.textContent = 'Ajouter';
+	addFriendButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:bg-bg2 transition';
+
+	// Liste d'amis (conteneur où on ajoute dynamiquement)
+	const friendListContainer = document.createElement('div');
+	friendListContainer.className = 'mt-4';
+
+	// Action quand on clique sur “Ajouter”
+	addFriendButton.onclick = () => {
+		const name = friendInput.value.trim();
+		if (name !== '') {
+			const friendItem = createFriendItem(name); // Appelle ta fonction définie plus tôt
+			friendListContainer.appendChild(friendItem);
+			friendInput.value = '';
+			// Tu peux aussi appeler ici une fonction d'envoi backend
+		}
+	};
+
+	// Assemble le champ + bouton
+	addFriendContainer.appendChild(friendInput);
+	addFriendContainer.appendChild(addFriendButton);
+	lFriendDiv.appendChild(addFriendContainer);
+
+	// Ajoute le conteneur de la liste
+	lFriendDiv.appendChild(friendListContainer);
+
+	// Optionnel : amis existants
+	const friends = ['Alice', 'Bob', 'Charlie'];
+	friends.forEach(friend => {
+		const item = createFriendItem(friend);
+		friendListContainer.appendChild(item);
+	});
+	//jusqu'ici lig.137
 
 	tabDiv.appendChild(profDiv);
 	tabDiv.appendChild(histDiv);
@@ -111,3 +195,5 @@ export const Profile: PageComponent = new PageComponent(() => {
 	root.appendChild(tabDiv);
 	return root;
 });
+
+
