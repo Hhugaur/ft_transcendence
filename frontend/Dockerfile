@@ -4,7 +4,6 @@ WORKDIR /app
 
 RUN npm install -D vite typescript tailwindcss postcss autoprefixer
 
-
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
