@@ -2,8 +2,9 @@
   "name": "transcendence-front",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite --port 5000",
+    "dev": "vite",
     "build": "vite build",
+    "preview": "vite preview --port 5000 --host",
     "serve": "serve -s dist"
   },
 	"dependencies": {

@@ -1,3 +1,10 @@
+FROM node:20 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
 FROM alpine:3.22
 
 RUN apk add --no-cache nginx openssl
@@ -10,6 +17,7 @@ RUN mkdir -p /etc/nginx/ssl && \
     -out /etc/nginx/ssl/transcendence.crt
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/dist /app/dist
 
 EXPOSE 6969 4269
 
