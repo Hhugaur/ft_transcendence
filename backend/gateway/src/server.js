@@ -81,6 +81,18 @@ server.register(fastifyHttpProxy, {
     }
 });
 
+server.register(fastifyHttpProxy, {
+    upstream: authenticationUrl,
+    prefix: '/api/pong',
+    rewritePrefix: '/',
+    replyOptions: {
+        onResponse: (req, reply, res) => {
+            server.log.info(`Response from Authentication: ${res.statusCode}`);
+            reply.send(res);
+        }
+    }
+});
+
 const start = async () => {
     try {
         await server.listen({ port, host: '0.0.0.0' });
