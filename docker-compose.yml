@@ -1,4 +1,3 @@
-version: '3'
 services:
   proxy-ssl:
     build: ./proxy-ssl
