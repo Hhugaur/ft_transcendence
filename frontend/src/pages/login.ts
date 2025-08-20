@@ -3,22 +3,33 @@ import {
         HTMLComponent
 } from '../component';
 import { Title } from '../components/title';
-import { Link } from '../components/link';
+import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
 
 export const Login: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
+	document.body.classList.remove('fade-out');
+	document.body.classList.add('fade-in');
 	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
 
-	const back: HTMLComponent = new Link ('/');
-	const buttonback: HTMLElement = document.createElement('button');
+	// const back: HTMLComponent = new Link ('/');
+	// const buttonback: HTMLElement = document.createElement('button');
+	// buttonback.className = 'underline ml-[5%] text-bg0';
+	// buttonback.textContent = 'retour';
+	// back.appendChild(buttonback);
+	// main.appendChild(back.make());
+
+	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
 	buttonback.textContent = 'retour';
-	back.appendChild(buttonback);
-	main.appendChild(back.make());
+	buttonback.addEventListener('click', (e) => {
+		e.preventDefault();
+		fadeOutAndNavigateSPA('/');
+	});
+	main.appendChild(buttonback);
 
 	const div: HTMLElement = document.createElement('div');
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
@@ -98,12 +109,23 @@ export const Login: PageComponent = new PageComponent(() => {
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
 	forgotpass.textContent = 'Mot de passe oublié';
 
-	const registerL: HTMLComponent = new Link('/register');
-	const forgotpassL: HTMLComponent = new Link('/forgot-password');
-	registerL.appendChild(registerB); 
-	buttonDiv.appendChild(registerL.make());
-	forgotpassL.appendChild(forgotpass);
-	buttonDiv.appendChild(forgotpassL.make());
+	//const registerL: HTMLComponent = new Link('/register');
+	//const forgotpassL: HTMLComponent = new Link('/forgot-password');
+	//registerL.appendChild(registerB);
+	registerB.addEventListener('click', (e) => {
+		e.preventDefault();
+		fadeOutAndNavigateSPA('/register');
+	});
+
+	forgotpass.addEventListener('click', (e) => {
+		e.preventDefault();
+		fadeOutAndNavigateSPA('/forgot-password');
+	});
+	buttonDiv.appendChild(registerB);
+	buttonDiv.appendChild(forgotpass);
+	//buttonDiv.appendChild(registerL.make());
+	//forgotpassL.appendChild(forgotpass);
+	//buttonDiv.appendChild(forgotpassL.make());
 	div.appendChild(buttonDiv);
 
 	root.appendChild(div);

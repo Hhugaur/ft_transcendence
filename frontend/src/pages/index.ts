@@ -3,8 +3,8 @@ import {
         HTMLComponent
 } from '../component';
 import { Title } from '../components/title';
-import { Link } from '../components/link';
-
+import { Link , fadeOutAndNavigateSPA } from '../components/link';
+import { createLanguageMenu } from '../components/language';
 
 let auth: number;
 
@@ -33,12 +33,19 @@ const statusLogin: () => HTMLElement = () => {
 	}
     else {
     	const button: HTMLButtonElement = document.createElement('button');
-    	button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
+    	// button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
+		button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
     	button.textContent = 'Se connecter';
 
-    	const loginL: HTMLComponent = new Link('/login');
-    	loginL.appendChild(button); // add button to link
-    	buttonDiv.appendChild(loginL.make()); // add link to container
+    	// const loginL: HTMLComponent = new Link('/login');
+    	// loginL.appendChild(button); // add button to link
+    	// buttonDiv.appendChild(loginL.make()); // add link to container
+		button.addEventListener('click', (e) => {
+			e.preventDefault();
+			fadeOutAndNavigateSPA('/login'); // ✅ Use SPA navigation + fade-out
+		});
+
+		buttonDiv.appendChild(button);
 		auth = 0
 	}
 	return buttonDiv;
@@ -54,12 +61,14 @@ const classic: () => HTMLElement = () => {
 
     // --- Buttons ---
     const buttonClassic: HTMLButtonElement = document.createElement('button');
-    buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
-    buttonClassic.textContent = 'Classique';
+   //buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+    buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
+ 	buttonClassic.textContent = 'Classique';
 
     const buttonTournament: HTMLButtonElement = document.createElement('button');
-    buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
-    buttonTournament.textContent = 'Tournoi';
+    //buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+    buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
+	buttonTournament.textContent = 'Tournoi';
 
     // --- Variable to track selected mode ---
     let selectedMode: 'classic' | 'tournament' = 'classic';
@@ -69,13 +78,17 @@ const classic: () => HTMLElement = () => {
         const nameInput: HTMLInputElement = document.createElement('input');
         nameInput.type = 'text';
         nameInput.placeholder = 'Entrez votre pseudo';
-        nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+        //nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+		nameInput.className = `hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl
+		transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-md focus:outline-none`;
 
         gameDiv.replaceChild(nameInput, buttonClassic);
 
         const playButton: HTMLButtonElement = document.createElement('button');
         playButton.textContent = 'Jouer';
-        playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+		//playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+        playButton.className = `hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl
+    	transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:bg-bg3`;
 
         playButton.addEventListener('click', () => {
             const username = nameInput.value.trim();
@@ -122,6 +135,8 @@ const classic: () => HTMLElement = () => {
 };
 
 export const Index: PageComponent = new PageComponent(() => {
+   document.body.classList.remove('fade-out');
+   document.body.classList.add('fade-in');
    document.body.classList.remove('bg-bg2');
    document.body.classList.add('bg-bg1');
 
@@ -143,6 +158,7 @@ export const Index: PageComponent = new PageComponent(() => {
 
 	// Add game buttons section to root
     root.appendChild(classic());
+	//root.appendChild(createLanguageMenu());
 
     return root;
 });
