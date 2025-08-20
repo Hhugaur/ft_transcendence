@@ -52,60 +52,71 @@ const classic: () => HTMLElement = () => {
     const gameDiv: HTMLElement = document.createElement('div');
     gameDiv.className = 'flex flex-col items-center text-2xl text-bg0';
 
-    // --- Classic Mode Button ---
+    // --- Buttons ---
     const buttonClassic: HTMLButtonElement = document.createElement('button');
     buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
     buttonClassic.textContent = 'Classique';
 
-    // --- Tournament Mode Button ---
     const buttonTournament: HTMLButtonElement = document.createElement('button');
     buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
     buttonTournament.textContent = 'Tournoi';
 
-    const tournamentL: HTMLComponent = new Link('/tournament');
-    tournamentL.appendChild(buttonTournament);
+    // --- Variable to track selected mode ---
+    let selectedMode: 'classic' | 'tournament' = 'classic';
 
-    const tournamentElement = tournamentL.make(); // <--- cache it
+    // --- Guest Mode Flow ---
+    const handleGuestFlow = () => {
+        const nameInput: HTMLInputElement = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.placeholder = 'Entrez votre pseudo';
+        nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
 
-    // --- Event Listener for Classic Button ---
-    buttonClassic.addEventListener('click', () => {
-        if (auth == 1) {
-            window.location.href = '/game';
-        } else {
-            // Replace Classic with an input field
-            const nameInput: HTMLInputElement = document.createElement('input');
-            nameInput.type = 'text';
-            nameInput.placeholder = 'Entrez votre pseudo';
-            nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+        gameDiv.replaceChild(nameInput, buttonClassic);
 
-            gameDiv.replaceChild(nameInput, buttonClassic);
+        const playButton: HTMLButtonElement = document.createElement('button');
+        playButton.textContent = 'Jouer';
+        playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
 
-            // Replace Tournament button with a new "Jouer" button
-            const playButton: HTMLButtonElement = document.createElement('button');
-            playButton.textContent = 'Jouer';
-            playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+        playButton.addEventListener('click', () => {
+            const username = nameInput.value.trim();
+            if (username.length === 0) {
+                alert('Veuillez entrer un pseudo.');
+                return;
+            }
 
-            playButton.addEventListener('click', () => {
-                const username = nameInput.value.trim();
-                if (username.length === 0) {
-                    alert('Veuillez entrer un pseudo.');
-                    return;
-                }
+            localStorage.setItem('guestName', username);
 
-                // Save guest name
-                localStorage.setItem('guestName', username);
-
-                // Redirect or trigger game logic
+            // Redirect based on selected mode
+            if (selectedMode === 'classic') {
                 window.location.href = '/game';
-            });
+            } else {
+                window.location.href = '/tournament';
+            }
+        });
 
-            gameDiv.replaceChild(playButton, tournamentElement);
+        gameDiv.replaceChild(playButton, buttonTournament);
+    };
+
+    // --- Shared Event Listener Logic ---
+    const handleGameStart = (mode: 'classic' | 'tournament') => {
+        selectedMode = mode;
+
+        if (auth === 1) {
+            // Authenticated users go straight to their route
+            window.location.href = mode === 'classic' ? '/game' : '/tournament';
+        } else {
+            // Guests enter name first
+            handleGuestFlow();
         }
-    });
+    };
 
-    // --- Append Initial Buttons ---
+    // --- Attach Event Listeners ---
+    buttonClassic.addEventListener('click', () => handleGameStart('classic'));
+    buttonTournament.addEventListener('click', () => handleGameStart('tournament'));
+
+    // --- Append Buttons ---
     gameDiv.appendChild(buttonClassic);
-    gameDiv.appendChild(tournamentElement);
+    gameDiv.appendChild(buttonTournament);
 
     return gameDiv;
 };
@@ -135,6 +146,8 @@ export const Index: PageComponent = new PageComponent(() => {
 
     return root;
 });
+
+//sur les autre pages peut etre ajouter des boutons pour revenir sur la page d'accueil
 
 /*const isLoggedIn = checkAuth(); // Replace with real auth check
 
