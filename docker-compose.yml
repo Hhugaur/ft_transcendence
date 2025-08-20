@@ -1,7 +1,9 @@
 version: '3'
 services:
   proxy-ssl:
-    build: ./proxy-ssl
+    build:
+      context: .
+      dockerfile: proxy-ssl/Dockerfile
     depends_on:
       - front
     networks:
