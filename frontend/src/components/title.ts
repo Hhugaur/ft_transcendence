@@ -1,7 +1,7 @@
 import { HTMLComponent } from '../component';
 
 export class Title extends HTMLComponent {
-        public constructor(text: string) {
+        public constructor() {
                 super();
         }
 

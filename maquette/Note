@@ -1,0 +1,14 @@
+charte graphique :
+#273B3A
+#186974
+hsl(22, 40.50%, 85.50%)
+#BE4334
+#732D24
+2 font differente pour le texte 1 pour le titre 1 pour le texte
+titre :
+bitcount
+texte:
+Caveat brush
+regarde la branch de tdelage
+faire page connexion et page lie avec la connexion
+npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
