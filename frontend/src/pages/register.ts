@@ -60,6 +60,33 @@ export const Register: PageComponent = new PageComponent(() => {
 			return;
 		}
 
+		if (newpassword !== newnewpassword) {
+			alert('Les mots de passes ne sont pas identiques!')
+			return ;
+		}
+
+		fetch('https://transcendence.42.fr:4269/api/auth/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ username, password: newpassword })
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(`Erreur HTTP : ${response.status}`);
+				}
+				alert('Done!');
+				return response.json();
+			})
+			.then(data => {
+				console.log('Inscription réussie :', data);
+			})
+			.catch(error => {
+				console.error('Erreur lors de l’inscription :', error);
+				alert('Nop!');
+			});
+
 		// Example of sending to an API
 		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })
 		// alert(`Tentative de connexion avec:\nUsername: ${username}\nPassword: ${password}`);
