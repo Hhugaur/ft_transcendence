@@ -72,20 +72,20 @@ export const Register: PageComponent = new PageComponent(() => {
 			},
 			body: JSON.stringify({ username, password: newpassword })
 		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(`Erreur HTTP : ${response.status}`);
-				}
-				alert('Done!');
-				return response.json();
-			})
-			.then(data => {
-				console.log('Inscription réussie :', data);
-			})
-			.catch(error => {
-				console.error('Erreur lors de l’inscription :', error);
-				alert('Nop!');
-			});
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`Erreur HTTP : ${response.status}`);
+			}
+			alert('Done!');
+			return response.json();
+		})
+		.then(data => {
+			console.log('Inscription réussie :', data);
+		})
+		.catch(error => {
+			console.error('Erreur lors de l’inscription :', error);
+			alert('Nop!');
+		});
 
 		// Example of sending to an API
 		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })
