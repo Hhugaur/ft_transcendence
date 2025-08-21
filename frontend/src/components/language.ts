@@ -43,17 +43,17 @@ export function createLanguageMenu(): HTMLElement {
 	const button = document.createElement('button');
 	button.id = 'dropdownButton';
 	button.className =
-		'ml-30 inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-bg2 text-sm font-medium text-gray-700 hover:bg-gray-50';
+		'text-bg0 ml-30 inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-bg2 text-sm font-medium hover:bg-txt1 hover';
 	button.innerHTML = `
 		Language
-		<svg class=" h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 		</svg>
 	`;
 
 	const menu = document.createElement('div');
 	menu.className =
-		'hidden origin-top-right absolute right-0 mt-2 w-[50%] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10';
+		'hidden text-bg0 origin-top-right absolute right-0 mt-2 w-[50%] rounded-md bg-bg0 ring-1 ring-black ring-opacity-5 z-10';
 
 	const menuList = document.createElement('div');
 	menuList.className = 'py-1';

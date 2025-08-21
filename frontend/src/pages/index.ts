@@ -158,7 +158,7 @@ export const Index: PageComponent = new PageComponent(() => {
 
 	// Add game buttons section to root
     root.appendChild(classic());
-	//root.appendChild(createLanguageMenu());
+	root.appendChild(createLanguageMenu());
 
     return root;
 });
