@@ -11,6 +11,13 @@ texte:
 Caveat brush
 npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
 
+
+-bouton deconnexion 
+-pouvoir upload une image
+-fairee fonctinner login et reggister 
+-continuer asvec les transition
+
+
 Liste :
 
 - You must implement validation mechanisms for forms and any user input, either on
