@@ -41,7 +41,8 @@ server.get('/health', async (request, reply) => {
 
 // if it's not from known api it will be rejected
 server.register(fastifyCors, {
-    origin: frontendUrl,
+    origin: 'https://transcendence.42.fr:4269',
+    credentials: true
 });
 
 // redirections

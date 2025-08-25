@@ -83,6 +83,28 @@ export const Login: PageComponent = new PageComponent(() => {
 			return;
 		}
 
+		fetch('https://transcendence.42.fr:4269/api/auth/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ username, password })
+		})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`Erreur HTTP : ${response.status}`);
+			}
+			alert('Done!');
+			return response.json();
+		})
+		.then(data => {
+			console.log('Connnexion réussie :', data);
+		})
+		.catch(error => {
+			console.error('Erreur lors de la connexion :', error);
+			alert('Nop!');
+		});
+
 		// Example of sending to an API
 		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })
 		// alert(`Tentative de connexion avec:\nUsername: ${username}\nPassword: ${password}`);
