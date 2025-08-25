@@ -1,13 +1,16 @@
 version: '3'
 services:
   proxy-ssl:
-    build: ./proxy-ssl
+    build:
+      context: .
+      dockerfile: proxy-ssl/Dockerfile
     depends_on:
       - front
     networks:
       - webapp
     ports:
       - 4269:4269
+      - 6969:6969
     restart: always
     container_name: proxy-ssl
     hostname: proxy-ssl
@@ -35,6 +38,7 @@ services:
       - database
       - authentication
       - websocket
+      - pong
     env_file:
       - .env
     networks:
@@ -71,6 +75,18 @@ services:
     restart: always
     container_name: authentication
     hostname: authentication
+
+  pong:
+    build: ./backend/pong
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3004:3004"
+    restart: always
+    container_name: pong
+    hostname: pong
 
   front:
     build: ./frontend
