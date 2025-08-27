@@ -104,7 +104,6 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-      - ./frontend/dist:/app/dist 
 
 networks:
   webapp:
