@@ -2,6 +2,7 @@ import {
 		PageComponent,
 		HTMLComponent
 } from '../component';
+import { sendRequest } from '../utils';
 import { Title } from '../components/title';
 import { Link } from '../components/link';
 import { createMatchItem, Match } from '../components/matchHistory';
@@ -86,6 +87,60 @@ export const Profile: PageComponent = new PageComponent(() => {
 	imgDiv.appendChild(imgProf);
 	imgDiv.appendChild(imgSpan);
 	root.appendChild(imgDiv);
+
+	const uploadAvatarContainer = document.createElement('div');
+	uploadAvatarContainer.className = 'flex items-center gap-2 px-2 mt-2';
+
+	const uploadAvatarButton = document.createElement('button');
+	uploadAvatarButton.textContent = 'Upload avatar';
+	uploadAvatarButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:bg-bg2 transition';
+
+	const avatarInput = createInput('file', null, 'avatarInput', 'flex items-center gap-2 px-2 mt-2');
+
+	uploadAvatarContainer.appendChild(uploadAvatarButton);
+	uploadAvatarContainer.appendChild(avatarInput);
+	root.appendChild(uploadAvatarContainer);
+
+	let selectedFile: File | null = null;
+
+	avatarInput.addEventListener("change", (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		selectedFile = target.files?.[0] || null;
+	});
+
+	uploadAvatarButton.addEventListener("click", async () => {
+		if (!selectedFile) {
+			alert("Aucun fichier sélectionné.");
+			return;
+		}
+
+		if (!/^image\/(jpeg|png)$/.test(selectedFile.type)) {
+			alert("Formats autorisés: JPG/PNG.");
+			return;
+		}
+		if (selectedFile.size > 2097152) {
+			alert("Taille max: 2 Mo.");
+			return;
+		}
+
+		const form = new FormData();
+		form.append("file", selectedFile);
+
+		try {
+			const res = await fetch('https://transcendence.42.fr:4269/api/upload', {
+				method: "PATCH",
+				body: form,
+				credentials: "include",
+			});
+
+			if (!res.ok)
+				throw new Error(`HTTP ${res.status}`);
+			alert("Upload réussi ✅");
+		} catch (err: any) {
+			console.log("Échec de l’upload: ", err.message);
+			alert("Échec de l’upload: " + err.message);
+		}
+	});
 	
 	const tabDiv: HTMLElement = document.createElement('div');
 	tabDiv.className = 'grid grid-cols-3 gap-8 mt-[2%] mx-[1%]';
@@ -168,7 +223,8 @@ export const Profile: PageComponent = new PageComponent(() => {
 			const friendItem = createFriendItem(name); // Appelle ta fonction définie plus tôt
 			friendListContainer.appendChild(friendItem);
 			friendInput.value = '';
-			// Tu peux aussi appeler ici une fonction d'envoi backend
+			sendRequest('https://transcendence.42.fr:4269/api/friends/add', 'username',
+				'friend', 'tmp', name);
 		}
 	};
 
