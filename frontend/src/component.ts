@@ -1,19 +1,23 @@
 export class Component {
-        private factory: () => HTMLElement;
+	private factory: () => HTMLElement | Promise<HTMLElement>;
 
-        public constructor(factory: () => HTMLElement) {
-                this.factory = factory;
-        }
+	public constructor(factory: () => HTMLElement | Promise<HTMLElement>) {
+		this.factory = factory;
+	}
 
+	// async make() allows you to use await when needed
         public make(): HTMLElement {
                 return this.factory();
         }
 
-        public getElemFactory(): () => HTMLElement {
-                return this.factory;
+        public async makeAsync(): Promise<HTMLElement> {
+                return this.factory();
         }
+        
+	public getElemFactory(): () => HTMLElement | Promise<HTMLElement> {
+		return this.factory;
+	}
 }
-
 export class HTMLComponent extends Component {
         public className: string = '';
         public textContent: string = '';
@@ -46,7 +50,7 @@ export class HTMLComponent extends Component {
 }
 
 export class PageComponent extends Component {
-        public constructor(factory: () => HTMLElement) {
-                super(factory);
-        }
+	public constructor(factory: () => HTMLElement | Promise<HTMLElement>) {
+		super(factory);
+	}
 }

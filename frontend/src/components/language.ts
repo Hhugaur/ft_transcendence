@@ -8,7 +8,7 @@ export async function loadLanguage(lang: string): Promise<Translations> {
   return await response.json();
 }
 
-function applyTranslations(translations: Translations): void {
+export function applyTranslations(translations: Translations): void {
   const elements = document.querySelectorAll<HTMLElement>('[data-i18n]');
   elements.forEach(el => {
     const key = el.dataset.i18n;
