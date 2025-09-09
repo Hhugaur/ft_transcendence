@@ -4,156 +4,163 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
-import { createLanguageMenu, loadLanguage, applyTranslations, Translations} from '../components/language';
-
+//import { createLanguageMenu } from '../components/language';
 
 let auth: number;
 
-const statusLogin = (translations: Translations): HTMLElement => {
-	const buttonDiv = document.createElement('div');
+const statusLogin: () => HTMLElement = () => {
+
+	const buttonDiv: HTMLElement = document.createElement('div');
 	buttonDiv.className = 'flex text-bg0 justify-end mr-10 mt-4';
 
-	if (0) {
-		// Authenticated user flow
-		const imgDiv = document.createElement('div');
-		imgDiv.className = 'w-32 h-32 rounded-full bg-bg0 relative overflow-hidden text-sm -mb-[50%] ml-[15%]';
-
-		const profileL = new Link('/profile');
-		const img = document.createElement('img');
+	if(0)
+	{
+		const imgDiv: HTMLElement = document.createElement('div');
+		imgDiv.className ='w-32 h-32 rounded-full bg-bg0 relative overflow-hidden text-sm -mb-[50%] ml-[15%]';
+		const profileL: HTMLComponent = new Link('/profile');
+		const img: HTMLImageElement = document.createElement('img');
 		img.className = 'w-full h-full object-cover absolute top-0 left-0 text-bg0';
-		img.alt = translations['iImagetxt'] ?? 'Image de profile';
+		img.alt = 'Image de profile';
 		img.src = './test.jpg';
-
-		const imgSpan = document.createElement('span');
-		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black';
-		imgSpan.textContent = translations['iImagetxt'] ?? 'Image de profile';
-
+		const imgSpan: HTMLSpanElement =  document.createElement('span');
+		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black'
+		imgSpan.textContent = 'Image de profile';
 		imgDiv.appendChild(img);
 		imgDiv.appendChild(imgSpan);
-
 		profileL.appendChild(imgDiv);
 		buttonDiv.appendChild(profileL.make());
-
 		auth = 1;
-	} else {
-		// Guest user flow
-		const button = document.createElement('button');
+	}
+    else {
+    	const button: HTMLButtonElement = document.createElement('button');
+    	// button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
 		button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-		button.textContent = translations['iButton1'] ?? 'Se connecter'; // ✅ use translated text
+    	button.textContent = 'Se connecter';
 
+    	// const loginL: HTMLComponent = new Link('/login');
+    	// loginL.appendChild(button); // add button to link
+    	// buttonDiv.appendChild(loginL.make()); // add link to container
 		button.addEventListener('click', (e) => {
 			e.preventDefault();
-			fadeOutAndNavigateSPA('/login');
+			fadeOutAndNavigateSPA('/login'); // ✅ Use SPA navigation + fade-out
 		});
 
 		buttonDiv.appendChild(button);
-		auth = 0;
+		auth = 0
 	}
-
 	return buttonDiv;
-};
+}
 
 
 //va manquer a gerer pour le tournois en gros meme chose que classique seulement qu'a la place d'ller dans game on va dans tournament.
 
-const classic = (translations: Translations): HTMLElement => {
-	const gameDiv: HTMLElement = document.createElement('div');
-	gameDiv.className = 'flex flex-col items-center text-2xl text-bg0';
+const classic: () => HTMLElement = () => {
+    // --- Wrapper ---
+    const gameDiv: HTMLElement = document.createElement('div');
+    gameDiv.className = 'flex flex-col items-center text-2xl text-bg0';
 
-	const buttonClassic: HTMLButtonElement = document.createElement('button');
-	buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-	buttonClassic.textContent = translations['iButton2'] ?? 'Classique';
+    // --- Buttons ---
+    const buttonClassic: HTMLButtonElement = document.createElement('button');
+   //buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+    buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
+ 	buttonClassic.textContent = 'Classique';
 
-	const buttonTournament: HTMLButtonElement = document.createElement('button');
-	buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-	buttonTournament.textContent = translations['iButton3'] ?? 'Tournoi';
+    const buttonTournament: HTMLButtonElement = document.createElement('button');
+    //buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+    buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
+	buttonTournament.textContent = 'Tournoi';
 
-	let selectedMode: 'classic' | 'tournament' = 'classic';
+    // --- Variable to track selected mode ---
+    let selectedMode: 'classic' | 'tournament' = 'classic';
 
-	const handleGuestFlow = () => {
-		const nameInput: HTMLInputElement = document.createElement('input');
-		nameInput.type = 'text';
-		nameInput.placeholder = translations['iInput'] ?? 'Entrez votre pseudo';
+    // --- Guest Mode Flow ---
+    const handleGuestFlow = () => {
+        const nameInput: HTMLInputElement = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.placeholder = 'Entrez votre pseudo';
+        //nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
 		nameInput.className = `hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl
-			transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-md focus:outline-none`;
+		transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-md focus:outline-none`;
 
-		gameDiv.replaceChild(nameInput, buttonClassic);
+        gameDiv.replaceChild(nameInput, buttonClassic);
 
-		const playButton: HTMLButtonElement = document.createElement('button');
-		playButton.textContent = translations['iButton4'] ?? 'Jouer';
-		playButton.className = `hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl
-			transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:bg-bg3`;
+        const playButton: HTMLButtonElement = document.createElement('button');
+        playButton.textContent = 'Jouer';
+		//playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+        playButton.className = `hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl
+    	transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:bg-bg3`;
 
-		playButton.addEventListener('click', () => {
-			const username = nameInput.value.trim();
-			if (username.length === 0) {
-				alert('Veuillez entrer un pseudo.');
-				return;
-			}
+        playButton.addEventListener('click', () => {
+            const username = nameInput.value.trim();
+            if (username.length === 0) {
+                alert('Veuillez entrer un pseudo.');
+                return;
+            }
 
-			localStorage.setItem('guestName', username);
+            localStorage.setItem('guestName', username);
 
-			window.location.href = selectedMode === 'classic' ? '/game' : '/tournament';
-		});
+            // Redirect based on selected mode
+            if (selectedMode === 'classic') {
+                window.location.href = '/game';
+            } else {
+                window.location.href = '/tournament';
+            }
+        });
 
-		gameDiv.replaceChild(playButton, buttonTournament);
-	};
+        gameDiv.replaceChild(playButton, buttonTournament);
+    };
 
-	const handleGameStart = (mode: 'classic' | 'tournament') => {
-		selectedMode = mode;
+    // --- Shared Event Listener Logic ---
+    const handleGameStart = (mode: 'classic' | 'tournament') => {
+        selectedMode = mode;
 
-		if (auth === 1) {
-			window.location.href = mode === 'classic' ? '/game' : '/tournament';
-		} else {
-			handleGuestFlow();
-		}
-	};
+        if (auth === 1) {
+            // Authenticated users go straight to their route
+            window.location.href = mode === 'classic' ? '/game' : '/tournament';
+        } else {
+            // Guests enter name first
+            handleGuestFlow();
+        }
+    };
 
-	buttonClassic.addEventListener('click', () => handleGameStart('classic'));
-	buttonTournament.addEventListener('click', () => handleGameStart('tournament'));
+    // --- Attach Event Listeners ---
+    buttonClassic.addEventListener('click', () => handleGameStart('classic'));
+    buttonTournament.addEventListener('click', () => handleGameStart('tournament'));
 
-	gameDiv.appendChild(buttonClassic);
-	gameDiv.appendChild(buttonTournament);
+    // --- Append Buttons ---
+    gameDiv.appendChild(buttonClassic);
+    gameDiv.appendChild(buttonTournament);
 
-	return gameDiv;
+    return gameDiv;
 };
 
-export const Index: PageComponent = new PageComponent(async () => {
-	document.body.classList.remove('fade-out');
-	document.body.classList.add('fade-in');
-	document.body.classList.remove('bg-bg2');
-	document.body.classList.add('bg-bg1');
+export const Index: PageComponent = new PageComponent(() => {
+   document.body.classList.remove('fade-out');
+   document.body.classList.add('fade-in');
+   document.body.classList.remove('bg-bg2');
+   document.body.classList.add('bg-bg1');
 
-	const lang = localStorage.getItem('lang') || 'fr';
-	const translations = await loadLanguage(lang);
+    const root: HTMLElement = document.createElement('div');
+	// --- Login / Profile Section ---
+	// peut etre implementer un menu deroulant pour avoir acces au bouton deconnecter(?)
+    root.appendChild(statusLogin());
 
-	const root: HTMLElement = document.createElement('div');
+    // --- Title Section ---
+    const titleDiv: HTMLElement = document.createElement('div');
+    titleDiv.className = 'flex flex-col items-center mx-[25%] bg-bg11 -mt-10 p-7 rounded-3xl';
 
-	// 🔹 Login/Profile
-	root.appendChild(statusLogin(translations));
+    const title: HTMLParagraphElement = document.createElement('p');
+    title.className = 'text-8xl hover:cursor-default font-bitcount text-bg0';
+    title.textContent = 'TRANSCENDENCE';
 
-	// 🔹 Title
-	const titleDiv: HTMLElement = document.createElement('div');
-	titleDiv.className = 'flex flex-col items-center mx-[25%] bg-bg11 -mt-10 p-7 rounded-3xl';
+    titleDiv.appendChild(title);
+    root.appendChild(titleDiv);
 
-	const title: HTMLParagraphElement = document.createElement('p');
-	title.className = 'text-8xl hover:cursor-default font-bitcount text-bg0';
-	title.setAttribute('data-i18n', 'iTitle');
-	title.textContent = translations['iTitle'] ?? 'TRANSCENDENCE';
+	// Add game buttons section to root
+    root.appendChild(classic());
+	//root.appendChild(createLanguageMenu());
 
-	titleDiv.appendChild(title);
-	root.appendChild(titleDiv);
-
-	// 🔹 Game section
-	root.appendChild(classic(translations));
-
-	// 🔹 Language dropdown
-	root.appendChild(createLanguageMenu());
-
-	// 🔹 Apply all remaining data-i18n translations
-	applyTranslations(translations);
-
-	return root;
+    return root;
 });
 //sur les autre pages peut etre ajouter des boutons pour revenir sur la page d'accueil
 
