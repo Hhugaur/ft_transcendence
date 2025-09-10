@@ -4,7 +4,7 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
-//import { createLanguageMenu } from '../components/language';
+import { locale, createLanguageMenu} from '../components/language';
 
 let auth: number;
 
@@ -35,7 +35,7 @@ const statusLogin: () => HTMLElement = () => {
     	const button: HTMLButtonElement = document.createElement('button');
     	// button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
 		button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-    	button.textContent = 'Se connecter';
+    	button.textContent = locale.iButton1;
 
     	// const loginL: HTMLComponent = new Link('/login');
     	// loginL.appendChild(button); // add button to link
@@ -63,7 +63,7 @@ const classic: () => HTMLElement = () => {
     const buttonClassic: HTMLButtonElement = document.createElement('button');
    //buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
     buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
- 	buttonClassic.textContent = 'Classique';
+ 	buttonClassic.textContent = locale.iButton2;
 
     const buttonTournament: HTMLButtonElement = document.createElement('button');
     //buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
@@ -151,15 +151,14 @@ export const Index: PageComponent = new PageComponent(() => {
 
     const title: HTMLParagraphElement = document.createElement('p');
     title.className = 'text-8xl hover:cursor-default font-bitcount text-bg0';
-    title.textContent = 'TRANSCENDENCE';
+    title.textContent = locale.iTitle;
 
     titleDiv.appendChild(title);
     root.appendChild(titleDiv);
 
 	// Add game buttons section to root
     root.appendChild(classic());
-	//root.appendChild(createLanguageMenu());
-
+    root.appendChild(createLanguageMenu());
     return root;
 });
 //sur les autre pages peut etre ajouter des boutons pour revenir sur la page d'accueil

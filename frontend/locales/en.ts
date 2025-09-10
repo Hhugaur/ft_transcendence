@@ -1,4 +1,4 @@
-{
+export const en =  {
     "iTitle": "TRANSCENDENCE",
     "iButton1": "Log In",
     "iButton2": "Classic",
