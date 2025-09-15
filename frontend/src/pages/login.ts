@@ -2,11 +2,10 @@ import {
         PageComponent,
         HTMLComponent
 } from '../component';
-import { sendRequest } from '../utils';
 import { Title } from '../components/title';
 import { Link } from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
-import {sendRequest} from "../utils";
+import { sendRequest } from "../utils";
 
 export const Login: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');

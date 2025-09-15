@@ -2,11 +2,10 @@ import {
 		PageComponent,
 		HTMLComponent
 } from '../component';
-import { sendRequest } from '../utils';
 import { Title } from '../components/title';
 import { Link } from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
-import {sendRequest} from "../utils";
+import { sendRequest } from "../utils";
 
 export const Register: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
@@ -69,28 +68,6 @@ export const Register: PageComponent = new PageComponent(() => {
 
 		sendRequest('https://transcendence.42.fr:4269/api/auth/register', 'username',
 			'password', username, newpassword);
-
-		fetch('https://transcendence.42.fr:4269/api/auth/register', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ username, password: newpassword })
-		})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error(`Erreur HTTP : ${response.status}`);
-			}
-			alert('Done!');
-			return response.json();
-		})
-		.then(data => {
-			console.log('Inscription réussie :', data);
-		})
-		.catch(error => {
-			console.error('Erreur lors de l’inscription :', error);
-			alert('Nop!');
-		});
 
 		// Example of sending to an API
 		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })

@@ -81,7 +81,20 @@ export const Profile: PageComponent = new PageComponent(() => {
 	const imgProf: HTMLImageElement = document.createElement('img');
 	imgProf.className = 'w-full h-full object-cover absolute top-0 left-0 text-bg0';
 	imgProf.alt = 'Image de profile';
-	imgProf.src = './test.jpg';
+
+	async function displayAvatar(username: string) {
+		const res = await fetch(`https://transcendence.42.fr:4269/api/auth/avatar/${username}`);
+		if (!res.ok) {
+			console.error("Impossible de charger l'avatar");
+			return;
+		}
+
+		const data = await res.json();
+
+		imgProf.src = data.avatarUrl;
+	}
+
+	displayAvatar("test1234");
 	const imgSpan: HTMLSpanElement =  document.createElement('span');
 	imgSpan.textContent = 'Image de profile';
 	imgDiv.appendChild(imgProf);
@@ -125,9 +138,10 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 		const form = new FormData();
 		form.append("file", selectedFile);
+		form.append("username", "test1234");
 
 		try {
-			const res = await fetch('https://transcendence.42.fr:4269/api/upload', {
+			const res = await fetch('https://transcendence.42.fr:4269/api/auth/upload', {
 				method: "PATCH",
 				body: form,
 				credentials: "include",
