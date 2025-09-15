@@ -6,15 +6,14 @@ import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
 import { locale, createLanguageMenu} from '../components/language';
 
-let auth: number;
+export let auth: number;
 
 const statusLogin: () => HTMLElement = () => {
 
-	const buttonDiv: HTMLElement = document.createElement('div');
-	buttonDiv.className = 'flex text-bg0 justify-end mr-10 mt-4';
-
 	if(0)
 	{
+        const buttonDiv: HTMLElement = document.createElement('div');
+	    buttonDiv.className = 'grid text-bg0 justify-end mr-10 mt-4';
 		const imgDiv: HTMLElement = document.createElement('div');
 		imgDiv.className ='w-32 h-32 rounded-full bg-bg0 relative overflow-hidden text-sm -mb-[50%] ml-[15%]';
 		const profileL: HTMLComponent = new Link('/profile');
@@ -29,13 +28,20 @@ const statusLogin: () => HTMLElement = () => {
 		imgDiv.appendChild(imgSpan);
 		profileL.appendChild(imgDiv);
 		buttonDiv.appendChild(profileL.make());
-		auth = 1;
+        const leave: HTMLButtonElement = document.createElement('button');
+        leave.className = '-mb-[100%] mt-10 ml-5 text-sm';
+        leave.textContent = 'se deconnecter';
+	    buttonDiv.appendChild(leave);
+        auth = 1;
+        return buttonDiv;
 	}
     else {
+        const buttonDiv: HTMLElement = document.createElement('div');
+	    buttonDiv.className = 'flex text-bg0 justify-end mr-10 mt-4';
     	const button: HTMLButtonElement = document.createElement('button');
     	// button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
 		button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-    	button.textContent = locale.iButton1;
+    	button.textContent = 'Se connecter';
 
     	// const loginL: HTMLComponent = new Link('/login');
     	// loginL.appendChild(button); // add button to link
@@ -47,8 +53,9 @@ const statusLogin: () => HTMLElement = () => {
 
 		buttonDiv.appendChild(button);
 		auth = 0
+        return buttonDiv;
 	}
-	return buttonDiv;
+	
 }
 
 
