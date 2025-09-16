@@ -5,6 +5,7 @@ export const es = {
     "iButton3": "Torneo",
     "iInput": "Ingresa tu nombre de usuario",
     "iButton4": "Jugar",
+    "disc": "disc",
     "iImagetxt": "Imagen de perfil",
     "iLanguage": "Idioma",
     "lTitle": "INICIAR SESIÓN",
@@ -37,6 +38,5 @@ export const es = {
     "pButton1": "Agregar",
     "pButton2": "Perfil",
     "pButton3": "Partida",
-    "pButton4": "Eliminar",
-    "back": "Volver"
+    "pButton4": "Eliminar"
 }

@@ -5,6 +5,7 @@ export const en =  {
     "iButton3": "Tournament",
     "iInput": "Enter your username",
     "iButton4": "Play",
+    "disc": "disc",
     "iImagetxt": "Profile picture",
     "iLanguage": "Language",
     "lTitle": "LOGIN",
@@ -38,5 +39,6 @@ export const en =  {
     "pButton2": "Profile",
     "pButton3": "Match",
     "pButton4": "Delete",
-    "back": "Back"
+    "back": "back",
+    "button": "button"
 }

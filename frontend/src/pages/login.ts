@@ -6,9 +6,11 @@ import { sendRequest } from '../utils';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
+import { local } from '../components/language';
 import {sendRequest} from "../utils";
 
 export const Login: PageComponent = new PageComponent(() => {
+	
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
 	document.body.classList.remove('fade-out');
@@ -26,7 +28,7 @@ export const Login: PageComponent = new PageComponent(() => {
 
 	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
-	buttonback.textContent = 'retour';
+	buttonback.textContent = local.back;
 	buttonback.addEventListener('click', (e) => {
 		e.preventDefault();
 		fadeOutAndNavigateSPA('/');
@@ -37,7 +39,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
 	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[35%]';
-	title.textContent = 'CONNEXION';
+	title.textContent = local.lTitle;
 	div.appendChild(title);
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
@@ -50,7 +52,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	// Create a container to hold password input + toggle button side by side
 	const toggleBtn: HTMLButtonElement = document.createElement('button');
 	toggleBtn.type = 'button';
-	toggleBtn.textContent = 'Afficher';
+	toggleBtn.textContent = local.lButton1;
 	toggleBtn.className = 'ml-2 text-sm text-txt1 underline whitespace-nowrap w-[70px] overflow-hidden text-center -mr-10';
 
 	// Container for both input and button
@@ -62,7 +64,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	// Toggle logic
 	toggleBtn.addEventListener('click', () => {
 		pass.type = pass.type === 'password' ? 'text' : 'password';
-		toggleBtn.textContent = pass.type === 'password' ? 'Afficher' : 'Masquer';
+		toggleBtn.textContent = pass.type === 'password' ? local.iButton1 : local.iButton2;
 	});
 
 	//attendre qu'il y a ce qu'il faut pour apres le redecaler vers les bon endroits (accueil)
@@ -105,10 +107,10 @@ export const Login: PageComponent = new PageComponent(() => {
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
 	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
-	registerB.textContent = "S'inscrire";
+	registerB.textContent = local.lOther2;
 	const forgotpass: HTMLElement = document.createElement('button');
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-	forgotpass.textContent = 'Mot de passe oublié';
+	forgotpass.textContent = local.lOther1;
 
 	//const registerL: HTMLComponent = new Link('/register');
 	//const forgotpassL: HTMLComponent = new Link('/forgot-password');

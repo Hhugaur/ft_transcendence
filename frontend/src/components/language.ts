@@ -84,13 +84,13 @@ let userLanguage: supportedLanguage = getPreferredLanguage();
 
 export type supportedLanguage = keyof typeof translations;
 
-export let locale: {[key: string]: string } = {};
+export let local: {[key: string]: string } = {};
 
 export function setLanguage(lang: supportedLanguage): void {
 	if (translations[lang]) {
 		userLanguage = lang;
 		localStorage.setItem('lang', lang as string);
-		Object.assign(locale, translations[lang]);
+		Object.assign(local, translations[lang]);
 		console.log(`Language set to: ${lang}`);
 	} else {
 		console.warn(`Language '${lang}' not supported.`);

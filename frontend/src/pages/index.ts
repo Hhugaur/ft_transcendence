@@ -4,7 +4,7 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
-import { locale, createLanguageMenu} from '../components/language';
+import { local, createLanguageMenu} from '../components/language';
 
 export let auth: number;
 
@@ -23,14 +23,14 @@ const statusLogin: () => HTMLElement = () => {
 		img.src = './test.jpg';
 		const imgSpan: HTMLSpanElement =  document.createElement('span');
 		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black'
-		imgSpan.textContent = 'Image de profile';
+		imgSpan.textContent = local.iImagetxt;
 		imgDiv.appendChild(img);
 		imgDiv.appendChild(imgSpan);
 		profileL.appendChild(imgDiv);
 		buttonDiv.appendChild(profileL.make());
         const leave: HTMLButtonElement = document.createElement('button');
         leave.className = '-mb-[100%] mt-10 ml-5 text-sm';
-        leave.textContent = 'se deconnecter';
+        leave.textContent = local.disc;
 	    buttonDiv.appendChild(leave);
         auth = 1;
         return buttonDiv;
@@ -41,7 +41,7 @@ const statusLogin: () => HTMLElement = () => {
     	const button: HTMLButtonElement = document.createElement('button');
     	// button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
 		button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-    	button.textContent = 'Se connecter';
+    	button.textContent = local.iButton1;
 
     	// const loginL: HTMLComponent = new Link('/login');
     	// loginL.appendChild(button); // add button to link
@@ -70,12 +70,12 @@ const classic: () => HTMLElement = () => {
     const buttonClassic: HTMLButtonElement = document.createElement('button');
    //buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
     buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
- 	buttonClassic.textContent = locale.iButton2;
+ 	buttonClassic.textContent = local.iButton2;
 
     const buttonTournament: HTMLButtonElement = document.createElement('button');
     //buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
     buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-	buttonTournament.textContent = 'Tournoi';
+	buttonTournament.textContent = local.iButton2;
 
     // --- Variable to track selected mode ---
     let selectedMode: 'classic' | 'tournament' = 'classic';
@@ -92,7 +92,7 @@ const classic: () => HTMLElement = () => {
         gameDiv.replaceChild(nameInput, buttonClassic);
 
         const playButton: HTMLButtonElement = document.createElement('button');
-        playButton.textContent = 'Jouer';
+        playButton.textContent = local.iButton4;
 		//playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
         playButton.className = `hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl
     	transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:bg-bg3`;
@@ -158,7 +158,7 @@ export const Index: PageComponent = new PageComponent(() => {
 
     const title: HTMLParagraphElement = document.createElement('p');
     title.className = 'text-8xl hover:cursor-default font-bitcount text-bg0';
-    title.textContent = locale.iTitle;
+    title.textContent = local.iTitle;
 
     titleDiv.appendChild(title);
     root.appendChild(titleDiv);

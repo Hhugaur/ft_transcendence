@@ -5,6 +5,7 @@ export const fr = {
     "iButton3": "Tournoi",
     "iInput": "Entrez votre pseudo",
     "iButton4": "Jouer",
+
     "iImagetxt": "Image de profile",
     "iLanguage": "langage",
     "lTitle": "CONNEXION",
@@ -15,7 +16,7 @@ export const fr = {
     "lButton2": "Masquer",
     "lText": "oû",
     "lOther1": "Mot de passe oublié",
-    "1Other2": "S'inscrire",
+    "lOther2": "S'inscrire",
     "rTitle": "INSCRIPTION",
     "rInput1": "Nom d'utilisateur",
     "rInput2": "Nouveau mot de passe",
@@ -38,5 +39,6 @@ export const fr = {
     "pButton2": "Profile",
     "pButton3": "Match",
     "pButton4": "Supprimer",
-    "back": "retour"
+    "back": "retour",
+    "disc": "se deconnecter",
 }
