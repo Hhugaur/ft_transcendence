@@ -9,7 +9,7 @@ services:
     networks:
       - webapp
     ports:
-      - 4269:4269
+      - 42069:42069
       - 6969:6969
     restart: always
     container_name: proxy-ssl
