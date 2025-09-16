@@ -5,8 +5,10 @@ import {
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
 import { local, createLanguageMenu} from '../components/language';
+import { Router } from '../router';
 
 export let auth: number;
+const app = Router.getInstance();
 
 const statusLogin: () => HTMLElement = () => {
 
@@ -108,9 +110,9 @@ const classic: () => HTMLElement = () => {
 
             // Redirect based on selected mode
             if (selectedMode === 'classic') {
-                window.location.href = '/game';
+                app.warp('/game', false);
             } else {
-                window.location.href = '/tournament';
+                 app.warp('/tournament', false);
             }
         });
 
