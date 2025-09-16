@@ -4,3 +4,5 @@ node_modules
 *.idea
 .vscode
 database
+.env
+backend/game/src/game.node
