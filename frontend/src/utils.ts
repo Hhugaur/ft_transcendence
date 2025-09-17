@@ -1,22 +1,19 @@
-export function sendRequest(url: string, nameVar1: string, nameVar2: string, var1: string, var2: string) {
+export async function sendRequest(url: string, nameVar1: string, nameVar2: string, var1: string, var2: string) {
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nameVar1: var1, nameVar2: var2 })
-    })
-        .then(response => {
+        body: JSON.stringify({ [nameVar1]: var1, [nameVar2]: var2 })
+    }).then(response => {
             if (!response.ok) {
                 throw new Error(`Erreur HTTP : ${response.status}`);
             }
             alert('Done!');
             return response.json();
-        })
-        .then(data => {
+        }).then(data => {
             console.log(selectMessage(url, true), data);
-        })
-        .catch(error => {
+        }).catch(error => {
             console.error(selectMessage(url, false), error);
             alert('Nop!');
         });

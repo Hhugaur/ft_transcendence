@@ -8,8 +8,8 @@ import { config } from './config.js';
 import { loginManager } from './login.js';
 import { registerManager } from './register.js';
 import { disconnectManager } from './disconnect.js';
-import { addFriendManager,
-        deleteFriendManager } from './friends.js';
+import { addFriendManager, deleteFriendManager } from './friends.js';
+import { updateAvatar, getAvatar } from './avatar.js';
 
 async function initDatabase() {
     return open({
@@ -56,6 +56,14 @@ async function main() {
             const { username, friend } = request.body;
             await deleteFriendManager({ username, friend }, database, reply);
         })
+        server.post('/upload', async (request, reply) => {
+            const { username, file } = request.body;
+            await updateAvatar({ username, file }, database, reply);
+        })
+        server.get('/avatar/:username', async (request, reply) => {
+            const { username } = request.params;
+            return getAvatar(username, database, reply);
+        });
     } catch (err) {
         console.error("Error:", err.message);
     }
