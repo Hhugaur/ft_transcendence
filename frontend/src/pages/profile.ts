@@ -2,10 +2,11 @@ import {
 		PageComponent,
 		HTMLComponent
 } from '../component';
-import { sendRequest } from '../utils';
 import { Title } from '../components/title';
-import { Link } from '../components/link';
+import { Link , fadeOutAndNavigateSPA } from '../components/link';
+import { auth } from './index.ts';
 import { createMatchItem, Match } from '../components/matchHistory';
+import { local, createLanguageMenu} from '../components/language';
 import { createInput, createLabeledInput, createEditableField } from '../components/input';
 
 function createFriendItem(friendName: string): HTMLElement {
@@ -25,7 +26,7 @@ function createFriendItem(friendName: string): HTMLElement {
 	// Bouton "Voir profil"
 	const profileBtn = document.createElement('button');
 	profileBtn.className = 'bg-bg0 text-txt0 px-2 py-1 rounded hover:bg-bg2 transition';
-	profileBtn.textContent = 'Profil';
+	profileBtn.textContent = local.pButton2;
 	profileBtn.onclick = () => {
 		// À remplacer par la logique réelle
 		console.log(`Voir profil de ${friendName}`);
@@ -35,7 +36,7 @@ function createFriendItem(friendName: string): HTMLElement {
 	// Bouton "Demander match"
 	const challengeBtn = document.createElement('button');
 	challengeBtn.className = 'bg-bg0 text-txt0 px-2 py-1 rounded hover:bg-bg2 transition';
-	challengeBtn.textContent = 'Match';
+	challengeBtn.textContent = local.pButton3;
 	challengeBtn.onclick = () => {
 		console.log(`Envoyer une demande de match à ${friendName}`);
 	};
@@ -43,7 +44,7 @@ function createFriendItem(friendName: string): HTMLElement {
 	// Bouton "Supprimer"
 	const removeBtn = document.createElement('button');
 	removeBtn.className = 'bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition';
-	removeBtn.textContent = 'Supprimer';
+	removeBtn.textContent = local.pButton4;
 	removeBtn.onclick = () => {
 		console.log(`Supprimer ${friendName} de la liste`);
 		container.remove(); // Ou logique backend
@@ -59,21 +60,33 @@ function createFriendItem(friendName: string): HTMLElement {
 }
 
 export const Profile: PageComponent = new PageComponent(() => {
+	document.body.classList.remove('fade-out');
+	document.body.classList.add('fade-in');
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
 	const root: HTMLElement = document.createElement('div');
+	if (auth === 0)
+	{
+		fadeOutAndNavigateSPA('/');
+		return root;
+	}
 	root.className = 'font-CaveatBrush';
 	
 	const back: HTMLComponent = new Link ('/');
 	const buttonback: HTMLElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
-	buttonback.textContent = 'retour';
+	buttonback.textContent = local.back;
 	back.appendChild(buttonback);
 	root.appendChild(back.make());
 
+	const leave: HTMLButtonElement = document.createElement('button');
+	leave.className = 'ml-[80%] text-bg0 underline';
+	leave.textContent = local.disc;
+	root.appendChild(leave);
+
 	const htwo: HTMLHeadingElement = document.createElement('h2');
 	htwo.className = 'flex justify-center font-bitcount text-bg0 text-8xl bg-bg21 mx-[35%] mt-[1%]';
-	htwo.textContent = 'PROFILE';
+	htwo.textContent = local.pTitle1;
 	root.appendChild(htwo);
 
 	const imgDiv: HTMLElement = document.createElement('div');
@@ -95,8 +108,9 @@ export const Profile: PageComponent = new PageComponent(() => {
 	}
 
 	displayAvatar("test1234");
+
 	const imgSpan: HTMLSpanElement =  document.createElement('span');
-	imgSpan.textContent = 'Image de profile';
+	imgSpan.textContent = local.pImage;
 	imgDiv.appendChild(imgProf);
 	imgDiv.appendChild(imgSpan);
 	root.appendChild(imgDiv);
@@ -163,7 +177,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	profDiv.className = 'col-span-1 grid gap-4 bg-bg1 border-bg0 border-8 mr-[10%] pb-[50%]';
 	const profP: HTMLParagraphElement = document.createElement('p');
 	profP.className = 'text-center text-bg0 mt-3 text-4xl';
-	profP.textContent = 'Profile';
+	profP.textContent = local.pTitle2;
 	const userInput = createEditableField('Username :', 'username');
 	const passInput = createEditableField('Password :', '••••••');
 
@@ -186,7 +200,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 	const histP: HTMLParagraphElement = document.createElement('p');
 	histP.className = 'text-center text-4xl text-bg0 mt-3';
-	histP.textContent = "Historique de partie";
+	histP.textContent = local.pTitle3;
 
 	const matchData: Match[] = [
 		{ opponent: 'Player123', date: '2025-08-01', touch_blue: 1, touch_red: 10  ,score: '10 - 7' },
@@ -208,7 +222,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	lFriendDiv.className = 'col-span-1 bg-bg1 border-bg0 border-8 ml-[10%]';
 	const friendP: HTMLParagraphElement = document.createElement('p');
 	friendP.className = 'text-center text-4xl text-bg0 mt-3';
-	friendP.textContent = "Liste d'amis";
+	friendP.textContent = local.pTitle4;
 	lFriendDiv.appendChild(friendP);
 
 	// Conteneur pour le champ et le bouton
@@ -218,12 +232,12 @@ export const Profile: PageComponent = new PageComponent(() => {
 	// Champ de saisie
 	const friendInput = document.createElement('input');
 	friendInput.type = 'text';
-	friendInput.placeholder = 'Nom de l\'ami';
+	friendInput.placeholder = local.pInput;
 	friendInput.className = 'flex-1 px-2 py-1 rounded border border-bg0';
 
 	// Bouton d'ajout
 	const addFriendButton = document.createElement('button');
-	addFriendButton.textContent = 'Ajouter';
+	addFriendButton.textContent = local.pButton1;
 	addFriendButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:bg-bg2 transition';
 
 	// Liste d'amis (conteneur où on ajoute dynamiquement)
@@ -237,8 +251,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 			const friendItem = createFriendItem(name); // Appelle ta fonction définie plus tôt
 			friendListContainer.appendChild(friendItem);
 			friendInput.value = '';
-			sendRequest('https://transcendence.42.fr:4269/api/friends/add', 'username',
-				'friend', 'tmp', name);
+			// Tu peux aussi appeler ici une fonction d'envoi backend
 		}
 	};
 
@@ -265,5 +278,3 @@ export const Profile: PageComponent = new PageComponent(() => {
 	root.appendChild(tabDiv);
 	return root;
 });
-
-

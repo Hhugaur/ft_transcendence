@@ -19,6 +19,4 @@ RUN mkdir -p /etc/nginx/ssl && \
 COPY proxy-ssl/conf/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist /app/dist
 
-EXPOSE 6969 4269
-
 CMD ["nginx", "-g", "daemon off;"]
