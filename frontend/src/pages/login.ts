@@ -7,7 +7,6 @@ import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
 import { local } from '../components/language';
-import {sendRequest} from "../utils";
 
 export const Login: PageComponent = new PageComponent(() => {
 	

@@ -77,7 +77,7 @@ const classic: () => HTMLElement = () => {
     const buttonTournament: HTMLButtonElement = document.createElement('button');
     //buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
     buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-	buttonTournament.textContent = local.iButton2;
+	buttonTournament.textContent = local.iButton3;
 
     // --- Variable to track selected mode ---
     let selectedMode: 'classic' | 'tournament' = 'classic';
