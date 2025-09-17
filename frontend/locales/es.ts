@@ -38,5 +38,6 @@ export const es = {
     "pButton1": "Agregar",
     "pButton2": "Perfil",
     "pButton3": "Partida",
-    "pButton4": "Eliminar"
+    "pButton4": "Eliminar",
+	"back": "back"
 }

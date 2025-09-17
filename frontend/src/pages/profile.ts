@@ -6,7 +6,7 @@ import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
 import { auth } from './index.ts';
 import { createMatchItem, Match } from '../components/matchHistory';
-import { local } from '../components/language.ts';
+import { local, createLanguageMenu} from '../components/language';
 import { createInput, createLabeledInput, createEditableField } from '../components/input';
 
 function createFriendItem(friendName: string): HTMLElement {
@@ -26,7 +26,7 @@ function createFriendItem(friendName: string): HTMLElement {
 	// Bouton "Voir profil"
 	const profileBtn = document.createElement('button');
 	profileBtn.className = 'bg-bg0 text-txt0 px-2 py-1 rounded hover:bg-bg2 transition';
-	profileBtn.textContent = local.pButtton2;
+	profileBtn.textContent = local.pButton2;
 	profileBtn.onclick = () => {
 		// À remplacer par la logique réelle
 		console.log(`Voir profil de ${friendName}`);

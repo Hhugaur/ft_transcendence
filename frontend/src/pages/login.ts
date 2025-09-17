@@ -6,7 +6,7 @@ import { sendRequest } from '../utils';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
-import { local } from '../components/language';
+import { local, createLanguageMenu} from '../components/language';
 
 export const Login: PageComponent = new PageComponent(() => {
 	
@@ -37,7 +37,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	const div: HTMLElement = document.createElement('div');
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
-	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[35%]';
+	title.className = 'text-bg0 font-bitcount hover:cursor-default text-4xl text-center -mt-[35%]';
 	title.textContent = local.lTitle;
 	div.appendChild(title);
 	const form: HTMLFormElement = document.createElement('form');
@@ -131,6 +131,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.appendChild(buttonDiv);
 
 	root.appendChild(div);
+	//main.appendChild(createLanguageMenu());
 	main.appendChild(root);
 	return main;
 });
