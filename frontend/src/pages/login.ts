@@ -2,11 +2,12 @@ import {
         PageComponent,
         HTMLComponent
 } from '../component';
-import { sendRequest } from '../utils';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
+import { sendRequest } from "../utils";
 import { local, createLanguageMenu} from '../components/language';
+
 
 export const Login: PageComponent = new PageComponent(() => {
 	

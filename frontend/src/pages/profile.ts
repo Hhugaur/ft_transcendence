@@ -154,13 +154,82 @@ export const Profile: PageComponent = new PageComponent(() => {
 	imgDiv.className = 'w-32 h-32 rounded-full bg-bg0 overflow-hidden flex items-center justify-center relative text-center text-sm -mb-[1%] ml-[15%]';
 	const imgProf: HTMLImageElement = document.createElement('img');
 	imgProf.className = 'w-full h-full object-cover absolute top-0 left-0 text-bg0';
-	imgProf.alt = local.pImage;
-	imgProf.src = './test.jpg';
+	imgProf.alt = 'Image de profile';
+
+	async function displayAvatar(username: string) {
+		const res = await fetch(`https://transcendence.42.fr:4269/api/auth/avatar/${username}`);
+		if (!res.ok) {
+			console.error("Impossible de charger l'avatar");
+			return;
+		}
+
+		const data = await res.json();
+
+		imgProf.src = data.avatarUrl;
+	}
+
+	displayAvatar("test1234");
+
 	const imgSpan: HTMLSpanElement =  document.createElement('span');
 	imgSpan.textContent = local.pImage;
 	imgDiv.appendChild(imgProf);
 	imgDiv.appendChild(imgSpan);
 	root.appendChild(imgDiv);
+
+	const uploadAvatarContainer = document.createElement('div');
+	uploadAvatarContainer.className = 'flex items-center gap-2 px-2 mt-2';
+
+	const uploadAvatarButton = document.createElement('button');
+	uploadAvatarButton.textContent = 'Upload avatar';
+	uploadAvatarButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:bg-bg2 transition';
+
+	const avatarInput = createInput('file', null, 'avatarInput', 'flex items-center gap-2 px-2 mt-2');
+
+	uploadAvatarContainer.appendChild(uploadAvatarButton);
+	uploadAvatarContainer.appendChild(avatarInput);
+	root.appendChild(uploadAvatarContainer);
+
+	let selectedFile: File | null = null;
+
+	avatarInput.addEventListener("change", (e: Event) => {
+		const target = e.target as HTMLInputElement;
+		selectedFile = target.files?.[0] || null;
+	});
+
+	uploadAvatarButton.addEventListener("click", async () => {
+		if (!selectedFile) {
+			alert("Aucun fichier sélectionné.");
+			return;
+		}
+
+		if (!/^image\/(jpeg|png)$/.test(selectedFile.type)) {
+			alert("Formats autorisés: JPG/PNG.");
+			return;
+		}
+		if (selectedFile.size > 2097152) {
+			alert("Taille max: 2 Mo.");
+			return;
+		}
+
+		const form = new FormData();
+		form.append("file", selectedFile);
+		form.append("username", "test1234");
+
+		try {
+			const res = await fetch('https://transcendence.42.fr:4269/api/auth/upload', {
+				method: "PATCH",
+				body: form,
+				credentials: "include",
+			});
+
+			if (!res.ok)
+				throw new Error(`HTTP ${res.status}`);
+			alert("Upload réussi ✅");
+		} catch (err: any) {
+			console.log("Échec de l’upload: ", err.message);
+			alert("Échec de l’upload: " + err.message);
+		}
+	});
 	
 	const tabDiv: HTMLElement = document.createElement('div');
 	tabDiv.className = 'grid grid-cols-3 gap-8 mt-[2%] mx-[1%]';
