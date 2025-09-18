@@ -16,13 +16,6 @@ export const Register: PageComponent = new PageComponent(() => {
 	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
-	
-	// const back: HTMLComponent = new Link ('/');
-	// const buttonback: HTMLElement = document.createElement('button');
-	// buttonback.className = 'underline ml-[5%] text-bg0';
-	// buttonback.textContent = 'retour';
-	// back.appendChild(buttonback);
-	// main.appendChild(back.make());
 
 	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
