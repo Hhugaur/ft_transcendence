@@ -14,9 +14,4 @@ RUN npm run build
 
 EXPOSE 5000
 
-# mode dev localhost
-# CMD ["npm", "run", "dev"]
-
-
-# mode prod
 CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "5000"]

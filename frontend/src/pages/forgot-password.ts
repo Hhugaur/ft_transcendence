@@ -6,6 +6,8 @@ import { Title } from '../components/title';
 import { Link } from '../components/link';
 
 export const ForgotPassword: PageComponent = new PageComponent(() => {
+	document.body.classList.remove('fade-out');
+   	document.body.classList.add('fade-in');
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
 	const root: HTMLElement = document.createElement('div');
