@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS GAMES (
 CREATE TABLE IF NOT EXISTS BLOCKED (
 	user_id INTEGER,
 	blocked_id INTEGER,
-	PRIMARY KEY (user_id, friend_id),
+	PRIMARY KEY (user_id, blocked_id),
 	FOREIGN KEY (user_id) REFERENCES USERS(id),
 	FOREIGN KEY (blocked_id) REFERENCES USERS(id)
 );
