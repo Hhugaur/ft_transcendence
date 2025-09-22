@@ -173,6 +173,8 @@ server.get('/avatar/:username', async (request, reply) => {
         }
 
         const data = await sendDbGetAvatarRequest(username);
+        if (!data.avatar)
+            return reply.code(404).send("Any avatar!");
         const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
         reply.code(200).send({ avatarUrl });
     } catch(error) {
