@@ -132,14 +132,23 @@ server.post('/friends/delete', async (request, reply) => {
 
 server.patch('/upload', async (request, reply) => {
     try {
-        const { file } = request.file;
-        const { username } = request.body;
-        if (!username || !file) {
-            console.log('Body received by /upload:', request.body);
-            return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)/* || !config.safeUsernameSQLInjection.test(file)*/) { // protection a voir
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
+        const parts = request.parts();
+
+        let username = null;
+        let fileBuffer = null;
+        let fileMime = null;
+
+        for await (const part of parts) {
+            if (part.type === "file" && part.fieldname === "file") {
+                const chunks = [];
+                for await (const chunk of part.file) {
+                    chunks.push(chunk);
+                }
+                fileBuffer = Buffer.concat(chunks);
+                fileMime = part.mimetype; // ex: image/png
+            } else if (part.type === "field" && part.fieldname === "username") {
+                username = part.value;
+            }
         }
 
         await sendDbUpdateAvatarRequest(username, file);
