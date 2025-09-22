@@ -172,9 +172,11 @@ server.get('/avatar/:username', async (request, reply) => {
             return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
         }
 
-        const data = await sendDbGetAvatarRequest(username);
-        if (!data.avatar)
-            return reply.code(404).send("Any avatar!");
+        try {
+            const data = await sendDbGetAvatarRequest(username);
+        } catch(error) {
+            reply.code(404).send("Any avatar!"); // can be better
+        }
         const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
         reply.code(200).send({ avatarUrl });
     } catch(error) {
