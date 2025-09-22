@@ -154,11 +154,6 @@ server.patch('/upload', async (request, reply) => {
             return reply.code(400).send({ error: "Missing username" });
         }
 
-        // Vérification sécurité
-        if (!config.safeUsernameSQLInjection.test(username)) {
-            return reply.code(400).send({ error: "Invalid username" });
-        }
-
         // Sauvegarde dans la DB (exemple: avatar = BLOB)
         await sendDbUpdateAvatarRequest(username, fileBuffer);
 
