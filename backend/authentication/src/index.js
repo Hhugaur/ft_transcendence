@@ -16,7 +16,11 @@ import { sendDbUpdateAvatarRequest, sendDbGetAvatarRequest } from './avatar.js';
 //  secret: process.env.JWT_SECRET as string,
 // });
 
-await server.register(multipart);
+server.register(multipart, {
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5 MB
+    }
+});
 
 await server.register(cors, {
     origin: '*', // a modif mais pour l'instant test
@@ -132,27 +136,35 @@ server.post('/friends/delete', async (request, reply) => {
 
 server.patch('/upload', async (request, reply) => {
     try {
-        const parts = request.parts();
-
-        let username = null;
-        let fileBuffer = null;
-        let fileMime = null;
-
-        for await (const part of parts) {
-            if (part.type === "file" && part.fieldname === "file") {
-                const chunks = [];
-                for await (const chunk of part.file) {
-                    chunks.push(chunk);
-                }
-                fileBuffer = Buffer.concat(chunks);
-                fileMime = part.mimetype; // ex: image/png
-            } else if (part.type === "field" && part.fieldname === "username") {
-                username = part.value;
-            }
+        const filePart = await request.file();
+        if (!filePart) {
+            return reply.code(400).send({ error: "No file uploaded" });
         }
 
-        await sendDbUpdateAvatarRequest(username, file);
-        reply.code(200).send({ message: `${username} try to change his avatar: Success, avatar has been changed!` });
+        // Lis le contenu du fichier en mémoire
+        const chunks = [];
+        for await (const chunk of filePart.file) {
+            chunks.push(chunk);
+        }
+        const fileBuffer = Buffer.concat(chunks);
+
+        // Récupère le champ "username" depuis le formulaire
+        const username = filePart.fields.username?.value;
+        if (!username) {
+            return reply.code(400).send({ error: "Missing username" });
+        }
+
+        // Vérification sécurité
+        if (!config.safeUsernameSQLInjection.test(username)) {
+            return reply.code(400).send({ error: "Invalid username" });
+        }
+
+        // Sauvegarde dans la DB (exemple: avatar = BLOB)
+        await sendDbUpdateAvatarRequest(username, fileBuffer);
+
+        return reply.code(200).send({
+            message: `${username} uploaded avatar successfully!`
+        });
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
