@@ -19,13 +19,6 @@ export const Login: PageComponent = new PageComponent(() => {
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
 
-	// const back: HTMLComponent = new Link ('/');
-	// const buttonback: HTMLElement = document.createElement('button');
-	// buttonback.className = 'underline ml-[5%] text-bg0';
-	// buttonback.textContent = 'retour';
-	// back.appendChild(buttonback);
-	// main.appendChild(back.make());
-
 	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
 	buttonback.textContent = local.back;
@@ -87,7 +80,7 @@ export const Login: PageComponent = new PageComponent(() => {
 			return;
 		}
 
-		sendRequest('https://transcendence.42.fr:4269/api/auth/login', 'username',
+		sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
 			'password', username, password);
 	};
 
@@ -132,42 +125,6 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.appendChild(buttonDiv);
 
 	root.appendChild(div);
-	//main.appendChild(createLanguageMenu());
 	main.appendChild(root);
 	return main;
 });
-
-/*form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const username = user.value.trim();
-  const password = pass.value;
-
-  if (!username || !password) {
-    alert('Please fill out both fields.');
-    return;
-  }
-
-  // Do your login logic here...
-  console.log('Logging in with:', username, password);
-});
-*/
-
-/*registerB.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Navigate to registration page or trigger route change
-    console.log("Redirect to registration page");
-});
-
-forgotpass.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Handle forgot password logic or navigate
-    console.log("Redirect to forgot password page");
-});
-*/
-
-/*const forgotpassL: HTMLComponent = new Link('/forgot-password');
-const forgotpass: HTMLElement = document.createElement('button');
-forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-forgotpass.textContent = 'Mot de passe oublié';
-forgotpassL.appendChild(forgotpass);
-buttonDiv.appendChild(forgotpassL.make()); */

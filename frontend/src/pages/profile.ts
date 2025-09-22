@@ -157,7 +157,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	imgProf.alt = 'Image de profile';
 
 	async function displayAvatar(username: string) {
-		const res = await fetch(`https://transcendence.42.fr:4269/api/auth/avatar/${username}`);
+		const res = await fetch(`https://transcendence.42.fr:42069/api/auth/avatar/${username}`);
 		if (!res.ok) {
 			console.error("Impossible de charger l'avatar");
 			return;
@@ -181,13 +181,12 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 	const uploadAvatarButton = document.createElement('button');
 	uploadAvatarButton.textContent = 'Upload avatar';
-	uploadAvatarButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:bg-bg2 transition';
+	uploadAvatarButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:shadow-md hover:bg-txt1 transition';
 
 	const avatarInput = createInput('file', null, 'avatarInput', 'flex items-center gap-2 px-2 mt-2');
 
 	uploadAvatarContainer.appendChild(uploadAvatarButton);
 	uploadAvatarContainer.appendChild(avatarInput);
-	root.appendChild(uploadAvatarContainer);
 
 	let selectedFile: File | null = null;
 
@@ -216,7 +215,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 		form.append("username", "test1234");
 
 		try {
-			const res = await fetch('https://transcendence.42.fr:4269/api/auth/upload', {
+			const res = await fetch('https://transcendence.42.fr:42069/api/auth/upload', {
 				method: "PATCH",
 				body: form,
 				credentials: "include",
@@ -235,7 +234,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	tabDiv.className = 'grid grid-cols-3 gap-8 mt-[2%] mx-[1%]';
 
 	const profDiv: HTMLElement = document.createElement('div');
-	profDiv.className = 'col-span-1 grid gap-4 bg-bg1 border-bg0 border-8 mr-[10%] pb-[50%]';
+	profDiv.className = 'col-span-1 grid gap-4 bg-bg1 border-bg0 border-8 mr-[10%] pb-[45%]';
 	const profP: HTMLParagraphElement = document.createElement('p');
 	profP.className = 'text-center text-bg0 mt-3 text-4xl';
 	profP.textContent = local.pTitle2;
@@ -253,6 +252,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	profDiv.appendChild(profP);
 	profDiv.appendChild(userInput.element);
 	profDiv.appendChild(passInput.element);
+	profDiv.appendChild(uploadAvatarContainer);
 	profDiv.appendChild(winratetxt);
 	profDiv.appendChild(winrate);
 

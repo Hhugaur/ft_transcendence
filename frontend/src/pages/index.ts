@@ -170,16 +170,3 @@ export const Index: PageComponent = new PageComponent(() => {
     root.appendChild(createLanguageMenu());
     return root;
 });
-//sur les autre pages peut etre ajouter des boutons pour revenir sur la page d'accueil
-
-/*const isLoggedIn = checkAuth(); // Replace with real auth check
-
-if (isLoggedIn) {
-    const profileImg = document.createElement('img');
-    profileImg.src = getUserProfilePic(); // Replace with actual user photo URL
-    profileImg.className = 'w-12 h-12 rounded-full hover:cursor-pointer';
-    buttonDiv.appendChild(profileImg);
-} else {
-    loginL.appendChild(button);
-    buttonDiv.appendChild(loginL.make());
-}*/

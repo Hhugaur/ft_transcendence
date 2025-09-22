@@ -20,17 +20,17 @@ export async function sendRequest(url: string, nameVar1: string, nameVar2: strin
 }
 
 function selectMessage(url: string, type: boolean) {
-    if (url === 'https://transcendence.42.fr:4269/api/friends/add' && type === true)
+    if (url === 'https://transcendence.42.fr:42069/api/friends/add' && type === true)
         return "Ajout d'ami réussie :";
-    if (url === 'https://transcendence.42.fr:4269/api/friends/add' && type === false)
+    if (url === 'https://transcendence.42.fr:42069/api/friends/add' && type === false)
         return "Erreur lors de l’ajout d'ami :";
-    if (url === 'https://transcendence.42.fr:4269/api/auth/login' && type === true)
+    if (url === 'https://transcendence.42.fr:42069/api/auth/login' && type === true)
         return 'Connnexion réussie :';
-    if (url === 'https://transcendence.42.fr:4269/api/auth/login' && type === false)
+    if (url === 'https://transcendence.42.fr:42069/api/auth/login' && type === false)
         return 'Erreur lors de la connexion :';
-    if (url === 'https://transcendence.42.fr:4269/api/auth/register' && type === true)
+    if (url === 'https://transcendence.42.fr:42069/api/auth/register' && type === true)
         return 'Inscription réussie :';
-    if (url === 'https://transcendence.42.fr:4269/api/auth/register' && type === false)
+    if (url === 'https://transcendence.42.fr:42069/api/auth/register' && type === false)
         return 'Erreur lors de l’inscription :';
 }
-// https://transcendence.42.fr:4269/api/upload
+// https://transcendence.42.fr:42069/api/upload

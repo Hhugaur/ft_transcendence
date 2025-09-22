@@ -5,7 +5,6 @@ export const fr = {
     "iButton3": "Tournoi",
     "iInput": "Entrez votre pseudo",
     "iButton4": "Jouer",
-
     "iImagetxt": "Image de profile",
     "iLanguage": "langage",
     "lTitle": "CONNEXION",
