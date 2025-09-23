@@ -183,7 +183,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	uploadAvatarButton.textContent = 'Upload avatar';
 	uploadAvatarButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:shadow-md hover:bg-txt1 transition';
 
-	const avatarInput = createInput('file', null, 'avatarInput', 'flex items-center gap-2 px-2 mt-2');
+	const avatarInput = createInput('file', '', 'avatarInput', 'bg-txt0 flex items-center gap-2 px-2 mt-2');
 
 	uploadAvatarContainer.appendChild(uploadAvatarButton);
 	uploadAvatarContainer.appendChild(avatarInput);

@@ -100,7 +100,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
 	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
-	registerB.textContent = local.lOther2;
+	registerB.textContent = local.rSubmit;
 	const forgotpass: HTMLElement = document.createElement('button');
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
 	forgotpass.textContent = local.lOther1;

@@ -86,7 +86,7 @@ const classic: () => HTMLElement = () => {
     const handleGuestFlow = () => {
         const nameInput: HTMLInputElement = document.createElement('input');
         nameInput.type = 'text';
-        nameInput.placeholder = 'Entrez votre pseudo';
+        nameInput.placeholder = local.iInput;
         //nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
 		nameInput.className = `hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl
 		transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-md focus:outline-none`;
