@@ -3,5 +3,5 @@ frontend/node_modules
 node_modules
 *.idea
 .vscode
-database
+database/database.sqlite
 .env
