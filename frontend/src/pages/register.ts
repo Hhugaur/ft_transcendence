@@ -77,7 +77,7 @@ export const Register: PageComponent = new PageComponent(() => {
 			return ;
 		}
 
-		sendRequest('https://transcendence.42.fr:4269/api/auth/register', 'username',
+		sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
 			'password', username, newpassword);
 
 		// Example of sending to an API

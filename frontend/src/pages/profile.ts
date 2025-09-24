@@ -96,7 +96,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	imgProf.alt = 'Image de profile';
 
 	async function displayAvatar(username: string) {
-		const res = await fetch(`https://transcendence.42.fr:4269/api/auth/avatar/${username}`);
+		const res = await fetch(`https://transcendence.42.fr:42069/api/auth/avatar/${username}`);
 		if (!res.ok) {
 			console.error("Impossible de charger l'avatar");
 			return;
@@ -155,7 +155,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 		form.append("username", "test1234");
 
 		try {
-			const res = await fetch('https://transcendence.42.fr:4269/api/auth/upload', {
+			const res = await fetch('https://transcendence.42.fr:42069/api/auth/upload', {
 				method: "PATCH",
 				body: form,
 				credentials: "include",

@@ -87,7 +87,7 @@ export const Login: PageComponent = new PageComponent(() => {
 			return;
 		}
 
-		sendRequest('https://transcendence.42.fr:4269/api/auth/login', 'username',
+		sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
 			'password', username, password);
 	};
 
