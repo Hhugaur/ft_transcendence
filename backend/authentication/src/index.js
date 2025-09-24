@@ -182,7 +182,7 @@ server.get('/avatar/:username', async (request, reply) => {
         try {
             const data = await sendDbGetAvatarRequest(username);
         } catch(error) {
-            reply.code(404).send("Any avatar!"); // can be better
+            reply.code(404).send({ avatar: null, message: "No avatar found" }); // can be better
         }
         const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
         reply.code(200).send({ avatarUrl });
