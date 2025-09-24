@@ -33,4 +33,4 @@ function selectMessage(url: string, type: boolean) {
     if (url === 'https://transcendence.42.fr:42069/api/auth/register' && type === false)
         return 'Erreur lors de l’inscription :';
 }
-// https://transcendence.42.fr:4269/api/upload
+// https://transcendence.42.fr:42069/api/upload

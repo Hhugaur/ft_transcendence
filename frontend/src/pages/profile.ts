@@ -104,7 +104,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 		const data = await res.json();
 
-		imgProf.src = data.avatarUrl;
+		imgProf.src = data.avatar;
 	}
 
 	displayAvatar("test1234");
