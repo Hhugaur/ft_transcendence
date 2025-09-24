@@ -16,7 +16,11 @@ import { sendDbUpdateAvatarRequest, sendDbGetAvatarRequest } from './avatar.js';
 //  secret: process.env.JWT_SECRET as string,
 // });
 
-await server.register(multipart);
+server.register(multipart, {
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5 MB
+    }
+});
 
 await server.register(cors, {
     origin: '*', // a modif mais pour l'instant test
@@ -132,18 +136,30 @@ server.post('/friends/delete', async (request, reply) => {
 
 server.patch('/upload', async (request, reply) => {
     try {
-        const { file } = request.file;
-        const { username } = request.body;
-        if (!username || !file) {
-            console.log('Body received by /upload:', request.body);
-            return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)/* || !config.safeUsernameSQLInjection.test(file)*/) { // protection a voir
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
+        const filePart = await request.file();
+        if (!filePart) {
+            return reply.code(400).send({ error: "No file uploaded" });
         }
 
-        await sendDbUpdateAvatarRequest(username, file);
-        reply.code(200).send({ message: `${username} try to change his avatar: Success, avatar has been changed!` });
+        // Lis le contenu du fichier en mémoire
+        const chunks = [];
+        for await (const chunk of filePart.file) {
+            chunks.push(chunk);
+        }
+        const fileBuffer = Buffer.concat(chunks);
+
+        // Récupère le champ "username" depuis le formulaire
+        const username = filePart.fields.username?.value;
+        if (!username) {
+            return reply.code(400).send({ error: "Missing username" });
+        }
+
+        // Sauvegarde dans la DB (exemple: avatar = BLOB)
+        await sendDbUpdateAvatarRequest(username, fileBuffer);
+
+        return reply.code(200).send({
+            message: `${username} uploaded avatar successfully!`
+        });
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
@@ -163,7 +179,11 @@ server.get('/avatar/:username', async (request, reply) => {
             return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
         }
 
-        const data = await sendDbGetAvatarRequest(username);
+        try {
+            const data = await sendDbGetAvatarRequest(username);
+        } catch(error) {
+            reply.code(404).send("Any avatar!"); // can be better
+        }
         const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
         reply.code(200).send({ avatarUrl });
     } catch(error) {

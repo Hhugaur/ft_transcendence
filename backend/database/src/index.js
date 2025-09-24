@@ -5,6 +5,7 @@ import cors from '@fastify/cors';
 
 import server from './server.js';
 import { config } from './config.js';
+import multipart from '@fastify/multipart';
 import { loginManager } from './login.js';
 import { registerManager } from './register.js';
 import { disconnectManager } from './disconnect.js';
@@ -21,6 +22,12 @@ async function initDatabase() {
 await server.register(cors, {
     origin: '*', // a modif mais pour l'instant test
     methods: ['GET', 'POST']
+});
+
+server.register(multipart, {
+    limits: {
+        fileSize: 2 * 1024 * 1024 // 2MB comme sur le frontend
+    }
 });
 
 async function main() {
