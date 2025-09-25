@@ -1,13 +1,14 @@
 export const fr = {
+    //index
     "iTitle": "TRANSCENDENCE",
     "iButton1": "Se connecter",
     "iButton2": "Classique",
     "iButton3": "Tournoi",
     "iInput": "Entrez votre pseudo",
     "iButton4": "Jouer",
-
     "iImagetxt": "Image de profile",
     "iLanguage": "langage",
+    //login
     "lTitle": "CONNEXION",
     "lInput1": "Nom d'utilisateur",
     "lInput2": "Mot de passe",
@@ -16,12 +17,12 @@ export const fr = {
     "lButton2": "Masquer",
     "lText": "oû",
     "lOther1": "Mot de passe oublié",
-    "lOther2": "S'inscrire",
+    //register
     "rTitle": "INSCRIPTION",
     "rInput1": "Nom d'utilisateur",
     "rInput2": "Nouveau mot de passe",
     "rSubmit": "S'inscrire",
-    "rText": "oû",
+    //profile
     "pTitle1": "PROFILE",
     "pImage": "Image de profile",
     "pTitle2": "Profile",

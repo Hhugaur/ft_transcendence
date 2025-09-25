@@ -7,7 +7,7 @@ import { Tournament } from './pages/tournament';
 import { Profile } from './pages/profile';
 import { Register } from './pages/register';
 import { ForgotPassword } from './pages/forgot-password';
-//import { ViewProfile } from './pages/view-profile';
+import { ViewProfile } from './pages/view-profile';
 
 const app = Router.getInstance();
 
@@ -18,6 +18,6 @@ app.register('/tournament', Tournament);
 app.register('/profile', Profile);
 app.register('/register', Register);
 app.register('/forgot-password', ForgotPassword);
-//app.register('/view-profile', ViewProfile);
+app.register('/view-profile', ViewProfile);
 
 app.launch();

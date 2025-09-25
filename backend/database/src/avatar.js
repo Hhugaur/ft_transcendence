@@ -22,6 +22,7 @@ export const updateAvatar = async ({ username, file }, db, reply) => {
 export const getAvatar = async (username, db, reply) => {
     try {
         const user = await db.get('SELECT avatar FROM USERS WHERE username = ?', username);
+
         if (!user || !user.avatar) {
             return reply.code(404).send({ error: `User not found for ${username} or no avatar!` });
         }

@@ -15,13 +15,6 @@ export const Register: PageComponent = new PageComponent(() => {
 	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
-	
-	// const back: HTMLComponent = new Link ('/');
-	// const buttonback: HTMLElement = document.createElement('button');
-	// buttonback.className = 'underline ml-[5%] text-bg0';
-	// buttonback.textContent = 'retour';
-	// back.appendChild(buttonback);
-	// main.appendChild(back.make());
 
 	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
@@ -42,14 +35,12 @@ export const Register: PageComponent = new PageComponent(() => {
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
 
-	//ici faudra mettre des check vu que c'est ici que va avoir le formulaire pour la connexion
 	const user: HTMLInputElement = createInput('text', 'Username', 'Username', 'p-2 bg-bg0 mt-[26%] text-center');
 
 	const newpass: HTMLInputElement = createInput('password', 'New Password', 'New Password', 'p-2 bg-bg0 mt-2 text-center');
 
 	const newnewpass: HTMLInputElement = createInput('password', 'New Password', 'New New Password', 'p-2 bg-bg0 mt-2 text-center');
 
-	//peut etre un link vers la page principale
 	const submit: HTMLInputElement = createInput('submit', '', 'Valider', 'font-caveat py-1 bg-txt1 text-bg0 text-xl mt-3 text-center rounded-sm');
 	submit.value = "S'inscrire";
 
@@ -80,9 +71,6 @@ export const Register: PageComponent = new PageComponent(() => {
 		sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
 			'password', username, newpassword);
 
-		// Example of sending to an API
-		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })
-		// alert(`Tentative de connexion avec:\nUsername: ${username}\nPassword: ${password}`);
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');
@@ -90,7 +78,6 @@ export const Register: PageComponent = new PageComponent(() => {
 	or.textContent = 'or';
 	div.appendChild(or);
 
-	//ici le transformer en link pour qu'il aille vers le bon endroint
 	const google: HTMLAnchorElement = document.createElement('a');
 	google.className = 'text-bg1 bg-bg0 ml-[31%] py-1 px-5';
 	google.textContent = 'GOOGLE';

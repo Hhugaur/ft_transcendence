@@ -19,13 +19,6 @@ export const Login: PageComponent = new PageComponent(() => {
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
 
-	// const back: HTMLComponent = new Link ('/');
-	// const buttonback: HTMLElement = document.createElement('button');
-	// buttonback.className = 'underline ml-[5%] text-bg0';
-	// buttonback.textContent = 'retour';
-	// back.appendChild(buttonback);
-	// main.appendChild(back.make());
-
 	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
 	buttonback.textContent = local.back;
@@ -107,7 +100,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
 	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
-	registerB.textContent = local.lOther2;
+	registerB.textContent = local.rSubmit;
 	const forgotpass: HTMLElement = document.createElement('button');
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
 	forgotpass.textContent = local.lOther1;
@@ -132,42 +125,6 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.appendChild(buttonDiv);
 
 	root.appendChild(div);
-	//main.appendChild(createLanguageMenu());
 	main.appendChild(root);
 	return main;
 });
-
-/*form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const username = user.value.trim();
-  const password = pass.value;
-
-  if (!username || !password) {
-    alert('Please fill out both fields.');
-    return;
-  }
-
-  // Do your login logic here...
-  console.log('Logging in with:', username, password);
-});
-*/
-
-/*registerB.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Navigate to registration page or trigger route change
-    console.log("Redirect to registration page");
-});
-
-forgotpass.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Handle forgot password logic or navigate
-    console.log("Redirect to forgot password page");
-});
-*/
-
-/*const forgotpassL: HTMLComponent = new Link('/forgot-password');
-const forgotpass: HTMLElement = document.createElement('button');
-forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-forgotpass.textContent = 'Mot de passe oublié';
-forgotpassL.appendChild(forgotpass);
-buttonDiv.appendChild(forgotpassL.make()); */

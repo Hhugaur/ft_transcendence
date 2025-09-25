@@ -1,4 +1,5 @@
 export const en =  {
+    //profile
     "iTitle": "TRANSCENDENCE",
     "iButton1": "Log In",
     "iButton2": "Classic",
@@ -8,6 +9,7 @@ export const en =  {
     "disc": "disc",
     "iImagetxt": "Profile picture",
     "iLanguage": "Language",
+    //login
     "lTitle": "LOGIN",
     "lInput1": "Username",
     "lInput2": "Password",
@@ -16,12 +18,13 @@ export const en =  {
     "lButton2": "Hide",
     "lText": "or",
     "lOther1": "Forgot password",
-    "1Other2": "Sign Up",
+    //register
     "rTitle": "SIGN UP",
     "rInput1": "Username",
     "rInput2": "New password",
     "rSubmit": "Sign Up",
     "rText": "or",
+    //profile
     "pTitle1": "PROFILE",
     "pImage": "Profile picture",
     "pTitle2": "Profile",

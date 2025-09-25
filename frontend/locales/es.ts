@@ -1,4 +1,5 @@
 export const es = {
+    //index
     "iTitle": "TRASCENDENCIA",
     "iButton1": "Iniciar sesión",
     "iButton2": "Clásico",
@@ -8,20 +9,22 @@ export const es = {
     "disc": "disc",
     "iImagetxt": "Imagen de perfil",
     "iLanguage": "Idioma",
-    "lTitle": "INICIAR SESIÓN",
+    //login
+    "lTitle": "Inicia sesión",
     "lInput1": "Nombre de usuario",
     "lInput2": "Contraseña",
-    "lSubmit": "Iniciar sesión",
+    "lSubmit": "Inicia sesión",
     "lButton1": "Mostrar",
     "lButton2": "Ocultar",
     "lText": "o",
-    "lOther1": "Olvidé mi contraseña",
-    "1Other2": "Registrarse",
+    //register
+    "lOther1": "Olvide contraseña",
     "rTitle": "REGISTRO",
     "rInput1": "Nombre de usuario",
     "rInput2": "Nueva contraseña",
     "rSubmit": "Registrarse",
     "rText": "o",
+    //profile
     "pTitle1": "PERFIL",
     "pImage": "Imagen de perfil",
     "pTitle2": "Perfil",
