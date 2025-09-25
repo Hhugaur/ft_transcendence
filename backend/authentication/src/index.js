@@ -154,8 +154,8 @@ server.patch('/upload', async (request, reply) => {
             return reply.code(400).send({ error: "Missing username" });
         }
 
-        // Sauvegarde dans la DB (exemple: avatar = BLOB)
-        await sendDbUpdateAvatarRequest(username, fileBuffer);
+        const fileBase64 = fileBuffer.toString('base64');
+        await sendDbUpdateAvatarRequest(username, fileBase64);
 
         return reply.code(200).send({
             message: `${username} uploaded avatar successfully!`
@@ -182,7 +182,7 @@ server.get('/avatar/:username', async (request, reply) => {
         try {
             const data = await sendDbGetAvatarRequest(username);
         } catch(error) {
-            reply.code(404).send("Any avatar!"); // can be better
+            reply.code(404).send({ avatar: null, message: "No avatar found" }); // can be better
         }
         const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
         reply.code(200).send({ avatarUrl });
