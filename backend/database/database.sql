@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS USERS (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	status TEXT CHECK(status IN ('disconnected', 'connected', 'absent')) NOT NULL DEFAULT 'disconnected',
+	status TEXT CHECK(status IN ('Hors ligne', 'Connecter', 'In game')) NOT NULL DEFAULT 'Hors ligne',
 	username VARCHAR(20) UNIQUE NOT NULL,
 	password VARCHAR(128),
 	avatar BLOB,
@@ -15,6 +15,14 @@ CREATE TABLE IF NOT EXISTS GAMES (
 	blue_player_id INTEGER,
 	FOREIGN KEY (red_player_id) REFERENCES USERS(id),
 	FOREIGN KEY (blue_player_id) REFERENCES USERS(id)
+);
+
+CREATE TABLE IF NOT EXISTS BLOCKED (
+	user_id INTEGER,
+	blocked_id INTEGER,
+	PRIMARY KEY (user_id, blocked_id),
+	FOREIGN KEY (user_id) REFERENCES USERS(id),
+	FOREIGN KEY (blocked_id) REFERENCES USERS(id)
 );
 
 CREATE TABLE IF NOT EXISTS FRIENDS (

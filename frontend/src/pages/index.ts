@@ -3,18 +3,19 @@ import {
         HTMLComponent
 } from '../component';
 import { Title } from '../components/title';
-import { Link } from '../components/link';
+import { Link , fadeOutAndNavigateSPA } from '../components/link';
+import { local, createLanguageMenu} from '../components/language';
+import { Router } from '../router';
 
-
-let auth: number;
+export let auth: number;
+const app = Router.getInstance();
 
 const statusLogin: () => HTMLElement = () => {
 
-	const buttonDiv: HTMLElement = document.createElement('div');
-	buttonDiv.className = 'flex text-bg0 justify-end mr-10 mt-4';
-
 	if(0)
 	{
+        const buttonDiv: HTMLElement = document.createElement('div');
+	    buttonDiv.className = 'grid text-bg0 justify-end mr-10 mt-4';
 		const imgDiv: HTMLElement = document.createElement('div');
 		imgDiv.className ='w-32 h-32 rounded-full bg-bg0 relative overflow-hidden text-sm -mb-[50%] ml-[15%]';
 		const profileL: HTMLComponent = new Link('/profile');
@@ -24,24 +25,39 @@ const statusLogin: () => HTMLElement = () => {
 		img.src = './test.jpg';
 		const imgSpan: HTMLSpanElement =  document.createElement('span');
 		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black'
-		imgSpan.textContent = 'Image de profile';
+		imgSpan.textContent = local.iImagetxt;
 		imgDiv.appendChild(img);
 		imgDiv.appendChild(imgSpan);
 		profileL.appendChild(imgDiv);
 		buttonDiv.appendChild(profileL.make());
-		auth = 1;
+        const leave: HTMLButtonElement = document.createElement('button');
+        leave.className = '-mb-[100%] mt-10 ml-5 text-sm';
+        leave.textContent = local.disc;
+	    buttonDiv.appendChild(leave);
+        auth = 1;
+        return buttonDiv;
 	}
     else {
+        const buttonDiv: HTMLElement = document.createElement('div');
+	    buttonDiv.className = 'flex text-bg0 justify-end mr-10 mt-4';
     	const button: HTMLButtonElement = document.createElement('button');
-    	button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
-    	button.textContent = 'Se connecter';
+    	// button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
+		button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
+    	button.textContent = local.iButton1;
 
-    	const loginL: HTMLComponent = new Link('/login');
-    	loginL.appendChild(button); // add button to link
-    	buttonDiv.appendChild(loginL.make()); // add link to container
+    	// const loginL: HTMLComponent = new Link('/login');
+    	// loginL.appendChild(button); // add button to link
+    	// buttonDiv.appendChild(loginL.make()); // add link to container
+		button.addEventListener('click', (e) => {
+			e.preventDefault();
+			fadeOutAndNavigateSPA('/login'); // ✅ Use SPA navigation + fade-out
+		});
+
+		buttonDiv.appendChild(button);
 		auth = 0
+        return buttonDiv;
 	}
-	return buttonDiv;
+	
 }
 
 
@@ -54,12 +70,14 @@ const classic: () => HTMLElement = () => {
 
     // --- Buttons ---
     const buttonClassic: HTMLButtonElement = document.createElement('button');
-    buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
-    buttonClassic.textContent = 'Classique';
+   //buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+    buttonClassic.className = 'hover:cursor-pointer mt-70 px-20 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
+ 	buttonClassic.textContent = local.iButton2;
 
     const buttonTournament: HTMLButtonElement = document.createElement('button');
-    buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
-    buttonTournament.textContent = 'Tournoi';
+    //buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+    buttonTournament.className = 'hover:cursor-pointer mt-10 px-20 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
+	buttonTournament.textContent = local.iButton3;
 
     // --- Variable to track selected mode ---
     let selectedMode: 'classic' | 'tournament' = 'classic';
@@ -68,14 +86,18 @@ const classic: () => HTMLElement = () => {
     const handleGuestFlow = () => {
         const nameInput: HTMLInputElement = document.createElement('input');
         nameInput.type = 'text';
-        nameInput.placeholder = 'Entrez votre pseudo';
-        nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+        nameInput.placeholder = local.iInput;
+        //nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
+		nameInput.className = `hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl
+		transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-md focus:outline-none`;
 
         gameDiv.replaceChild(nameInput, buttonClassic);
 
         const playButton: HTMLButtonElement = document.createElement('button');
-        playButton.textContent = 'Jouer';
-        playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+        playButton.textContent = local.iButton4;
+		//playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
+        playButton.className = `hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl
+    	transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:bg-bg3`;
 
         playButton.addEventListener('click', () => {
             const username = nameInput.value.trim();
@@ -88,9 +110,9 @@ const classic: () => HTMLElement = () => {
 
             // Redirect based on selected mode
             if (selectedMode === 'classic') {
-                window.location.href = '/game';
+                app.warp('/game', false);
             } else {
-                window.location.href = '/tournament';
+                 app.warp('/tournament', false);
             }
         });
 
@@ -122,6 +144,8 @@ const classic: () => HTMLElement = () => {
 };
 
 export const Index: PageComponent = new PageComponent(() => {
+   document.body.classList.remove('fade-out');
+   document.body.classList.add('fade-in');
    document.body.classList.remove('bg-bg2');
    document.body.classList.add('bg-bg1');
 
@@ -136,59 +160,13 @@ export const Index: PageComponent = new PageComponent(() => {
 
     const title: HTMLParagraphElement = document.createElement('p');
     title.className = 'text-8xl hover:cursor-default font-bitcount text-bg0';
-    title.textContent = 'TRANSCENDENCE';
+    title.textContent = local.iTitle;
 
     titleDiv.appendChild(title);
     root.appendChild(titleDiv);
 
 	// Add game buttons section to root
     root.appendChild(classic());
-
+    root.appendChild(createLanguageMenu());
     return root;
 });
-
-//sur les autre pages peut etre ajouter des boutons pour revenir sur la page d'accueil
-
-/*const isLoggedIn = checkAuth(); // Replace with real auth check
-
-if (isLoggedIn) {
-    const profileImg = document.createElement('img');
-    profileImg.src = getUserProfilePic(); // Replace with actual user photo URL
-    profileImg.className = 'w-12 h-12 rounded-full hover:cursor-pointer';
-    buttonDiv.appendChild(profileImg);
-} else {
-    loginL.appendChild(button);
-    buttonDiv.appendChild(loginL.make());
-}*/
-
-
-/*
-	// --- Dropdown Menu Section ---
-    const dropdownWrapper: HTMLElement = document.createElement('div');
-    dropdownWrapper.className = 'relative inline-block text-left ml-[15%] mt-4';
-
-    const dropdownButton: HTMLButtonElement = document.createElement('button');
-    dropdownButton.id = 'dropdownButton';
-    dropdownButton.className = 'inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none';
-    dropdownButton.innerHTML = `
-        Menu
-        <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-    `;
-    dropdownWrapper.appendChild(dropdownButton);
-
-    const dropdownMenu: HTMLElement = document.createElement('div');
-    dropdownMenu.id = 'dropdownMenu';
-    dropdownMenu.className = 'hidden origin-top-right absolute right-0 mt-2 w-44 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10';
-
-    dropdownMenu.innerHTML = `
-        <div class="py-1">
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Option 1</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Option 2</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Option 3</a>
-        </div>
-    `;
-    dropdownWrapper.appendChild(dropdownMenu);
-	root.appendChild(dropdownWrapper);
-		*/

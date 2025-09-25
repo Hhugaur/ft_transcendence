@@ -3,22 +3,27 @@ import {
 		HTMLComponent
 } from '../component';
 import { Title } from '../components/title';
-import { Link } from '../components/link';
+import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
+import { sendRequest } from "../utils";
 
 export const Register: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
+	document.body.classList.remove('fade-out');
+	document.body.classList.add('fade-in');
 	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
-	
-	const back: HTMLComponent = new Link ('/');
-	const buttonback: HTMLElement = document.createElement('button');
+
+	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
 	buttonback.textContent = 'retour';
-	back.appendChild(buttonback);
-	main.appendChild(back.make());
+	buttonback.addEventListener('click', (e) => {
+		e.preventDefault();
+		fadeOutAndNavigateSPA('/');
+	});
+	main.appendChild(buttonback);
 	
 	const div: HTMLElement = document.createElement('div');
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
@@ -30,14 +35,12 @@ export const Register: PageComponent = new PageComponent(() => {
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
 
-	//ici faudra mettre des check vu que c'est ici que va avoir le formulaire pour la connexion
 	const user: HTMLInputElement = createInput('text', 'Username', 'Username', 'p-2 bg-bg0 mt-[26%] text-center');
 
 	const newpass: HTMLInputElement = createInput('password', 'New Password', 'New Password', 'p-2 bg-bg0 mt-2 text-center');
 
 	const newnewpass: HTMLInputElement = createInput('password', 'New Password', 'New New Password', 'p-2 bg-bg0 mt-2 text-center');
 
-	//peut etre un link vers la page principale
 	const submit: HTMLInputElement = createInput('submit', '', 'Valider', 'font-caveat py-1 bg-txt1 text-bg0 text-xl mt-3 text-center rounded-sm');
 	submit.value = "S'inscrire";
 
@@ -60,9 +63,14 @@ export const Register: PageComponent = new PageComponent(() => {
 			return;
 		}
 
-		// Example of sending to an API
-		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })
-		// alert(`Tentative de connexion avec:\nUsername: ${username}\nPassword: ${password}`);
+		if (newpassword !== newnewpassword) {
+			alert('Les mots de passes ne sont pas identiques!')
+			return ;
+		}
+
+		sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
+			'password', username, newpassword);
+
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');
@@ -70,7 +78,6 @@ export const Register: PageComponent = new PageComponent(() => {
 	or.textContent = 'or';
 	div.appendChild(or);
 
-	//ici le transformer en link pour qu'il aille vers le bon endroint
 	const google: HTMLAnchorElement = document.createElement('a');
 	google.className = 'text-bg1 bg-bg0 ml-[31%] py-1 px-5';
 	google.textContent = 'GOOGLE';

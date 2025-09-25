@@ -5,11 +5,12 @@ import cors from '@fastify/cors';
 
 import server from './server.js';
 import { config } from './config.js';
+import multipart from '@fastify/multipart';
 import { loginManager } from './login.js';
 import { registerManager } from './register.js';
 import { disconnectManager } from './disconnect.js';
-import { addFriendManager,
-        deleteFriendManager } from './friends.js';
+import { addFriendManager, deleteFriendManager } from './friends.js';
+import { updateAvatar, getAvatar } from './avatar.js';
 
 async function initDatabase() {
     return open({
@@ -21,6 +22,12 @@ async function initDatabase() {
 await server.register(cors, {
     origin: '*', // a modif mais pour l'instant test
     methods: ['GET', 'POST']
+});
+
+server.register(multipart, {
+    limits: {
+        fileSize: 2 * 1024 * 1024 // 2MB comme sur le frontend
+    }
 });
 
 async function main() {
@@ -56,6 +63,14 @@ async function main() {
             const { username, friend } = request.body;
             await deleteFriendManager({ username, friend }, database, reply);
         })
+        server.post('/upload', async (request, reply) => {
+            const { username, file } = request.body;
+            await updateAvatar({ username, file }, database, reply);
+        })
+        server.get('/avatar/:username', async (request, reply) => {
+            const { username } = request.params;
+            return getAvatar(username, database, reply);
+        });
     } catch (err) {
         console.error("Error:", err.message);
     }
