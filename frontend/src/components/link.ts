@@ -18,3 +18,14 @@ export class Link extends HTMLComponent {
                 return a;
         }
 }
+
+export const fadeOutAndNavigateSPA = (route: string) => {
+  document.body.classList.remove('fade-in');
+  document.body.classList.add('fade-out');
+
+  setTimeout(() => {
+    history.pushState(null, '', route);
+    // Now trigger your router’s route handling logic manually, e.g.:
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  }, 500);
+};

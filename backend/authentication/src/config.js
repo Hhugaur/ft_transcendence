@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const config = {
+    backendUrl: process.env.BACKEND_URL,
     databaseUrl: process.env.DATABASE_URL,
     frontendUrl: process.env.FRONTEND_URL,
     authenticationUrl: process.env.AUTHENTICATION_URL,

@@ -6,10 +6,10 @@ export const disconnectManager = async (username, db, reply) => {
 
         if (!user)
             return reply.code(400).send({ error: `${username} doesn't exist!`});
-        if (user.status === 'disconnected')
+        if (user.status === 'Hors ligne')
             return reply.code(400).send({ error: `${username} already disconnected!`});
 
-        await db.run('UPDATE USERS SET status = "disconnected" WHERE username = $username', { $username: username });
+        await db.run('UPDATE USERS SET status = "Hors ligne" WHERE username = $username', { $username: username });
         return reply.code(201).send({ message: `${username} has been disconnected!`});
     } catch (err) {
         server.log.error(err);

@@ -3,28 +3,36 @@ import {
         HTMLComponent
 } from '../component';
 import { Title } from '../components/title';
-import { Link } from '../components/link';
+import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
+import { sendRequest } from "../utils";
+import { local, createLanguageMenu} from '../components/language';
+
 
 export const Login: PageComponent = new PageComponent(() => {
+	
 	document.body.classList.remove('bg-bg1');
 	document.body.classList.add('bg-bg2');
+	document.body.classList.remove('fade-out');
+	document.body.classList.add('fade-in');
 	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
 
-	const back: HTMLComponent = new Link ('/');
-	const buttonback: HTMLElement = document.createElement('button');
+	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
-	buttonback.textContent = 'retour';
-	back.appendChild(buttonback);
-	main.appendChild(back.make());
+	buttonback.textContent = local.back;
+	buttonback.addEventListener('click', (e) => {
+		e.preventDefault();
+		fadeOutAndNavigateSPA('/');
+	});
+	main.appendChild(buttonback);
 
 	const div: HTMLElement = document.createElement('div');
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
-	title.className = 'text-bg0 font-bitcount hover:cursor-default text-5xl text-center -mt-[35%]';
-	title.textContent = 'CONNEXION';
+	title.className = 'text-bg0 font-bitcount hover:cursor-default text-4xl text-center -mt-[35%]';
+	title.textContent = local.lTitle;
 	div.appendChild(title);
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
@@ -37,7 +45,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	// Create a container to hold password input + toggle button side by side
 	const toggleBtn: HTMLButtonElement = document.createElement('button');
 	toggleBtn.type = 'button';
-	toggleBtn.textContent = 'Afficher';
+	toggleBtn.textContent = local.lButton1;
 	toggleBtn.className = 'ml-2 text-sm text-txt1 underline whitespace-nowrap w-[70px] overflow-hidden text-center -mr-10';
 
 	// Container for both input and button
@@ -49,7 +57,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	// Toggle logic
 	toggleBtn.addEventListener('click', () => {
 		pass.type = pass.type === 'password' ? 'text' : 'password';
-		toggleBtn.textContent = pass.type === 'password' ? 'Afficher' : 'Masquer';
+		toggleBtn.textContent = pass.type === 'password' ? local.iButton1 : local.iButton2;
 	});
 
 	//attendre qu'il y a ce qu'il faut pour apres le redecaler vers les bon endroits (accueil)
@@ -72,9 +80,8 @@ export const Login: PageComponent = new PageComponent(() => {
 			return;
 		}
 
-		// Example of sending to an API
-		// fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }), ... })
-		// alert(`Tentative de connexion avec:\nUsername: ${username}\nPassword: ${password}`);
+		sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
+			'password', username, password);
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');
@@ -93,55 +100,31 @@ export const Login: PageComponent = new PageComponent(() => {
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
 	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
-	registerB.textContent = "S'inscrire";
+	registerB.textContent = local.rSubmit;
 	const forgotpass: HTMLElement = document.createElement('button');
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-	forgotpass.textContent = 'Mot de passe oublié';
+	forgotpass.textContent = local.lOther1;
 
-	const registerL: HTMLComponent = new Link('/register');
-	const forgotpassL: HTMLComponent = new Link('/forgot-password');
-	registerL.appendChild(registerB); 
-	buttonDiv.appendChild(registerL.make());
-	forgotpassL.appendChild(forgotpass);
-	buttonDiv.appendChild(forgotpassL.make());
+	//const registerL: HTMLComponent = new Link('/register');
+	//const forgotpassL: HTMLComponent = new Link('/forgot-password');
+	//registerL.appendChild(registerB);
+	registerB.addEventListener('click', (e) => {
+		e.preventDefault();
+		fadeOutAndNavigateSPA('/register');
+	});
+
+	forgotpass.addEventListener('click', (e) => {
+		e.preventDefault();
+		fadeOutAndNavigateSPA('/forgot-password');
+	});
+	buttonDiv.appendChild(registerB);
+	buttonDiv.appendChild(forgotpass);
+	//buttonDiv.appendChild(registerL.make());
+	//forgotpassL.appendChild(forgotpass);
+	//buttonDiv.appendChild(forgotpassL.make());
 	div.appendChild(buttonDiv);
 
 	root.appendChild(div);
 	main.appendChild(root);
 	return main;
 });
-
-/*form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const username = user.value.trim();
-  const password = pass.value;
-
-  if (!username || !password) {
-    alert('Please fill out both fields.');
-    return;
-  }
-
-  // Do your login logic here...
-  console.log('Logging in with:', username, password);
-});
-*/
-
-/*registerB.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Navigate to registration page or trigger route change
-    console.log("Redirect to registration page");
-});
-
-forgotpass.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Handle forgot password logic or navigate
-    console.log("Redirect to forgot password page");
-});
-*/
-
-/*const forgotpassL: HTMLComponent = new Link('/forgot-password');
-const forgotpass: HTMLElement = document.createElement('button');
-forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-forgotpass.textContent = 'Mot de passe oublié';
-forgotpassL.appendChild(forgotpass);
-buttonDiv.appendChild(forgotpassL.make()); */
