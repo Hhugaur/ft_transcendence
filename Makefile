@@ -35,7 +35,6 @@ down:
 	@echo "$(YELLOW)[STOP]$(NC) 🔻 Arrêt des containers..."
 	@docker-compose down
 	@echo "$(GREEN)[OK]$(NC) ✅ Containers arrêtés."
-	@rm -fr .env
 
 re: dfclean up
 
@@ -49,6 +48,10 @@ dfclean: down
 	@docker system prune -af --volumes
 	@rm -rf $(DB_DIR)
 	@echo "$(GREEN)[OK]$(NC) ✅ Nettoyage effectué."
+	@rm -rf backend/game/src/game.node
+	@rm -fr .env
+
+
 
 # ===========================
 #   HELP

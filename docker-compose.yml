@@ -1,4 +1,3 @@
-version: '3'
 services:
   proxy-ssl:
     build:
@@ -76,17 +75,20 @@ services:
     container_name: authentication
     hostname: authentication
 
-  pong:
-    build: ./backend/pong
+  game:
+    build: ./backend/game
     env_file:
       - .env
     networks:
       - webapp
     ports:
-      - "3004:3004"
+      - "3005:3005"
     restart: always
-    container_name: pong
-    hostname: pong
+    container_name: game
+    hostname: game
+    volumes:
+      - ./backend/game:/app
+      - /app/node_modules
 
   front:
     build: ./frontend

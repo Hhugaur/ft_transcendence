@@ -43,8 +43,6 @@ io.on "connection", (socket) ->
                         status: "echo"
                         msg: msg
 
-
-
 start = ->
         try
                 await server.listen
