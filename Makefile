@@ -25,15 +25,15 @@ up:
 	@echo "$(BLUE)[INFO]$(NC) 🚀 Création du dossier base de données et fichier SQLite"
 	@mkdir -p $(DB_DIR) && touch $(DB_FILE) && chmod -R 777 $(DB_DIR)
 	@echo "$(BLUE)[INFO]$(NC) 🛠️  Construction des containers..."
-	@docker-compose build
+	@docker compose build
 	@echo "$(GREEN)[OK]$(NC) ✅ Containers construits avec succès !"
 	@echo "$(BLUE)[INFO]$(NC) 🔥 Lancement des services en arrière-plan..."
-	@docker-compose up -d
+	@docker compose up -d
 	@echo "$(GREEN)[SUCCESS]$(NC) ✅ Application lancée !"
 
 down:
 	@echo "$(YELLOW)[STOP]$(NC) 🔻 Arrêt des containers..."
-	@docker-compose down
+	@docker compose down
 	@echo "$(GREEN)[OK]$(NC) ✅ Containers arrêtés."
 
 re: dfclean up
