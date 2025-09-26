@@ -1,4 +1,3 @@
-version: '3'
 services:
   proxy-ssl:
     build:
@@ -6,6 +5,12 @@ services:
       dockerfile: proxy-ssl/Dockerfile
     depends_on:
       - front
+      - gateway
+      - authentication
+      - pong
+      - websocket
+      - game
+      - database
     networks:
       - webapp
     ports:
@@ -89,6 +94,21 @@ services:
     restart: always
     container_name: pong
     hostname: pong
+
+  game:
+    build: ./backend/game
+    env_file:
+      - .env
+    networks:
+      - webapp
+    ports:
+      - "3005:3005"
+    restart: always
+    container_name: game
+    hostname: game
+    volumes:
+      - ./backend/game:/app
+      - /app/node_modules
 
   front:
     build: ./frontend
