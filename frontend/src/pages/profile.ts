@@ -8,6 +8,7 @@ import { auth } from './index.ts';
 import { createMatchItem, Match } from '../components/matchHistory';
 import { local, createLanguageMenu} from '../components/language';
 import { createInput, createLabeledInput, createEditableField } from '../components/input';
+import { sendRequest } from "../utils";
 
 function createFriendItem(
 	friendName: string,
@@ -140,10 +141,15 @@ export const Profile: PageComponent = new PageComponent(() => {
 	back.appendChild(buttonback);
 	root.appendChild(back.make());
 
-	const leave: HTMLButtonElement = document.createElement('button');
-	leave.className = 'ml-[80%] text-bg0 underline';
-	leave.textContent = local.disc;
-	root.appendChild(leave);
+	const disconnectButton: HTMLButtonElement = document.createElement('button');
+	disconnectButton.className = 'ml-[80%] text-bg0 underline';
+	disconnectButton.textContent = local.disc;
+	root.appendChild(disconnectButton);
+
+	// Deconnexion
+	disconnectButton.onclick = () => {
+		sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+	};
 
 	const htwo: HTMLHeadingElement = document.createElement('h2');
 	htwo.className = 'flex justify-center font-bitcount text-bg0 text-8xl bg-bg21 mx-[35%] mt-[1%]';
