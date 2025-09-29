@@ -7,7 +7,10 @@ import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
 import { sendRequest } from "../utils";
 import { local, createLanguageMenu} from '../components/language';
+import {incAuthnbr} from './index';
+import { Router } from '../router';
 
+const app = Router.getInstance();
 
 export const Login: PageComponent = new PageComponent(() => {
 	
@@ -80,8 +83,14 @@ export const Login: PageComponent = new PageComponent(() => {
 			return;
 		}
 
-		sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
-			'password', username, password);
+		try {
+			sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
+				'password', username, password);
+			//incAuthnbr();
+			//fadeOutAndNavigateSPA('/index');
+		}
+		catch { return; }
+
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');

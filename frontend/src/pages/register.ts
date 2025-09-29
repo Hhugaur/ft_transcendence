@@ -6,6 +6,10 @@ import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
 import { sendRequest } from "../utils";
+import { Router } from '../router';
+import { incAuthnbr } from '.';
+
+const app = Router.getInstance();
 
 export const Register: PageComponent = new PageComponent(() => {
 	document.body.classList.remove('bg-bg1');
@@ -67,10 +71,14 @@ export const Register: PageComponent = new PageComponent(() => {
 			alert('Les mots de passes ne sont pas identiques!')
 			return ;
 		}
-
-		sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
-			'password', username, newpassword);
-
+		try{
+			sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
+				'password', username, newpassword);
+			//incAuthnbr();
+			//fadeOutAndNavigateSPA('/profile');
+		}
+		catch {return;}
+	
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');

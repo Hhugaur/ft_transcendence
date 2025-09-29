@@ -5,14 +5,27 @@ import {
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
 import { local, createLanguageMenu} from '../components/language';
+import { sendRequest } from "../utils";
 import { Router } from '../router';
 
 export let auth: number;
+
+export function incAuthnbr(): void
+{
+    auth = 1;
+}
+
+
+export function decAuthnbr(): void
+{
+    auth = 0;
+}
+
 const app = Router.getInstance();
 
 const statusLogin: () => HTMLElement = () => {
 
-	if(0)
+	if(auth == 1)
 	{
         const buttonDiv: HTMLElement = document.createElement('div');
 	    buttonDiv.className = 'grid text-bg0 justify-end mr-10 mt-4';
@@ -33,8 +46,14 @@ const statusLogin: () => HTMLElement = () => {
         const leave: HTMLButtonElement = document.createElement('button');
         leave.className = '-mb-[100%] mt-10 ml-5 text-sm';
         leave.textContent = local.disc;
+        leave.onclick = () => {
+            try {	
+                sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+            }
+            catch {}
+            //decAuthnbr();
+        };
 	    buttonDiv.appendChild(leave);
-        auth = 1;
         return buttonDiv;
 	}
     else {

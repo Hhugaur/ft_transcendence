@@ -4,7 +4,7 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
-import { auth } from './index.ts';
+import { auth, decAuthnbr } from './index.ts';
 import { createMatchItem, Match } from '../components/matchHistory';
 import { local, createLanguageMenu} from '../components/language';
 import { createInput, createLabeledInput, createEditableField } from '../components/input';
@@ -148,7 +148,12 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 	// Deconnexion
 	disconnectButton.onclick = () => {
-		sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+		try {	
+			sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+			//decAuthnbr();
+			//fadeOutAndNavigateSPA('/index');
+		}
+		catch { return;}
 	};
 
 	const htwo: HTMLHeadingElement = document.createElement('h2');
