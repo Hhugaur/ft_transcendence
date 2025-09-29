@@ -8,7 +8,7 @@ import { config } from './config.js';
 import multipart from '@fastify/multipart';
 import { loginManager } from './login.js';
 import { registerManager } from './register.js';
-import { getUserInfo } from './getter.js';
+import { getUserInfo, getUserFriendsInfo, getUserBlockedInfo, getUserHistoryInfo } from './getter.js';
 import { disconnectManager } from './disconnect.js';
 import { addFriendManager, deleteFriendManager } from './friends.js';
 import { updateAvatar, getAvatar } from './avatar.js';
@@ -75,6 +75,18 @@ async function main() {
         server.get('/:username', async (request, reply) => {
             const { username } = request.params;
             return getUserInfo(username, database, reply);
+        });
+        server.get('/friends/:username', async (request, reply) => {
+            const { username } = request.params;
+            return getUserFriendsInfo(username, database, reply);
+        });
+        server.get('/blocked/:username', async (request, reply) => {
+            const { username } = request.params;
+            return getUserBlockedInfo(username, database, reply);
+        });
+        server.get('/history/:username', async (request, reply) => {
+            const { username } = request.params;
+            return getUserHistoryInfo(username, database, reply);
         });
     } catch (err) {
         console.error("Error:", err.message);
