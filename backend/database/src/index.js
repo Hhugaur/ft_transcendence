@@ -8,6 +8,7 @@ import { config } from './config.js';
 import multipart from '@fastify/multipart';
 import { loginManager } from './login.js';
 import { registerManager } from './register.js';
+import { getUserInfo } from './getter.js';
 import { disconnectManager } from './disconnect.js';
 import { addFriendManager, deleteFriendManager } from './friends.js';
 import { updateAvatar, getAvatar } from './avatar.js';
@@ -70,6 +71,10 @@ async function main() {
         server.get('/avatar/:username', async (request, reply) => {
             const { username } = request.params;
             return getAvatar(username, database, reply);
+        });
+        server.get('/:username', async (request, reply) => {
+            const { username } = request.params;
+            return getUserInfo(username, database, reply);
         });
     } catch (err) {
         console.error("Error:", err.message);

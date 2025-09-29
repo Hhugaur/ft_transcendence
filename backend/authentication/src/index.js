@@ -7,6 +7,7 @@ import { encryptPassword } from './utils.js';
 import { sendDbRegisterRequest } from './register.js';
 import { sendDbLoginRequest } from './login.js';
 import { sendDbDisconnectRequest } from './disconnect.js';
+import { sendDbGetUserInfoRequest } from './getter.js';
 import { sendDbAddFriendRequest, sendDbDeleteFriendRequest } from "./friends.js";
 import { sendDbUpdateAvatarRequest, sendDbGetAvatarRequest } from './avatar.js';
 
@@ -168,7 +169,7 @@ server.patch('/upload', async (request, reply) => {
     }
 });
 
-server.get('/avatar/:username', async (request, reply) => {
+server.post('/friends/delete', async (request, reply) => {
     try {
         const { username } = request.params;
         if (!username) {
@@ -186,6 +187,27 @@ server.get('/avatar/:username', async (request, reply) => {
         }
         const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
         reply.code(200).send({ avatarUrl });
+    } catch(error) {
+        server.log.error(error);
+        server.log.error(error.message);
+        server.log.error(error.stack);
+        reply.code(500).send({ error: 'Authentication server error' });
+    }
+});
+
+server.get('/:username', async (request, reply) => {
+    try {
+        const { username } = request.params;
+        if (!username) {
+            console.log(`Body received by /username:`, request.body);
+            return reply.code(400).send({ error: 'Invalid argument(s)!' });
+        }
+        if (!config.safeUsernameSQLInjection.test(username)) {
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
+        }
+
+        await sendDbGetUserInfoRequest(username);
+        reply.code(200).send('Informations received successfully!');
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);

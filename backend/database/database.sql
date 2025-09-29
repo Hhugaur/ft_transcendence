@@ -52,10 +52,5 @@ CREATE TABLE IF NOT EXISTS GAMES_HISTORY (
 DROP VIEW IF EXISTS USER_STATS;
 
 CREATE VIEW USER_STATS AS
-SELECT
-	id,
-	username,
-	win,
-	lose,
-	win || '/' || CASE WHEN (win + lose) = 0 THEN 1 ELSE (win + lose) END AS ratio
+SELECT id, username, win, lose, win || '/' || CASE WHEN (win + lose) = 0 THEN 1 ELSE (win + lose) END AS ratio
 FROM USERS;
