@@ -39,21 +39,18 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.appendChild(title);
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
-	//ici faudra mettre des check vu que c'est ici que va avoir le formulaire pour la connexion
+
 	const user: HTMLInputElement = createInput('text', 'Username', 'Username', 'p-2 bg-bg0 mt-[28%] text-center rounded-sm');
 
 	const pass: HTMLInputElement = createInput('password', 'Password', 'Password', 'p-2 bg-bg0 mt-2 text-center rounded-sm');
 
-
-	// Create a container to hold password input + toggle button side by side
 	const toggleBtn: HTMLButtonElement = document.createElement('button');
 	toggleBtn.type = 'button';
 	toggleBtn.textContent = lang.lButton1;
 	toggleBtn.className = 'ml-2 text-sm text-txt1 underline whitespace-nowrap w-[70px] overflow-hidden text-center -mr-10';
 
-	// Container for both input and button
 	const passRow = document.createElement('div');
-	passRow.className = 'flex items-center mt-2'; // Flex layout
+	passRow.className = 'flex items-center mt-2';
 	passRow.appendChild(pass);
 	passRow.appendChild(toggleBtn);
 
@@ -86,10 +83,10 @@ export const Login: PageComponent = new PageComponent(() => {
 
 		sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
 			'password', username, password);
+		localStorage.setItem('username', username);
 		//temporaire
 		incAuthnbr();
 		fadeOutAndNavigateSPA('/index');
-
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');

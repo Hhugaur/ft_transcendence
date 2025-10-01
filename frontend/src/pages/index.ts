@@ -49,6 +49,7 @@ const statusLogin: () => HTMLElement = () => {
         disconnectButton.onclick = () => {
             sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
             //temporaire
+            localStorage.removeItem('username');
             decAuthnbr();
         };
 	    buttonDiv.appendChild(disconnectButton);

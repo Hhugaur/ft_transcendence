@@ -150,6 +150,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	disconnectButton.onclick = () => {
 		sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
 		//temporaire
+		localStorage.removeItem('username');
 		decAuthnbr();
 		fadeOutAndNavigateSPA('/index');
 	};
@@ -221,6 +222,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 		const form = new FormData();
 		form.append("file", selectedFile);
+		//localStorage.getItem('username');
 		form.append("username", "test1234");
 
 		try {

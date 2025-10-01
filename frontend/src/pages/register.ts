@@ -73,6 +73,7 @@ export const Register: PageComponent = new PageComponent(() => {
 		}
 		sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
 			'password', username, newpassword);
+		localStorage.setItem('username', username);
 		//temporaire
 		incAuthnbr();
 		fadeOutAndNavigateSPA('/profile');
