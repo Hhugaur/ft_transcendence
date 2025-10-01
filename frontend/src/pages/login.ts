@@ -6,7 +6,7 @@ import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA} from '../components/link';
 import { createInput, createLabeledInput } from '../components/input';
 import { sendRequest } from "../utils";
-import { local, createLanguageMenu} from '../components/language';
+import { lang, createLanguageMenu} from '../components/language';
 import {incAuthnbr} from './index';
 import { Router } from '../router';
 
@@ -24,7 +24,7 @@ export const Login: PageComponent = new PageComponent(() => {
 
 	const buttonback: HTMLButtonElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
-	buttonback.textContent = local.back;
+	buttonback.textContent = lang.back;
 	buttonback.addEventListener('click', (e) => {
 		e.preventDefault();
 		fadeOutAndNavigateSPA('/');
@@ -35,7 +35,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
 	title.className = 'text-bg0 font-bitcount hover:cursor-default text-4xl text-center -mt-[35%]';
-	title.textContent = local.lTitle;
+	title.textContent = lang.lTitle;
 	div.appendChild(title);
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
@@ -48,7 +48,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	// Create a container to hold password input + toggle button side by side
 	const toggleBtn: HTMLButtonElement = document.createElement('button');
 	toggleBtn.type = 'button';
-	toggleBtn.textContent = local.lButton1;
+	toggleBtn.textContent = lang.lButton1;
 	toggleBtn.className = 'ml-2 text-sm text-txt1 underline whitespace-nowrap w-[70px] overflow-hidden text-center -mr-10';
 
 	// Container for both input and button
@@ -60,7 +60,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	// Toggle logic
 	toggleBtn.addEventListener('click', () => {
 		pass.type = pass.type === 'password' ? 'text' : 'password';
-		toggleBtn.textContent = pass.type === 'password' ? local.iButton1 : local.iButton2;
+		toggleBtn.textContent = pass.type === 'password' ? lang.iButton1 : lang.iButton2;
 	});
 
 	//attendre qu'il y a ce qu'il faut pour apres le redecaler vers les bon endroits (accueil)
@@ -83,13 +83,12 @@ export const Login: PageComponent = new PageComponent(() => {
 			return;
 		}
 
-		try {
-			sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
-				'password', username, password);
-			//incAuthnbr();
-			//fadeOutAndNavigateSPA('/index');
-		}
-		catch { return; }
+
+		sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
+			'password', username, password);
+		//temporaire
+		incAuthnbr();
+		fadeOutAndNavigateSPA('/index');
 
 	};
 
@@ -109,10 +108,10 @@ export const Login: PageComponent = new PageComponent(() => {
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
 	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
-	registerB.textContent = local.rSubmit;
+	registerB.textContent = lang.rSubmit;
 	const forgotpass: HTMLElement = document.createElement('button');
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-	forgotpass.textContent = local.lOther1;
+	forgotpass.textContent = lang.lOther1;
 
 	//const registerL: HTMLComponent = new Link('/register');
 	//const forgotpassL: HTMLComponent = new Link('/forgot-password');

@@ -28,14 +28,14 @@ const translations: Record<SupportedLanguage, Dictionary> = {
 
 // Current language & public dictionary
 let userLanguage: SupportedLanguage = getPreferredLanguage();
-export let local: Dictionary = { ...translations[userLanguage] };
+export let lang: Dictionary = { ...translations[userLanguage] };
 
 // Set language and update UI
 export function setLanguage(lang: SupportedLanguage): void {
   if (translations[lang]) {
     userLanguage = lang;
     localStorage.setItem('lang', lang);
-    Object.assign(local, translations[lang]);
+    Object.assign(lang, translations[lang]);
     console.log(`Language set to: ${lang}`);
     updateUIWithNewLanguage();
   } else {
@@ -76,7 +76,7 @@ export function createLanguageMenu(): HTMLElement {
   button.id = 'dropdownButton';
   button.className = 'text-bg0 ml-30 inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-bg2 text-sm font-medium hover:bg-txt1 hover';
   button.innerHTML = `
-    ${local['language'] || 'Language'}
+    ${lang['language'] || 'Language'}
     <svg class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
@@ -97,7 +97,7 @@ export function createLanguageMenu(): HTMLElement {
       e.preventDefault();
       setLanguage(code);
       button.innerHTML = `
-        ${local['language'] || 'Language'}
+        ${lang['language'] || 'Language'}
         <svg class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
@@ -129,8 +129,8 @@ export function createLanguageMenu(): HTMLElement {
 function updateUIWithNewLanguage(): void {
   document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
     const key = el.dataset.i18n!;
-    if (local[key]) {
-      el.textContent = local[key];
+    if (lang[key]) {
+      el.textContent = lang[key];
     }
   });
 }

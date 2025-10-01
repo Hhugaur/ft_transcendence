@@ -4,7 +4,7 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
-import { local, createLanguageMenu} from '../components/language';
+import { lang, createLanguageMenu} from '../components/language';
 import { sendRequest } from "../utils";
 import { Router } from '../router';
 
@@ -38,22 +38,20 @@ const statusLogin: () => HTMLElement = () => {
 		img.src = './test.jpg';
 		const imgSpan: HTMLSpanElement =  document.createElement('span');
 		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black'
-		imgSpan.textContent = local.iImagetxt;
+		imgSpan.textContent = lang.iImagetxt;
 		imgDiv.appendChild(img);
 		imgDiv.appendChild(imgSpan);
 		profileL.appendChild(imgDiv);
 		buttonDiv.appendChild(profileL.make());
-        const leave: HTMLButtonElement = document.createElement('button');
-        leave.className = '-mb-[100%] mt-10 ml-5 text-sm';
-        leave.textContent = local.disc;
-        leave.onclick = () => {
-            try {	
-                sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
-            }
-            catch {}
-            //decAuthnbr();
+        const disconnectButton: HTMLButtonElement = document.createElement('button');
+        disconnectButton.className = '-mb-[100%] mt-10 ml-5 text-sm';
+        disconnectButton.textContent = lang.disc;
+        disconnectButton.onclick = () => {
+            sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+            //temporaire
+            decAuthnbr();
         };
-	    buttonDiv.appendChild(leave);
+	    buttonDiv.appendChild(disconnectButton);
         return buttonDiv;
 	}
     else {
@@ -62,7 +60,7 @@ const statusLogin: () => HTMLElement = () => {
     	const button: HTMLButtonElement = document.createElement('button');
     	// button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer';
 		button.className = 'px-15 py-5 bg-bg2 rounded-2xl grayscale-50 underline hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-    	button.textContent = local.iButton1;
+    	button.textContent = lang.iButton1;
 
     	// const loginL: HTMLComponent = new Link('/login');
     	// loginL.appendChild(button); // add button to link
@@ -91,12 +89,12 @@ const classic: () => HTMLElement = () => {
     const buttonClassic: HTMLButtonElement = document.createElement('button');
    //buttonClassic.className = 'hover:cursor-pointer mt-70 px-15 py-5 bg-bg2 rounded-2xl';
     buttonClassic.className = 'hover:cursor-pointer mt-70 px-20 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
- 	buttonClassic.textContent = local.iButton2;
+ 	buttonClassic.textContent = lang.iButton2;
 
     const buttonTournament: HTMLButtonElement = document.createElement('button');
     //buttonTournament.className = 'hover:cursor-pointer mt-10 px-17 py-5 bg-bg2 rounded-2xl';
     buttonTournament.className = 'hover:cursor-pointer mt-10 px-20 py-5 bg-bg2 rounded-2xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md';
-	buttonTournament.textContent = local.iButton3;
+	buttonTournament.textContent = lang.iButton3;
 
     // --- Variable to track selected mode ---
     let selectedMode: 'classic' | 'tournament' = 'classic';
@@ -105,7 +103,7 @@ const classic: () => HTMLElement = () => {
     const handleGuestFlow = () => {
         const nameInput: HTMLInputElement = document.createElement('input');
         nameInput.type = 'text';
-        nameInput.placeholder = local.iInput;
+        nameInput.placeholder = lang.iInput;
         //nameInput.className = 'hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl';
 		nameInput.className = `hover:cursor-pointer text-center mx-auto mt-70 px-15 py-5 bg-bg2 rounded-2xl
 		transition-all duration-300 ease-in-out focus:scale-105 focus:shadow-md focus:outline-none`;
@@ -113,7 +111,7 @@ const classic: () => HTMLElement = () => {
         gameDiv.replaceChild(nameInput, buttonClassic);
 
         const playButton: HTMLButtonElement = document.createElement('button');
-        playButton.textContent = local.iButton4;
+        playButton.textContent = lang.iButton4;
 		//playButton.className = 'hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl';
         playButton.className = `hover:cursor-pointer mx-auto mt-10 px-17 py-5 bg-bg2 rounded-2xl
     	transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-md hover:bg-bg3`;
@@ -134,7 +132,6 @@ const classic: () => HTMLElement = () => {
                  app.warp('/tournament', false);
             }
         });
-
         gameDiv.replaceChild(playButton, buttonTournament);
     };
 
@@ -179,7 +176,7 @@ export const Index: PageComponent = new PageComponent(() => {
 
     const title: HTMLParagraphElement = document.createElement('p');
     title.className = 'text-8xl hover:cursor-default font-bitcount text-bg0';
-    title.textContent = local.iTitle;
+    title.textContent = lang.iTitle;
 
     titleDiv.appendChild(title);
     root.appendChild(titleDiv);

@@ -71,14 +71,11 @@ export const Register: PageComponent = new PageComponent(() => {
 			alert('Les mots de passes ne sont pas identiques!')
 			return ;
 		}
-		try{
-			sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
-				'password', username, newpassword);
-			//incAuthnbr();
-			//fadeOutAndNavigateSPA('/profile');
-		}
-		catch {return;}
-	
+		sendRequest('https://transcendence.42.fr:42069/api/auth/register', 'username',
+			'password', username, newpassword);
+		//temporaire
+		incAuthnbr();
+		fadeOutAndNavigateSPA('/profile');
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');

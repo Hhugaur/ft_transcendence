@@ -6,7 +6,7 @@ import { Title } from '../components/title';
 import { Link , fadeOutAndNavigateSPA } from '../components/link';
 import { auth, decAuthnbr } from './index.ts';
 import { createMatchItem, Match } from '../components/matchHistory';
-import { local, createLanguageMenu} from '../components/language';
+import { lang, createLanguageMenu} from '../components/language';
 import { createInput, createLabeledInput, createEditableField } from '../components/input';
 import { sendRequest } from "../utils";
 
@@ -61,21 +61,21 @@ function createFriendItem(
 
 	const profileBtn = document.createElement('button');
 	profileBtn.className = 'bg-bg0 text-txt0 px-2 py-1 rounded hover:bg-bg2 transition';
-	profileBtn.textContent = local.pButton2;
+	profileBtn.textContent = lang.pButton2;
 	profileBtn.onclick = () => {
 		console.log(`Voir profil de ${friendName}`);
 	};
 
 	const challengeBtn = document.createElement('button');
 	challengeBtn.className = 'bg-bg0 text-txt0 px-2 py-1 rounded hover:bg-bg2 transition';
-	challengeBtn.textContent = local.pButton3;
+	challengeBtn.textContent = lang.pButton3;
 	challengeBtn.onclick = () => {
 		console.log(`Envoyer une demande de match à ${friendName}`);
 	};
 
 	const removeBtn = document.createElement('button');
 	removeBtn.className = 'bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition';
-	removeBtn.textContent = local.pButton4;
+	removeBtn.textContent = lang.pButton4;
 	removeBtn.onclick = () => {
 		if (confirm(`Supprimer ${friendName} ?`)) {
 			console.log(`Supprimé ${friendName}`);
@@ -137,28 +137,26 @@ export const Profile: PageComponent = new PageComponent(() => {
 	const back: HTMLComponent = new Link ('/');
 	const buttonback: HTMLElement = document.createElement('button');
 	buttonback.className = 'underline ml-[5%] text-bg0';
-	buttonback.textContent = local.back;
+	buttonback.textContent = lang.back;
 	back.appendChild(buttonback);
 	root.appendChild(back.make());
 
 	const disconnectButton: HTMLButtonElement = document.createElement('button');
 	disconnectButton.className = 'ml-[80%] text-bg0 underline';
-	disconnectButton.textContent = local.disc;
+	disconnectButton.textContent = lang.disc;
 	root.appendChild(disconnectButton);
 
 	// Deconnexion
 	disconnectButton.onclick = () => {
-		try {	
-			sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
-			//decAuthnbr();
-			//fadeOutAndNavigateSPA('/index');
-		}
-		catch { return;}
+		sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+		//temporaire
+		decAuthnbr();
+		fadeOutAndNavigateSPA('/index');
 	};
 
 	const htwo: HTMLHeadingElement = document.createElement('h2');
 	htwo.className = 'flex justify-center font-bitcount text-bg0 text-8xl bg-bg21 mx-[35%] mt-[1%]';
-	htwo.textContent = local.pTitle1;
+	htwo.textContent = lang.pTitle1;
 	root.appendChild(htwo);
 
 	const imgDiv: HTMLElement = document.createElement('div');
@@ -182,7 +180,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	displayAvatar("test1234");
 
 	const imgSpan: HTMLSpanElement =  document.createElement('span');
-	imgSpan.textContent = local.pImage;
+	imgSpan.textContent = lang.pImage;
 	imgDiv.appendChild(imgProf);
 	imgDiv.appendChild(imgSpan);
 	root.appendChild(imgDiv);
@@ -248,7 +246,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	profDiv.className = 'col-span-1 grid gap-4 bg-bg1 border-bg0 border-8 mr-[10%] pb-[45%]';
 	const profP: HTMLParagraphElement = document.createElement('p');
 	profP.className = 'text-center text-bg0 mt-3 text-4xl';
-	profP.textContent = local.pTitle2;
+	profP.textContent = lang.pTitle2;
 	const userInput = createEditableField('Username :', 'username');
 	const passInput = createEditableField('Password :', '••••••');
 
@@ -272,7 +270,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 	const histP: HTMLParagraphElement = document.createElement('p');
 	histP.className = 'text-center text-4xl text-bg0 mt-3';
-	histP.textContent = local.pTitle3;
+	histP.textContent = lang.pTitle3;
 
 	histDiv.appendChild(histP);
 
@@ -301,7 +299,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	lFriendDiv.className = 'col-span-1 bg-bg1 border-bg0 border-8 ml-[10%]';
 	const friendP: HTMLParagraphElement = document.createElement('p');
 	friendP.className = 'text-center text-4xl text-bg0 mt-3';
-	friendP.textContent = local.pTitle4;
+	friendP.textContent = lang.pTitle4;
 	lFriendDiv.appendChild(friendP);
 
 	// Conteneur pour le champ et le bouton
@@ -311,12 +309,12 @@ export const Profile: PageComponent = new PageComponent(() => {
 	// Champ de saisie
 	const friendInput = document.createElement('input');
 	friendInput.type = 'text';
-	friendInput.placeholder = local.pInput;
+	friendInput.placeholder = lang.pInput;
 	friendInput.className = 'flex-1 px-2 py-1 rounded border border-bg0';
 
 	// Bouton d'ajout
 	const addFriendButton = document.createElement('button');
-	addFriendButton.textContent = local.pButton1;
+	addFriendButton.textContent = lang.pButton1;
 	addFriendButton.className = 'bg-bg0 text-txt0 px-4 py-1 rounded hover:bg-bg2 transition';
 
 	// Liste d'amis (conteneur où on ajoute dynamiquement)

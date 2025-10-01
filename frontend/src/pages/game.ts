@@ -4,7 +4,7 @@ import {
 } from '../component';
 import { Title } from '../components/title';
 import { Link } from '../components/link';
-import { local } from '../components/language';
+import { lang } from '../components/language';
 
 export const Game: PageComponent = new PageComponent(() => {
     document.body.classList.remove('fade-out');
@@ -18,7 +18,7 @@ export const Game: PageComponent = new PageComponent(() => {
     const back = new Link('/');
     const buttonback = document.createElement('button');
     buttonback.className = 'underline ml-[5%] text-bg0';
-    buttonback.textContent = local.back;
+    buttonback.textContent = lang.back;
     back.appendChild(buttonback);
     root.appendChild(back.make());
 
