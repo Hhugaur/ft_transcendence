@@ -84,9 +84,6 @@ export const Login: PageComponent = new PageComponent(() => {
 		sendRequest('https://transcendence.42.fr:42069/api/auth/login', 'username',
 			'password', username, password);
 		localStorage.setItem('username', username);
-		//temporaire
-		incAuthnbr();
-		fadeOutAndNavigateSPA('/index');
 	};
 
 	const or: HTMLParagraphElement = document.createElement('p');

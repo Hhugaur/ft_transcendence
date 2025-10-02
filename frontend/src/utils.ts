@@ -1,3 +1,7 @@
+import { Link , fadeOutAndNavigateSPA} from './components/link';
+import {incAuthnbr, decAuthnbr} from './pages/index';
+
+
 export async function sendRequest(url: string, nameVar1: string, nameVar2: string, var1: string, var2: string) {
     try {
         if (nameVar2 !== null) {
@@ -44,19 +48,33 @@ export async function responseTraitment(response: Response, url: string) {
 
 function selectMessage(url: string, type: boolean, error: string) {
     if (url === 'https://transcendence.42.fr:42069/api/friends/add' && type === true)
+    {
         return "Ajout d'ami réussie!";
+    }
     if (url === 'https://transcendence.42.fr:42069/api/friends/add' && type === false)
         return "Erreur lors de l’ajout d'ami :" + error;
     if (url === 'https://transcendence.42.fr:42069/api/auth/login' && type === true)
+    {
+        incAuthnbr();
+        fadeOutAndNavigateSPA('/index');
         return 'Connnexion réussie!';
+    }
     if (url === 'https://transcendence.42.fr:42069/api/auth/login' && type === false)
         return 'Erreur lors de la connexion :' + error;
     if (url === 'https://transcendence.42.fr:42069/api/auth/register' && type === true)
+    {
+        incAuthnbr();
+		fadeOutAndNavigateSPA('/profile');
         return 'Inscription réussie!';
+    }
     if (url === 'https://transcendence.42.fr:42069/api/auth/register' && type === false)
         return 'Erreur lors de l’inscription :' + error;
     if (url === 'https://transcendence.42.fr:42069/api/auth/disconnect' && type === true)
+    {
+        decAuthnbr();
+		fadeOutAndNavigateSPA('/index');
         return "Déconnexion réussie!";
+    }
     if (url === 'https://transcendence.42.fr:42069/api/auth/disconnect' && type === false)
         return "Erreur lors de la déconnexion :" + error;
 }

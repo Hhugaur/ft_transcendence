@@ -129,7 +129,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	const root: HTMLElement = document.createElement('div');
 	if (auth === 0)
 	{
-		fadeOutAndNavigateSPA('/');
+		fadeOutAndNavigateSPA('/index');
 		return root;
 	}
 	root.className = 'font-CaveatBrush';
@@ -151,8 +151,6 @@ export const Profile: PageComponent = new PageComponent(() => {
 		sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
 		//temporaire
 		localStorage.removeItem('username');
-		decAuthnbr();
-		fadeOutAndNavigateSPA('/index');
 	};
 
 	const htwo: HTMLHeadingElement = document.createElement('h2');
