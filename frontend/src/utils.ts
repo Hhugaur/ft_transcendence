@@ -6,7 +6,8 @@ export async function sendRequest(url: string, nameVar1: string, nameVar2: strin
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ [nameVar1]: var1, [nameVar2]: var2 })
+                body: JSON.stringify({ [nameVar1]: var1, [nameVar2]: var2 }),
+                credentials: 'include'
             });
             await responseTraitment(response, url);
         } else {

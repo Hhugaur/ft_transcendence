@@ -32,13 +32,10 @@ await server.register(cors, {
 server.post('/register', async (request, reply) => {
     try {
         const { username, password } = request.body;
-        if (!username || !password) {
-            console.log('Body received by /register:', request.body);
+        if (!username || !password)
             return reply.code(400).send({ error: `Invalid argument(s)!: ${username}, ${password}` });
-        }
-        if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s) or too few characters!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password))
+            return reply.code(400).send({ error: 'Use of prohibited character(s) or too few characters!' });
         const hashedPassword = await encryptPassword(password);
 
         await sendDbRegisterRequest(username, hashedPassword);
@@ -54,16 +51,21 @@ server.post('/register', async (request, reply) => {
 server.post('/login', async (request, reply) => {
     try {
         const { username, password } = request.body;
-        if (!username || !password) {
-            console.log('Body received by /login:', request.body);
+        if (!username || !password)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safePasswordSQLInjection.test(password))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbLoginRequest(username, password);
-        reply.code(200).send({ message: `The user ${username} is connected!` });
+        const token = server.jwt.sign({ username });
+
+        reply.setCookie('token', token, {
+                httpOnly: true,
+                path: '/',
+                sameSite: 'lax',
+                secure: true,
+                maxAge: 3600
+            }).code(200).send({ message: 'Login success' });
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
@@ -72,19 +74,16 @@ server.post('/login', async (request, reply) => {
     }
 });
 
-server.post('/disconnect', async (request, reply) => {
+server.post('/disconnect',{ preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.body;
-        if (!username) {
-            console.log('Body received by /disconnect:', request.body);
+        const username = request.user.username;
+        if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbDisconnectRequest(username);
-        reply.code(200).send({ message: `The user ${username} has been disconnected!` });
+        reply.clearCookie('token', { path: '/' }).code(200).send({ message: 'Logged out' });
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
@@ -93,16 +92,13 @@ server.post('/disconnect', async (request, reply) => {
     }
 });
 
-server.post('/friends/add', async (request, reply) => {
+server.post('/friends/add', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
         const { username, friend } = request.body;
-        if (!username || !friend) {
-            console.log('Body received by /friends/add:', request.body);
+        if (!username || !friend)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbAddFriendRequest(username, friend);
         reply.code(200).send({ message: `${username} try to add ${friend}: Success, ${friend} has been add his friend list!` });
@@ -114,16 +110,13 @@ server.post('/friends/add', async (request, reply) => {
     }
 });
 
-server.post('/friends/delete', async (request, reply) => {
+server.post('/friends/delete', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
         const { username, friend } = request.body;
-        if (!username || !friend) {
-            console.log('Body received by /friends/delete:', request.body);
+        if (!username || !friend)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username) || !config.safeUsernameSQLInjection.test(friend))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbDeleteFriendRequest(username, friend);
         reply.code(200).send({ message: `${username} try to delete ${friend}: Success, ${friend} has been deleted from his friend list!` });
@@ -135,12 +128,12 @@ server.post('/friends/delete', async (request, reply) => {
     }
 });
 
-server.patch('/upload', async (request, reply) => {
+server.patch('/upload', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
+        const username = request.user.username;
         const filePart = await request.file();
-        if (!filePart) {
+        if (!filePart)
             return reply.code(400).send({ error: "No file uploaded" });
-        }
 
         // Lis le contenu du fichier en mémoire
         const chunks = [];
@@ -149,18 +142,13 @@ server.patch('/upload', async (request, reply) => {
         }
         const fileBuffer = Buffer.concat(chunks);
 
-        // Récupère le champ "username" depuis le formulaire
-        const username = filePart.fields.username?.value;
-        if (!username) {
+        if (!username)
             return reply.code(400).send({ error: "Missing username" });
-        }
 
         const fileBase64 = fileBuffer.toString('base64');
         await sendDbUpdateAvatarRequest(username, fileBase64);
 
-        return reply.code(200).send({
-            message: `${username} uploaded avatar successfully!`
-        });
+        return reply.code(200).send({message: `${username} uploaded avatar successfully!`});
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
@@ -169,24 +157,21 @@ server.patch('/upload', async (request, reply) => {
     }
 });
 
-server.post('/friends/delete', async (request, reply) => {
+server.post('/avatar', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.params;
-        if (!username) {
-            console.log('Body received by /avatar:', request.body);
+        const { username } = request.user.username;
+        if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         try {
             const data = await sendDbGetAvatarRequest(username);
+            const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
+            reply.code(200).send({ avatarUrl });
         } catch(error) {
             reply.code(404).send({ avatar: null, message: "No avatar found" }); // can be better
         }
-        const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
-        reply.code(200).send({ avatarUrl });
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);
@@ -195,16 +180,13 @@ server.post('/friends/delete', async (request, reply) => {
     }
 });
 
-server.get('/:username', async (request, reply) => {
+server.get('/me', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.params;
-        if (!username) {
-            console.log(`Body received by /username:`, request.body);
+        const { username } = request.user.username;
+        if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbGetUserInfoRequest(username);
         reply.code(200).send('Informations received successfully!');
@@ -216,16 +198,13 @@ server.get('/:username', async (request, reply) => {
     }
 });
 
-server.get('/friends/:username', async (request, reply) => {
+server.get('/me/friends', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.params;
-        if (!username) {
-            console.log(`Body received by /friends/username:`, request.body);
+        const { username } = request.user.username;
+        if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbGetUserFirendsInfoRequest(username);
         reply.code(200).send('Informations received successfully!');
@@ -237,16 +216,13 @@ server.get('/friends/:username', async (request, reply) => {
     }
 });
 
-server.get('/blocked/:username', async (request, reply) => {
+server.get('/me/blocked', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.params;
-        if (!username) {
-            console.log(`Body received by /blocked/username:`, request.body);
+        const { username } = request.user.username;
+        if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbGetUserBlockedInfoRequest(username);
         reply.code(200).send('Informations received successfully!');
@@ -258,16 +234,13 @@ server.get('/blocked/:username', async (request, reply) => {
     }
 });
 
-server.get('/history/:username', async (request, reply) => {
+server.get('/me/history', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
         const { username } = request.params;
-        if (!username) {
-            console.log(`Body received by /history/username:`, request.body);
+        if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
-        }
-        if (!config.safeUsernameSQLInjection.test(username)) {
-            return reply.code(400).send({ error: 'Use of prohibited character(s)!' })
-        }
+        if (!config.safeUsernameSQLInjection.test(username))
+            return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         await sendDbGetUserHistoryInfoRequest(username);
         reply.code(200).send('Informations received successfully!');

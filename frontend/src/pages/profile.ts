@@ -148,7 +148,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 	// Deconnexion
 	disconnectButton.onclick = () => {
-		sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+		sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', null, null, null, null);
 	};
 
 	const htwo: HTMLHeadingElement = document.createElement('h2');
@@ -162,8 +162,8 @@ export const Profile: PageComponent = new PageComponent(() => {
 	imgProf.className = 'w-full h-full object-cover absolute top-0 left-0 text-bg0';
 	imgProf.alt = 'Image de profile';
 
-	async function displayAvatar(username: string) {
-		const res = await fetch(`https://transcendence.42.fr:42069/api/auth/avatar/${username}`);
+	async function displayAvatar() {
+		const res = await fetch(`https://transcendence.42.fr:42069/api/auth/avatar`, { credentials: 'include' });
 		if (!res.ok) {
 			console.error("Impossible de charger l'avatar");
 			return;
@@ -174,7 +174,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 		imgProf.src = data.avatar;
 	}
 
-	displayAvatar("test1234");
+	displayAvatar();
 
 	const imgSpan: HTMLSpanElement =  document.createElement('span');
 	imgSpan.textContent = local.pImage;
@@ -218,7 +218,6 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 		const form = new FormData();
 		form.append("file", selectedFile);
-		form.append("username", "test1234");
 
 		try {
 			const res = await fetch('https://transcendence.42.fr:42069/api/auth/upload', {
