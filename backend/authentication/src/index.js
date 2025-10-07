@@ -167,8 +167,7 @@ server.post('/avatar', { preHandler: [server.authenticate] }, async (request, re
 
         try {
             const data = await sendDbGetAvatarRequest(username);
-            const avatarUrl = `${config.backendUrl}/uploads/avatars/${data.avatar}`;
-            reply.code(200).send({ avatarUrl });
+            reply.code(200).send({ data });
         } catch(error) {
             reply.code(404).send({ avatar: null, message: "No avatar found" }); // can be better
         }

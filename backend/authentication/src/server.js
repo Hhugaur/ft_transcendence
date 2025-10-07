@@ -13,7 +13,8 @@ await server.register(jwt, {
     secret: config.jwtPass,
     sign: {
         expiresIn: config.jwtExp || '1h'
-    }
+    },
+    cookie: { cookieName: 'token' }
 });
 
 server.decorate("authenticate", async function (request, reply) {

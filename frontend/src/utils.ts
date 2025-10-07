@@ -61,4 +61,3 @@ function selectMessage(url: string, type: boolean, error: string) {
     if (url === 'https://transcendence.42.fr:42069/api/auth/disconnect' && type === false)
         return "Erreur lors de la déconnexion :" + error;
 }
-// https://transcendence.42.fr:42069/api/upload
