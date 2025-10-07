@@ -9,6 +9,7 @@ import { createMatchItem, Match } from '../components/matchHistory';
 import { lang, createLanguageMenu} from '../components/language';
 import { createInput, createLabeledInput, createEditableField } from '../components/input';
 import { sendRequest } from "../utils";
+import { Router } from '../router.ts';
 
 function createFriendItem(
 	friendName: string,
@@ -122,6 +123,7 @@ function createFriendItem(
 
 
 export const Profile: PageComponent = new PageComponent(() => {
+
 	document.body.classList.remove('fade-out');
 	document.body.classList.add('fade-in');
 	document.body.classList.remove('bg-bg1');
@@ -129,7 +131,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 	const root: HTMLElement = document.createElement('div');
 	if (auth === 0)
 	{
-		fadeOutAndNavigateSPA('/index');
+		fadeOutAndNavigateSPA('/');
 		return root;
 	}
 	root.className = 'font-CaveatBrush';

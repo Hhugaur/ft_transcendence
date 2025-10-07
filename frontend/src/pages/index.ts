@@ -69,9 +69,8 @@ const statusLogin: () => HTMLElement = () => {
 			e.preventDefault();
 			fadeOutAndNavigateSPA('/login'); // ✅ Use SPA navigation + fade-out
 		});
-
+		auth = 0;
 		buttonDiv.appendChild(button);
-		auth = 0
         return buttonDiv;
 	}
 	

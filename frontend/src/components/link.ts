@@ -25,7 +25,6 @@ export const fadeOutAndNavigateSPA = (route: string) => {
 
   setTimeout(() => {
     history.pushState(null, '', route);
-    // Now trigger your router’s route handling logic manually, e.g.:
     window.dispatchEvent(new PopStateEvent('popstate'));
   }, 500);
 };

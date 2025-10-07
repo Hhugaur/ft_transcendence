@@ -56,7 +56,7 @@ function selectMessage(url: string, type: boolean, error: string) {
     if (url === 'https://transcendence.42.fr:42069/api/auth/login' && type === true)
     {
         incAuthnbr();
-        fadeOutAndNavigateSPA('/index');
+        fadeOutAndNavigateSPA('/');
         return 'Connnexion réussie!';
     }
     if (url === 'https://transcendence.42.fr:42069/api/auth/login' && type === false)
@@ -72,7 +72,7 @@ function selectMessage(url: string, type: boolean, error: string) {
     if (url === 'https://transcendence.42.fr:42069/api/auth/disconnect' && type === true)
     {
         decAuthnbr();
-		fadeOutAndNavigateSPA('/index');
+		fadeOutAndNavigateSPA('/');
         return "Déconnexion réussie!";
     }
     if (url === 'https://transcendence.42.fr:42069/api/auth/disconnect' && type === false)
