@@ -1,7 +1,0 @@
-CMakeLists.txt
-frontend/node_modules
-node_modules
-*.idea
-.vscode
-database/database.sqlite
-.env
