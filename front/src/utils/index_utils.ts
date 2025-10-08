@@ -1,3 +1,12 @@
+import { lang } from '../../locales/language';
+
+import { PageComponent, HTMLComponent } from '../components/component';
+import { Link , fadeOutAndNavigateSPA } from '../components/link';
+import { Router } from '../components/router';
+
+import { sendRequest } from './api';
+
+
 
 //temporaire en attendant d'avoir un vrai systeme de login and register fonctionnel
 export let isAuth: number;
@@ -32,16 +41,16 @@ export const statusLogin: () => HTMLElement = () => {
 		img.src = './test.jpg';
 		const imgSpan: HTMLSpanElement =  document.createElement('span');
 		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black'
-		imgSpan.textContent = lang.iImagetxt;
+		imgSpan.textContent = lang.iImagetxt; // Profile picture
 		imgDiv.appendChild(img);
 		imgDiv.appendChild(imgSpan);
 		profileL.appendChild(imgDiv);
 		buttonDiv.appendChild(profileL.make());
         const disconnectButton: HTMLButtonElement = document.createElement('button');
         disconnectButton.className = '-mb-[100%] mt-10 ml-5 text-sm';
-        disconnectButton.textContent = lang.disc;
+        disconnectButton.textContent = lang.disc; // disconnect
         disconnectButton.onclick = () => {
-            sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', null, 'test1234', null); // test1234 a remplacer par le user
+            sendRequest('https://transcendence.42.fr:42069/api/auth/disconnect', 'username', '', 'test1234', ''); // test1234 a remplacer par le user
             localStorage.removeItem('username');
         };
 	    buttonDiv.appendChild(disconnectButton);
@@ -116,7 +125,7 @@ export const classic: () => HTMLElement = () => {
     const handleGameStart = (mode: 'classic' | 'tournament') => {
         selectedMode = mode;
 
-        if (auth === 1) {
+        if (isAuth === 1) {
             // Authenticated users go straight to their route
             window.location.href = mode === 'classic' ? '/game' : '/tournament';
         } else {

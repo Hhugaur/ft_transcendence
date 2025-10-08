@@ -1,5 +1,10 @@
+import { lang } from '../../locales/language';
+
 import { PageComponent, HTMLComponent } from '../components/component';
+
 import { statusLogin, classic } from '../utils/index_utils';
+
+
 
 export const Index: PageComponent = new PageComponent(() => {
    document.body.classList.remove('fade-out');
