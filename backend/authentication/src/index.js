@@ -157,17 +157,17 @@ server.patch('/upload', { preHandler: [server.authenticate] }, async (request, r
     }
 });
 
-server.post('/avatar', { preHandler: [server.authenticate] }, async (request, reply) => {
+server.get('/avatar', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.user.username;
+        const username = request.user.username;
         if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         if (!config.safeUsernameSQLInjection.test(username))
             return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
         try {
-            const data = await sendDbGetAvatarRequest(username);
-            reply.code(200).send({ data });
+            const avatar = await sendDbGetAvatarRequest(username);
+            reply.code(200).send({ avatar });
         } catch(error) {
             reply.code(404).send({ avatar: null, message: "No avatar found" }); // can be better
         }
@@ -181,7 +181,7 @@ server.post('/avatar', { preHandler: [server.authenticate] }, async (request, re
 
 server.get('/me', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.user.username;
+        const username = request.user.username;
         if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         if (!config.safeUsernameSQLInjection.test(username))
@@ -199,7 +199,7 @@ server.get('/me', { preHandler: [server.authenticate] }, async (request, reply) 
 
 server.get('/me/friends', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.user.username;
+        const username = request.user.username;
         if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         if (!config.safeUsernameSQLInjection.test(username))
@@ -217,7 +217,7 @@ server.get('/me/friends', { preHandler: [server.authenticate] }, async (request,
 
 server.get('/me/blocked', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.user.username;
+        const username = request.user.username;
         if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         if (!config.safeUsernameSQLInjection.test(username))
@@ -235,7 +235,7 @@ server.get('/me/blocked', { preHandler: [server.authenticate] }, async (request,
 
 server.get('/me/history', { preHandler: [server.authenticate] }, async (request, reply) => {
     try {
-        const { username } = request.params;
+        const username = request.params;
         if (!username)
             return reply.code(400).send({ error: 'Invalid argument(s)!' });
         if (!config.safeUsernameSQLInjection.test(username))

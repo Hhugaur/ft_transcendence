@@ -165,13 +165,18 @@ export const Profile: PageComponent = new PageComponent(() => {
 	async function displayAvatar() {
 		const res = await fetch(`https://transcendence.42.fr:42069/api/auth/avatar`, { credentials: 'include' });
 		if (!res.ok) {
-			console.error("Impossible de charger l'avatar");
+			console.error("Impossible to load avatar!");
 			return;
 		}
 
 		const data = await res.json();
 
-		imgProf.src = data.avatar;
+		if (data.avatar) {
+			// Ajoute un timestamp pour forcer le navigateur à recharger l'image / evite de prendre l'image deja en cache
+			imgProf.src = `${data.avatar}?t=${Date.now()}`;;
+		} else {
+			console.warn("Aucun avatar pour cet utilisateur");
+		}
 	}
 
 	displayAvatar();
@@ -229,6 +234,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 			if (!res.ok)
 				throw new Error(`HTTP ${res.status}`);
 			alert("Upload réussi ✅");
+			await displayAvatar();
 		} catch (err: any) {
 			console.log("Échec de l’upload: ", err.message);
 			alert("Échec de l’upload: " + err.message);
