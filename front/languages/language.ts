@@ -1,6 +1,6 @@
 import { en } from './utils/en.ts';
 import { fr } from './utils/fr.ts';
-import { es } from './utils/es';
+import { es } from './utils/es.ts';
 import { HTMLComponent } from '../src/components/component.ts';
 
 

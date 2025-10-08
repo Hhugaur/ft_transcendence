@@ -1,4 +1,4 @@
-import { lang } from '../../locales/language';
+import { lang } from '../../languages/language';
 
 import { PageComponent, HTMLComponent } from '../components/component';
 
