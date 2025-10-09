@@ -29,5 +29,5 @@ export const sendDbGetAvatarRequest = async (username) => {
         throw new Error(`Error API DB: ${error}`);
     }
 
-    return send.json();
+    return await send.json();
 };

@@ -165,12 +165,10 @@ server.get('/avatar', { preHandler: [server.authenticate] }, async (request, rep
         if (!config.safeUsernameSQLInjection.test(username))
             return reply.code(400).send({ error: 'Use of prohibited character(s)!' });
 
-        try {
-            const avatar = await sendDbGetAvatarRequest(username);
-            reply.code(200).send({ avatar });
-        } catch(error) {
-            reply.code(404).send({ avatar: null, message: "No avatar found" }); // can be better
-        }
+        const avatar = await sendDbGetAvatarRequest(username);
+        if (!avatar.avatar)
+            reply.code(404).send({ avatar: null, message: "No avatar found" });
+        reply.code(200).send({ avatar });
     } catch(error) {
         server.log.error(error);
         server.log.error(error.message);

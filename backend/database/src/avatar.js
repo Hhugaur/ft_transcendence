@@ -27,9 +27,9 @@ export const getAvatar = async (username, db, reply) => {
             return reply.code(404).send({ error: `User not found for ${username} or no avatar!` });
         }
 
-        return reply.code(200).send(`data:image/png;base64,${user.avatar.toString('base64')}`);
+        return reply.code(200).send({ avatar: `data:image/png;base64,${user.avatar.toString('base64')}` });
     } catch (err) {
         server.log.error(err);
-        return reply.code(500).send({ error: 'Database Error: getAvatar' });
+        return reply.code(500).send({ avatar: null, error: 'Database Error: getAvatar' });
     }
 };

@@ -24,7 +24,7 @@ function createFriendItem(
 
 	// Avatar image
 	const avatar = document.createElement('img');
-	avatar.src = "test.jpeg"//avatarUrl || `/avatars/${friendName}.png`; // Default path fallback
+	// avatar.src = "test.jpeg"//avatarUrl || `/avatars/${friendName}.png`; // Default path fallback
 	avatar.alt = `${friendName} avatar`;
 	avatar.className = 'w-10 h-10 rounded-full object-cover border border-bg0';
 
@@ -171,9 +171,9 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 		const data = await res.json();
 
-		if (data.avatar) {
+		if (data && data.avatar) {
 			// Ajoute un timestamp pour forcer le navigateur à recharger l'image / evite de prendre l'image deja en cache
-			imgProf.src = `${data.avatar}?t=${Date.now()}`;;
+			imgProf.src = data.avatar.avatar + `#${Date.now()}`;
 		} else {
 			console.warn("Aucun avatar pour cet utilisateur");
 		}
