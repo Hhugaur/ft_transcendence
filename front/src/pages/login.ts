@@ -1,5 +1,15 @@
+import { lang } from '../../languages/language';
+
+import { PageComponent, HTMLComponent } from '../components/component';
+import { Link , fadeOutAndNavigateSPA } from '../components/link';
+import { Router } from '../components/router';
+
+import { sendRequest } from '../utils/api';
+import { createButtonBack } from '../utils/button_utils';
+import { createInput } from '../utils/input';
 
 const app = Router.getInstance();
+
 
 export const Login: PageComponent = new PageComponent(() => {
 	
@@ -11,20 +21,13 @@ export const Login: PageComponent = new PageComponent(() => {
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
 
-	const buttonback: HTMLButtonElement = document.createElement('button');
-	buttonback.className = 'underline ml-[5%] text-bg0';
-	buttonback.textContent = lang.back;
-	buttonback.addEventListener('click', (e) => {
-		e.preventDefault();
-		fadeOutAndNavigateSPA('/');
-	});
-	main.appendChild(buttonback);
+	main.appendChild(createButtonBack());
 
 	const div: HTMLElement = document.createElement('div');
 	div.className = 'bg-bg1 border-bg0 border-4 px-30 py-30 my-[10%] rounded-3xl';
 	const title: HTMLParagraphElement = document.createElement('p');
 	title.className = 'text-bg0 font-bitcount hover:cursor-default text-4xl text-center -mt-[35%]';
-	title.textContent = lang.lTitle;
+	title.textContent = lang.lTitle; //Login
 	div.appendChild(title);
 	const form: HTMLFormElement = document.createElement('form');
 	form.className = 'grid';
@@ -35,7 +38,7 @@ export const Login: PageComponent = new PageComponent(() => {
 
 	const toggleBtn: HTMLButtonElement = document.createElement('button');
 	toggleBtn.type = 'button';
-	toggleBtn.textContent = lang.lButton1;
+	toggleBtn.textContent = lang.lButton1; // Username
 	toggleBtn.className = 'ml-2 text-sm text-txt1 underline whitespace-nowrap w-[70px] overflow-hidden text-center -mr-10';
 
 	const passRow = document.createElement('div');
@@ -45,11 +48,11 @@ export const Login: PageComponent = new PageComponent(() => {
 
 	toggleBtn.addEventListener('click', () => {
 		pass.type = pass.type === 'password' ? 'text' : 'password';
-		toggleBtn.textContent = pass.type === 'password' ? lang.iButton1 : lang.iButton2;
+		toggleBtn.textContent = pass.type === 'password' ? lang.lButton1 : lang.lButton2; //Show //Hide
 	});
 
 	const submit: HTMLInputElement = createInput('submit', '', 'Valider', 'py-1 bg-txt1 text-bg0 text-xl mt-3 text-center rounded-sm');
-	submit.value = 'Se connecter';
+	submit.value = lang.lSubmit; // login in
 	form.appendChild(user);
 	form.appendChild(passRow);
 	form.appendChild(submit);
@@ -87,10 +90,10 @@ export const Login: PageComponent = new PageComponent(() => {
 	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
 	const registerB: HTMLElement = document.createElement('button');
 	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
-	registerB.textContent = lang.rSubmit;
+	registerB.textContent = lang.rSubmit; // register
 	const forgotpass: HTMLElement = document.createElement('button');
 	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-	forgotpass.textContent = lang.lOther1;
+	forgotpass.textContent = lang.lOther1; // forgot password
 
 	registerB.addEventListener('click', (e) => {
 		e.preventDefault();
@@ -101,6 +104,7 @@ export const Login: PageComponent = new PageComponent(() => {
 		e.preventDefault();
 		fadeOutAndNavigateSPA('/forgot-password');
 	});
+
 	buttonDiv.appendChild(registerB);
 	buttonDiv.appendChild(forgotpass);
 	div.appendChild(buttonDiv);

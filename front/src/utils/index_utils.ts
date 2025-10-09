@@ -37,7 +37,7 @@ export const statusLogin: () => HTMLElement = () => {
 		const profileL: HTMLComponent = new Link('/profile');
 		const img: HTMLImageElement = document.createElement('img');
 		img.className = 'w-full h-full object-cover absolute top-0 left-0 text-bg0';
-		img.alt = 'Image de profile';
+		img.alt = lang.iImagetxt; // Profile Picture
 		img.src = './test.jpg';
 		const imgSpan: HTMLSpanElement =  document.createElement('span');
 		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black'
@@ -127,7 +127,7 @@ export const classic: () => HTMLElement = () => {
 
         if (isAuth === 1) {
             // Authenticated users go straight to their route
-            window.location.href = mode === 'classic' ? '/game' : '/tournament';
+            fadeOutAndNavigateSPA(mode === 'classic' ? '/game' : '/tournament');
         } else {
             // Guests enter name first
             handleGuestFlow();
