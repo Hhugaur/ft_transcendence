@@ -24,7 +24,7 @@ export const getAvatar = async (username, db, reply) => {
         const user = await db.get('SELECT avatar FROM USERS WHERE username = ?', username);
 
         if (!user || !user.avatar) {
-            return reply.code(404).send({ error: `User not found for ${username} or no avatar!` });
+            return reply.code(404).send({ error: `User not found or no avatar!` });
         }
 
         return reply.code(200).send({ avatar: `data:image/png;base64,${user.avatar.toString('base64')}` });

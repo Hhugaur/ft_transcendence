@@ -24,6 +24,9 @@ export const sendDbGetAvatarRequest = async (username) => {
         },
     });
 
+    if (send.status === 404)
+        return { avatar: null };
+
     if (!send.ok) {
         const error = await send.text();
         throw new Error(`Error API DB: ${error}`);

@@ -173,7 +173,7 @@ export const Profile: PageComponent = new PageComponent(() => {
 
 		if (data && data.avatar) {
 			// Ajoute un timestamp pour forcer le navigateur à recharger l'image / evite de prendre l'image deja en cache
-			imgProf.src = data.avatar.avatar + `#${Date.now()}`;
+			imgProf.src = data.avatar + `#${Date.now()}`;
 		} else {
 			console.warn("Aucun avatar pour cet utilisateur");
 		}
