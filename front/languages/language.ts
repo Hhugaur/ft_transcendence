@@ -3,6 +3,7 @@ import { fr } from './utils/fr.ts';
 import { es } from './utils/es.ts';
 import { HTMLComponent } from '../src/components/component.ts';
 
+//change the lang=fr in the html && add preference language funct
 
 interface Language {
   code: SupportedLanguage;

@@ -1,22 +1,18 @@
 import { lang } from '../../languages/language';
 
 import { PageComponent, HTMLComponent } from '../components/component';
-import { Link , fadeOutAndNavigateSPA } from '../components/link';
 import { Router } from '../components/router';
 
 import { sendRequest } from '../utils/api';
 import { createButtonBack } from '../utils/button_utils';
 import { createInput } from '../utils/input';
+import { registerForgot } from '../utils/login_utils';
+import { changingScreen } from '../utils/screen_utils';
 
 const app = Router.getInstance();
 
-
 export const Login: PageComponent = new PageComponent(() => {
-	
-	document.body.classList.remove('bg-bg1');
-	document.body.classList.add('bg-bg2');
-	document.body.classList.remove('fade-out');
-	document.body.classList.add('fade-in');
+	changingScreen(true);
 	const main: HTMLElement = document.createElement('div');
 	const root: HTMLElement = document.createElement('div');
 	root.className = 'flex justify-center';
@@ -86,28 +82,7 @@ export const Login: PageComponent = new PageComponent(() => {
 	google.textContent = 'GOOGLE';
 	div.appendChild(google);
 
-	const buttonDiv: HTMLElement = document.createElement('div');
-	buttonDiv.className = 'mt-20 -mb-20 text-bg0';
-	const registerB: HTMLElement = document.createElement('button');
-	registerB.className = 'hover:cursor-pointer ml-60 -mr-70 underline text-sm';
-	registerB.textContent = lang.rSubmit; // register
-	const forgotpass: HTMLElement = document.createElement('button');
-	forgotpass.className = 'hover:cursor-pointer -ml-20 underline text-sm';
-	forgotpass.textContent = lang.lOther1; // forgot password
-
-	registerB.addEventListener('click', (e) => {
-		e.preventDefault();
-		fadeOutAndNavigateSPA('/register');
-	});
-
-	forgotpass.addEventListener('click', (e) => {
-		e.preventDefault();
-		fadeOutAndNavigateSPA('/forgot-password');
-	});
-
-	buttonDiv.appendChild(registerB);
-	buttonDiv.appendChild(forgotpass);
-	div.appendChild(buttonDiv);
+	div.appendChild(registerForgot());
 
 	root.appendChild(div);
 	main.appendChild(root);

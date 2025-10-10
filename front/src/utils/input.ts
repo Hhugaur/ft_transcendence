@@ -24,11 +24,8 @@ export function createLabeledInput(type: string, id: string, labelText: string, 
   return container;
 }
 
-export function createEditableField(
-	labelText: string,
-	value: string,
-	onChange?: (newValue: string) => void
-) {
+export function createEditableField(labelText: string, value: string, onChange?: (newValue: string) => void) 
+{
 	const container = document.createElement('div');
 
 	const label = document.createElement('label');

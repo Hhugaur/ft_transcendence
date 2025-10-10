@@ -1,17 +1,13 @@
 import { lang } from '../../languages/language';
 
-import { PageComponent, HTMLComponent } from '../components/component';
+import { PageComponent } from '../components/component';
 
 import { statusLogin, classic } from '../utils/index_utils';
-
+import { changingScreen } from '../utils/screen_utils';
 
 
 export const Index: PageComponent = new PageComponent(() => {
-   document.body.classList.remove('fade-out');
-   document.body.classList.add('fade-in');
-   document.body.classList.remove('bg-bg2');
-   document.body.classList.add('bg-bg1');
-
+    changingScreen(false);
     const root: HTMLElement = document.createElement('div');
 
 	// --- Login / Profile Section ---

@@ -41,7 +41,7 @@ export const statusLogin: () => HTMLElement = () => {
 		img.src = './test.jpg';
 		const imgSpan: HTMLSpanElement =  document.createElement('span');
 		imgSpan.className = 'w-full h-full flex items-center justify-center absolute top-0 left-0 text-center text-black'
-		imgSpan.textContent = lang.iImagetxt; // Profile picture
+		imgSpan.textContent = lang.altImage; // Profile picture
 		imgDiv.appendChild(img);
 		imgDiv.appendChild(imgSpan);
 		profileL.appendChild(imgDiv);
